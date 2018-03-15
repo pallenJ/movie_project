@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import mp.member.bean.Member;
 
 //회원관리 DAO
-@Repository("MemberDao")	
+@Repository("memberDao")	
 public class MemberDaoImpl implements MemberDao{ 
 	
 	@Autowired
