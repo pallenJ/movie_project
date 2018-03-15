@@ -1,5 +1,6 @@
 package test.hee;
 
-public class test {
 
+public class test {
+	
 }

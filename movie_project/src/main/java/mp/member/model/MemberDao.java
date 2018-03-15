@@ -2,10 +2,12 @@ package mp.member.model;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import mp.member.bean.Member;
 
 //회원관리 DAO
-
+@Repository
 public interface MemberDao {
 //------ 개인 회원 ------
 	//회원가입
