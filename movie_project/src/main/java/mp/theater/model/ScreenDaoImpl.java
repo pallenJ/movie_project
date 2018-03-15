@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import mp.theater.bean.Screen;
 import mp.theater.bean.Seat;
-
+ 
 @Repository("screenDao") 
 public class ScreenDaoImpl implements ScreenDao {
 	

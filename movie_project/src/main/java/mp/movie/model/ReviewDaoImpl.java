@@ -23,7 +23,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	//리뷰 등록
-	@Override
+	@Override 
 	public void register(Review review) {
 		String sql = "insert into review values (?, ?, ?, ?, ?, sysdate)";
 		Object[] args = {"'r'||LPAD(member_seq.nextval, '10', '0')", review.getStar(), review.getContent(), review.getMovieid()};

@@ -1,5 +1,5 @@
 package mp.movie.model;
-
+ 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
