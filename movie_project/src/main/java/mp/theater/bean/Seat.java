@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Component
 public class Seat { 
 	private String id, screenid, reallocation, servicelocation;
 	

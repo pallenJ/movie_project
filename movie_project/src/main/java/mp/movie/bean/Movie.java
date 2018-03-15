@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Component 
 public class Movie {
 	private String id, title, open, close, director, actor, genre, rate, time, nation, 
 	distributor, productor, story, posterpath, poster;

@@ -22,7 +22,7 @@ public class MovieDaoImpl implements MovieDao {
 	
 	private ResultSetExtractor<Movie> extactor;
 	
-	//영화 등록 메소드
+	//영화 등록
 	@Override
 	public void register(Movie movie) {
 		String sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -34,14 +34,14 @@ public class MovieDaoImpl implements MovieDao {
 		jdbcTemplate.update(sql, args);
 	}
 
-	//영화 목록 조회 메소드
+	//영화 목록 조회
 	@Override
 	public List<Movie> mymovielist(String uploader) {
 		String sql = "select * from movie";
 		return jdbcTemplate.query(sql, mapper);
 	}
 
-	//영화 수정 메소드
+	//영화 수정
 	@Override
 	public void edit(Movie movie) {
 		String sql = "update movie set title=?, open=?, close=?, director=?, actor=?, "
@@ -58,28 +58,33 @@ public class MovieDaoImpl implements MovieDao {
 	//영화 삭제 메소드
 	@Override
 	public void delete(String movieid, String sessionid, String uploaderpw) {
-		String sql = "select pw from member where id = ?";
-		Movie movie = jdbcTemplate.query(sql, extactor);
-		
-		//String sql = "delete from movie where id=?";
+		String sql = "delete from movie where uploader = "
+				+ "(select no from member where id='?' and pw='?')";
+		Movie movie = jdbcTemplate.query(sql, extactor, sessionid, uploaderpw);
 	}
 
+	//현재 상영 영화 목록 조회
 	@Override
 	public List<Movie> nowmovie(String sort) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from movie where open <= sysdate and "
+				+ "close >= sysdate order by ? desc";
+		//정렬 기준은 아직 안잡음
+		return jdbcTemplate.query(sql, mapper, sort);
 	}
 
+	//개봉 예정 영화 목록 조회
 	@Override
 	public List<Movie> soonmovie(String sort) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from movie where open > sysdate order by ? desc";
+		//정렬 기준은 아직 안잡음
+		return jdbcTemplate.query(sql, mapper, sort);
 	}
 
+	//영화 상세 조회
 	@Override
 	public Movie movieinfo(String movieid) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from movie where id = ?";
+		return jdbcTemplate.query(sql, extactor, movieid);
 	}
 	
 }
