@@ -21,7 +21,7 @@ public class MemberDaoImpl implements MemberDao{
 	public void register(Member member) {
 		
 		String sql="insert into member values('m'||LPAD(member_seq.nextval, '10', '0')"
-				+ ",?,?,?,?,?,0,'일반',sysdate)";
+				+ ",?,?,?,?,?,0,'일반',sysdate)";//no는 m000000001, m000000002,...등으로 입력
 		Object[] args = {member.getId(),member.getPw(),
 				member.getBirth(),member.getPhone(),member.getEmail()};
 		
@@ -45,9 +45,8 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public Member myinfo(String id) {
-		String sql = "select * from member where id=?";
+		String sql = "select * from member where id=?";//return jdbcTemplate.query(sql,extractor,id);
 		Member member = jdbcTemplate.query(sql,extractor,id);
-//		return member!=null;
 		return member;
 	}
 
