@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import mp.board.bean.Qna;
 
 //문의게시판 DAO(고객, 고객센터)
-@Repository("QnaDao")
+@Repository("qnaDao")
 public class QnaDaoImpl implements QnaDao{
 
 		@Autowired
@@ -46,22 +46,37 @@ public class QnaDaoImpl implements QnaDao{
 			return qna;
 		};
 		@Override
-		public void qnadetail(int no) {
+		public Qna qnadetail(int no) {
 		// TODO Auto-generated method stub
 			String sql ="select * from qna where no = ?";
-			jdbcTemplate.query(sql, mapper,no);
+			Qna qna= jdbcTemplate.query(sql, extractor,no);
+			return qna;
 		}
 
 		@Override
 		public void qnaedit(Qna qna) {
 		// TODO Auto-generated method stub
+			String sql = "update qna set head=?, title=?, secret=? where no=?";
+			Object [] args = {qna.getHead(), qna.getTitle(), qna.getSecret(),qna.getNo()};
+			jdbcTemplate.update(sql,args);
 		
 		}
 	
 		@Override
-		public void qnadelete(int no, String userpw) {
+		public boolean qnadelete(int no, String userpw) {
 		// TODO Auto-generated method stub
-		
+			//[1]qnadetail 메소드로 글정보 가져오기
+			Qna qna = qnadetail(no);
+			
+			//[2]ResultSetExtractor로 패스워드 가져오기
+			String sql = "select pw from member where no=?";
+			String pw = jdbcTemplate.query(sql, rs->{return rs.getString("pw");},qna.getNo());
+			
+			//[3]패스워드가 다르거나 오류 발생시 false 반환
+			if(!pw.equals(userpw))
+			return false;
+			sql= "delete qna where no=?";
+			return jdbcTemplate.update(sql,userpw)>0;
 		}
 	
 	}
