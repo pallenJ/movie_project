@@ -5,15 +5,15 @@ import java.sql.SQLException;
 
 public class Member {
 
-	 String no;
-	 String id;
-	 String pw;
-	 String birth;
-	 String phone;
-	 String email;
-	 int point;
-	 String grade;	
-	 String reg;
+	 private String no;
+	 private String id;
+	 private String pw;
+	 private String birth;
+	 private String phone;
+	 private String email;
+	 private int point;
+	 private String grade;	
+	 private String reg;
 	 
 	 public Member(ResultSet rs) throws SQLException {
 

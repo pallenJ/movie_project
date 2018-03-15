@@ -4,69 +4,84 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Notice {
-	 
-	
-	String id;
-	int star;
-	String writer;
-	String content;
-	String movieid;
-	String reg;
-
+	private int no;
+	private String head;
+	private String title;
+	private String content;
+	private String reg; 
+	private int read;
+	private String writer;
 	
 	public Notice(ResultSet rs) throws SQLException {
-		setId(rs.getString("id"));
-		setStar(rs.getInt("star"));
+		setNo(rs.getInt("no"));
+		setHead(rs.getString("head"));
+		setTitle(rs.getString("title"));
+		setContent(rs.getString("content"));
+		setRead(rs.getInt("read"));
 		setWriter(rs.getString("writer"));
-		setContent(rs.getString("content")); 
-		setMovieid(rs.getString("movieid"));
-		setReg(rs.getString("reg"));
-		
 	}
 	
 	public Notice() {
 		super();
 	}
-	
-	
-	public String getId() {
-		return id;
+
+	public int getNo() {
+		return no;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+	public void setNo(int no) {
+		this.no = no;
 	}
-	public int getStar() {
-		return star;
+
+	public String getHead() {
+		return head;
 	}
-	public void setStar(int star) {
-		this.star = star;
+
+	public void setHead(String head) {
+		this.head = head;
 	}
-	public String getWriter() {
-		return writer;
+
+	public String getTitle() {
+		return title;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getMovieid() {
-		return movieid;
-	}
-	public void setMovieid(String movieid) {
-		this.movieid = movieid;
-	}
+
 	public String getReg() {
 		return reg;
 	}
+
 	public void setReg(String reg) {
 		this.reg = reg;
 	}
+
+	public int getRead() {
+		return read;
+	}
+
+	public void setRead(int read) {
+		this.read = read;
+	}
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	
-	
+		
 	
 	
 }

@@ -20,6 +20,6 @@ public interface NoticeDao {
 	void noticeedit(Notice notice);
 	
 	//공지 삭제
-	void noticedelete(int no, String adminpw);
+	boolean noticedelete(int no, String adminpw);
 
 }	
