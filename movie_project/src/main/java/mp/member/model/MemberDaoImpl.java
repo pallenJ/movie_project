@@ -96,7 +96,7 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		//sort: asc나 desc	keyword: 무엇으로 정렬할것인지
 		String sql="select * from member order by ? ?";
-		List<Member> list=jdbcTemplate.query(sql,mapper,sort,keyword);
+		List<Member> list=jdbcTemplate.query(sql,mapper,keyword,sort);
 		return list;
 	}
 
