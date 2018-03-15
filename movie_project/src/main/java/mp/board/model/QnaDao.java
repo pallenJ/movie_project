@@ -10,7 +10,7 @@ public interface QnaDao {
 //------ 고객, 고객센터 ------ 
 	
 	//문의글 등록
-	void register(Qna qua);
+	void register(Qna qna);
 	
 	//문의글 전체 목록
 	List<Qna> qnalist();

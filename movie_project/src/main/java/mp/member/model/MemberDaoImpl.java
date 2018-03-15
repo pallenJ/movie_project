@@ -20,7 +20,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void register(Member member) {
 		
-		String sql="insert into member values(?,?,?,?,?,?,0,'일반',sysdate);";
+		String sql="insert into member values(?,?,?,?,?,?,0,'일반',sysdate)";
 		Object[] args = {member.getNo(),member.getId(),member.getPw(),
 				member.getBirth(),member.getPhone(),member.getEmail()};
 		
