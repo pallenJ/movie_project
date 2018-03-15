@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import mp.member.bean.Member;
 
 //회원관리 DAO
-@Repository("MemberDao")	
+@Repository("memberDao")	
 public class MemberDaoImpl implements MemberDao{ 
 	
 	@Autowired
@@ -20,8 +20,9 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void register(Member member) {
 		
-		String sql="insert into member values(?,?,?,?,?,?,0,'일반',sysdate)";
-		Object[] args = {member.getNo(),member.getId(),member.getPw(),
+		String sql="insert into member values('m'||LPAD(member_seq.nextval, '10', '0')"
+				+ ",?,?,?,?,?,0,'일반',sysdate)";
+		Object[] args = {member.getId(),member.getPw(),
 				member.getBirth(),member.getPhone(),member.getEmail()};
 		
 		jdbcTemplate.update(sql,args);

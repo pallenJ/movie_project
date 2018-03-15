@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import mp.board.bean.Notice;
 
 //공지사항 DAO
-@Repository("NoticeDao")
+@Repository("noticeDao")
 public class NoticeDaoImpl implements NoticeDao{
 	
 	@Autowired

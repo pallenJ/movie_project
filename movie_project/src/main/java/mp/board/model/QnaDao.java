@@ -16,13 +16,13 @@ public interface QnaDao {
 	List<Qna> qnalist();
 	
 	//상세보기
-	void qnadetail(int no);
+	Qna qnadetail(int no);
 	
 	//수정
 	void qnaedit(Qna qna);
 	
 	//삭제
-	void qnadelete(int no, String userpw);
+	boolean qnadelete(int no, String userpw);
 	
 	//
 }
