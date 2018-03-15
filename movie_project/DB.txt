@@ -1,0 +1,107 @@
+// 계정 만들기
+connect system/oracle;
+create user movie identified by movie;
+grant dba to movie;
+
+
+// 새 계정 로그인
+conn movie/movie;
+
+
+// table, sequence 생성
+create sequence notice_member nocache;
+create table member 
+(no varchar2(11) primary key, 
+id varchar2(12) not null unique, 
+pw varchar2(12) not null, 
+birth date not null, 
+phone varchar2(11) not null, 
+email varchar2(50) not null, 
+point number not null, 
+grade varchar2(30) not null, 
+reg date not null);
+
+create sequence notice_movie nocache;
+create table movie 
+(id varchar2(11) primary key, 
+title varchar2(100) not null, 
+open date not null, 
+close date not null, 
+director varchar2(30) not null, 
+actor varchar2(150) not null, 
+genre varchar2(30) not null, 
+rate varchar2(20) not null, 
+time number not null, 
+nation varchar2(60) not null, 
+distributor varchar2(60) not null, 
+productor varchar2(60) not null, 
+story varchar2(400) not null, 
+posterpath varchar2(256), 
+poster varchar2(256));
+
+create sequence notice_review nocache;
+create table review 
+(id varchar2(11) primary key, 
+star number not null, 
+writer constraint fk_review_writer references member(no), 
+content varchar2(12) not null, 
+movieid constraint fk_review_movieid references movie(id), 
+reg date not null);
+
+create sequence notice_theater nocache;
+create table theater 
+(id varchar2(11) primary key, 
+name varchar2(50) not null unique, 
+region varchar2(30) not null, 
+address varchar2(300) not null, 
+tel varchar2(11) not null, 
+manager constraint fk_theater_manager references member(no));
+
+create sequence notice_screen nocache;
+create table screen 
+(id varchar2(11) primary key, 
+no number not null, 
+theaterid constraint fk_screen_theaterid references theater(id));
+
+create sequence notice_seat nocache;
+create table seat 
+(id varchar2(11) primary key, 
+screenid constraint fk_seat_creenid references screen(id), 
+reallocation varchar2(3), 
+servicelocation varchar2(3));
+
+create sequence notice_seq nocache;
+create table notice 
+(no number primary key, 
+head varchar2(30) not null, 
+title varchar2(90) not null, 
+content varchar2(4000) not null, 
+reg date not null, 
+read number not null, 
+writer constraint fk_notice_writer references member(no));
+
+create sequence qna_seq nocache;
+create table qna 
+(no number primary key, 
+head varchar2(30) not null, 
+title varchar2(150) not null, 
+secret varchar2(5) not null, 
+content varchar2(4000) not null, 
+reg date not null, 
+read number not null, 
+writer constraint fk_qna_writer references member(no), 
+parent number not null, 
+gno number not null);
+
+
+
+
+//테이블 드롭 (외래키 때문에 삭제 순서 중요)
+drop table qna;
+drop table notice;
+drop table seat;
+drop table screen;
+drop table theater;
+drop table review;
+drop table movie;
+drop table member;
