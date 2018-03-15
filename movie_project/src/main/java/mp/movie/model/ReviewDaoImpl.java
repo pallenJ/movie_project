@@ -22,26 +22,28 @@ public class ReviewDaoImpl implements ReviewDao {
 	@Override
 	public void register(Review review) {
 		String sql = "insert into review values (?, ?, ?, ?, ?, sysdate);";
-		Object[] args = {};
+		Object[] args = {review.getId(), review.getStar(), review.getContent(), review.getMovieid()};
 		jdbcTemplate.update(sql, args);
 	}
 
+	//리뷰 목록 조회
 	@Override
 	public List<Review> reviewlist(String movieid) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from review order by reg desc;";
+		return jdbcTemplate.query(sql, mapper);
 	}
 
+	//리뷰 수정
 	@Override
 	public void reviewedit(Review review) {
-		// TODO Auto-generated method stub
-		
-	}
+		String sql = "update review set star = ?, content = ?";
+		jdbcTemplate.update(sql, review.getStar(), review.getContent());
+	};
 
+	//리뷰 삭제
 	@Override
-	public void reviewdelete(String reviewid, String userpw) {
-		// TODO Auto-generated method stub
-		
+	public void reviewdelete(String reviewid, String sessionid, String userpw) {
+		String sql = "delete from review where ";
 	}
 
 }

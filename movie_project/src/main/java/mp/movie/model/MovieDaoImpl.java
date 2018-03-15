@@ -58,9 +58,9 @@ public class MovieDaoImpl implements MovieDao {
 	//영화 삭제 메소드
 	@Override
 	public void delete(String movieid, String sessionid, String uploaderpw) {
-		String sql = "delete from movie where uploader = "
-				+ "(select no from member where id='?' and pw='?')";
-		Movie movie = jdbcTemplate.query(sql, extactor, sessionid, uploaderpw);
+		String sql = "delete from movie where id = ? and uploader = " + 
+				"(select no from member where id='test11' and pw='test22')";
+		Movie movie = jdbcTemplate.query(sql, extactor, movieid, sessionid, uploaderpw);
 	}
 
 	//현재 상영 영화 목록 조회

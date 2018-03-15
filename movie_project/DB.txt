@@ -1,15 +1,15 @@
-// °èÁ¤ ¸¸µé±â
+// ê³„ì • ë§Œë“¤ê¸°
 connect system/oracle;
 create user movie identified by movie;
 grant dba to movie;
 
 
-// »õ °èÁ¤ ·Î±×ÀÎ
+// ìƒˆ ê³„ì • ë¡œê·¸ì¸
 conn movie/movie;
 
 
-// table, sequence »ı¼º
-create sequence notice_member nocache;
+// table, sequence ìƒì„±
+create sequence member_seq nocache;
 create table member 
 (no varchar2(11) primary key, 
 id varchar2(12) not null unique, 
@@ -21,7 +21,7 @@ point number not null,
 grade varchar2(30) not null, 
 reg date not null);
 
-create sequence notice_movie nocache;
+create sequence movie_seq nocache;
 create table movie 
 (id varchar2(11) primary key, 
 title varchar2(100) not null, 
@@ -37,36 +37,37 @@ distributor varchar2(60) not null,
 productor varchar2(60) not null, 
 story varchar2(400) not null, 
 posterpath varchar2(256), 
-poster varchar2(256));
+poster varchar2(256), 
+uploader constraint fk_movie_uploader references member(no) on delete set null);
 
-create sequence notice_review nocache;
+create sequence review_seq nocache;
 create table review 
 (id varchar2(11) primary key, 
 star number not null, 
-writer constraint fk_review_writer references member(no), 
+writer constraint fk_review_writer references member(no) on delete cascade, 
 content varchar2(12) not null, 
-movieid constraint fk_review_movieid references movie(id), 
+movieid constraint fk_review_movieid references movie(id) on delete cascade, 
 reg date not null);
 
-create sequence notice_theater nocache;
+create sequence theater_seq nocache;
 create table theater 
 (id varchar2(11) primary key, 
 name varchar2(50) not null unique, 
 region varchar2(30) not null, 
 address varchar2(300) not null, 
 tel varchar2(11) not null, 
-manager constraint fk_theater_manager references member(no));
+manager constraint fk_theater_manager references member(no) on delete set null);
 
-create sequence notice_screen nocache;
+create sequence screen_seq nocache;
 create table screen 
 (id varchar2(11) primary key, 
 no number not null, 
-theaterid constraint fk_screen_theaterid references theater(id));
+theaterid constraint fk_screen_theaterid references theater(id) on delete cascade);
 
-create sequence notice_seat nocache;
+create sequence seat_seq nocache;
 create table seat 
 (id varchar2(11) primary key, 
-screenid constraint fk_seat_creenid references screen(id), 
+screenid constraint fk_seat_creenid references screen(id) on delete cascade, 
 reallocation varchar2(3), 
 servicelocation varchar2(3));
 
@@ -78,7 +79,7 @@ title varchar2(90) not null,
 content varchar2(4000) not null, 
 reg date not null, 
 read number not null, 
-writer constraint fk_notice_writer references member(no));
+writer constraint fk_notice_writer references member(no) on delete cascade);
 
 create sequence qna_seq nocache;
 create table qna 
@@ -89,14 +90,14 @@ secret varchar2(5) not null,
 content varchar2(4000) not null, 
 reg date not null, 
 read number not null, 
-writer constraint fk_qna_writer references member(no), 
+writer constraint fk_qna_writer references member(no) on delete cascade, 
 parent number not null, 
 gno number not null);
 
 
 
 
-//Å×ÀÌºí µå·Ó (¿Ü·¡Å° ¶§¹®¿¡ »èÁ¦ ¼ø¼­ Áß¿ä)
+//í…Œì´ë¸” ë“œë¡­ (ì™¸ë˜í‚¤ ë•Œë¬¸ì— ì‚­ì œ ìˆœì„œ ì¤‘ìš”)
 drop table qna;
 drop table notice;
 drop table seat;

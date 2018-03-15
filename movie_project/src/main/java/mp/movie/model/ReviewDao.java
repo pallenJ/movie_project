@@ -19,5 +19,5 @@ public interface ReviewDao {
 	void reviewedit(Review review);
 	
 	//삭제
-	void reviewdelete(String reviewid, String userpw);
+	void reviewdelete(String reviewid, String sessionid, String userpw);
 }

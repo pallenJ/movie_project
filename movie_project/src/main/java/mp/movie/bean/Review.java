@@ -8,13 +8,13 @@ import org.springframework.stereotype.Repository;
 
 public class Review {
 	private String id;
-	private int number;
+	private int star;
 	private String writer, content, movieid, reg;
 	
 	public Review() {}
 	public Review(ResultSet rs) throws SQLException {
 		setId(rs.getString("id"));
-		setNumber(rs.getInt("number"));
+		setStar(rs.getInt("star"));
 		setWriter(rs.getString("writer"));
 		setContent(rs.getString("content"));
 		setMovieid(rs.getString("movieid"));
@@ -27,11 +27,11 @@ public class Review {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public int getNumber() {
-		return number;
+	public int getStar() {
+		return star;
 	}
-	public void setNumber(int number) {
-		this.number = number;
+	public void setStar(int star) {
+		this.star = star;
 	}
 	public String getWriter() {
 		return writer;
