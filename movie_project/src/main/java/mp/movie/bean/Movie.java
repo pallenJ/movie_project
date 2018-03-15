@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 public class Movie {
 	private String id, title, open, close, director, actor, genre, rate, time, nation, 
-	distributor, productor, story, posterpath, poster;
+	distributor, productor, story, posterpath, poster, uploader;
 	
 	public Movie() {}
 	public Movie(ResultSet rs) throws SQLException {
@@ -27,6 +27,7 @@ public class Movie {
 		setStory(rs.getString("story"));
 		setPosterpath(rs.getString("posterpath"));
 		setPoster(rs.getString("poster"));
+		setUploader(rs.getString("uploader"));
 	}
 
 	public String getId() {
@@ -147,6 +148,14 @@ public class Movie {
 
 	public void setPoster(String poster) {
 		this.poster = poster;
+	}
+	
+	public String getUploader() {
+		return uploader;
+	}
+	
+	public void setUploader(String uploader) {
+		this.uploader = uploader;
 	}
 	
 }

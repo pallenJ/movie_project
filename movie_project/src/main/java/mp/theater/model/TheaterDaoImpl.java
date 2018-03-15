@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import mp.theater.bean.Theater;
 
-@Repository("TheaterDao") 
+@Repository("theaterDao") 
 public class TheaterDaoImpl implements TheaterDao {
 
 	@Override

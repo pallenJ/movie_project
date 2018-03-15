@@ -2,6 +2,8 @@ package mp.movie.model;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import mp.movie.bean.Movie;
 
-@Repository("MovieDao") 
+@Repository("movieDao") 
 public class MovieDaoImpl implements MovieDao {
 	
 	@Autowired
@@ -21,24 +23,26 @@ public class MovieDaoImpl implements MovieDao {
 	};
 	
 	private ResultSetExtractor<Movie> extactor;
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	//영화 등록
 	@Override
 	public void register(Movie movie) {
-		String sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] args = {movie.getId(), movie.getTitle(), movie.getOpen(), movie.getClose(), 
+		String sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Object[] args = {"'v'||LPAD(movie_seq.nextval, '10', '0')", movie.getTitle(), movie.getOpen(), movie.getClose(), 
 				movie.getDirector(), movie.getActor(), movie.getGenre(), movie.getRate(), 
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
 				movie.getProductor(), movie.getStory(), movie.getPosterpath(), 
-				movie.getPoster()};
+				movie.getPoster(), movie.getUploader()};
 		jdbcTemplate.update(sql, args);
 	}
 
 	//영화 목록 조회
 	@Override
 	public List<Movie> mymovielist(String uploader) {
-		String sql = "select * from movie";
-		return jdbcTemplate.query(sql, mapper);
+		String sql = "select * from movie where uploader = "
+				+ "(select no from member where id=?)";
+		return jdbcTemplate.query(sql, mapper, uploader);
 	}
 
 	//영화 수정
@@ -59,8 +63,13 @@ public class MovieDaoImpl implements MovieDao {
 	@Override
 	public void delete(String movieid, String sessionid, String uploaderpw) {
 		String sql = "delete from movie where id = ? and uploader = " + 
-				"(select no from member where id='test11' and pw='test22')";
-		Movie movie = jdbcTemplate.query(sql, extactor, movieid, sessionid, uploaderpw);
+				"(select no from member where id=? and pw=?)";
+		int result = jdbcTemplate.update(sql, extactor, movieid, sessionid, uploaderpw);
+		if(result == 1) {
+			log.debug("영화가 삭제되었습니다");
+		} else {
+			log.debug("영화가 삭제되지 않았습니다");
+		}
 	}
 
 	//현재 상영 영화 목록 조회

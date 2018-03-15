@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import mp.theater.bean.Seat;
 
-@Repository("SeatDao") 
+@Repository("seatDao") 
 public class SeatDaoImpl implements SeatDao {
 
 	@Override
