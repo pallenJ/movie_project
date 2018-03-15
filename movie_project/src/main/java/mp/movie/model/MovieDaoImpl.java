@@ -17,13 +17,20 @@ public class MovieDaoImpl implements MovieDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	private RowMapper<Movie> mapper = (rs, index)->{
 		return new Movie(rs);
 	};
 	
-	private ResultSetExtractor<Movie> extactor;
-	private Logger log = LoggerFactory.getLogger(getClass());
+	private ResultSetExtractor<Movie> extactor = rs -> {
+		if(rs.next()) {
+			return new Movie(rs);
+		} else {
+			log.debug("데이터 없음 : null값 반환!");
+			return null;
+		}
+	};
 	
 	//영화 등록
 	@Override

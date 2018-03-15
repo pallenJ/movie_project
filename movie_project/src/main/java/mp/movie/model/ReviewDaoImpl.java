@@ -15,12 +15,12 @@ import mp.movie.bean.Review;
 public class ReviewDaoImpl implements ReviewDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	private RowMapper<Review> mapper = (rs, index)->{
 		return new Review(rs);
 	};
 	
-	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	//리뷰 등록
 	@Override 
