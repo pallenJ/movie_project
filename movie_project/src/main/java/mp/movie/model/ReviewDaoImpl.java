@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import mp.movie.bean.Review;
-
+ 
 @Repository("reviewDao") 
 public class ReviewDaoImpl implements ReviewDao {
 	@Autowired

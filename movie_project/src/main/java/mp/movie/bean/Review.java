@@ -1,5 +1,5 @@
 package mp.movie.bean;
- 
+  
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

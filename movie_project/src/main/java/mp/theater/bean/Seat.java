@@ -1,5 +1,5 @@
 package mp.theater.bean;
- 
+  
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
