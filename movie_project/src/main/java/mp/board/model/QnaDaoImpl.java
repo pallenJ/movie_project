@@ -41,9 +41,9 @@ public class QnaDaoImpl implements QnaDao{
 		return list;
 		}
 		
-		private ResultSetExtractor<Qna> extractor= rs->{//return new Qna(rs);
-			Qna qna=new Qna(rs);
-			return qna;
+		private ResultSetExtractor<Qna> extractor= rs->{//return rs.next()?new Qna(rs):null;
+			if(rs.next()) return new Qna(rs);
+			else return null;
 		};
 		@Override
 		public Qna qnadetail(int no) {
@@ -67,16 +67,18 @@ public class QnaDaoImpl implements QnaDao{
 		// TODO Auto-generated method stub
 			//[1]qnadetail 메소드로 글정보 가져오기
 			Qna qna = qnadetail(no);
-			
+			String memNo = qna.getWriter();
 			//[2]ResultSetExtractor로 패스워드 가져오기
 			String sql = "select pw from member where no=?";
-			String pw = jdbcTemplate.query(sql, rs->{return rs.getString("pw");},qna.getNo());
+			String pw = jdbcTemplate.query(sql, rs->{
+			return rs.next()?rs.getString("pw"):null;}
+			,memNo);
 			
 			//[3]패스워드가 다르거나 오류 발생시 false 반환
-			if(!pw.equals(userpw))
+			if(pw==null||!pw.equals(userpw))
 			return false;
 			sql= "delete qna where no=?";
-			return jdbcTemplate.update(sql,userpw)>0;
+			return jdbcTemplate.update(sql,no)>0;
 		}
 	
 	}
