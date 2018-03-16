@@ -88,7 +88,8 @@ create table screen
 (id varchar2(11) primary key, 
 no number not null, 
 theaterid constraint fk_screen_theaterid references theater(id) on delete cascade, 
-seats number not null);
+seats number not null, 
+uploader constraint fk_screen_uploader references member(no) on delete set null);
 
 create sequence seat_seq nocache;
 create table seat 
@@ -163,7 +164,8 @@ alter table add 필드~;
 alter table drop (필드명);
 alter table drop contraint 외래키;
 
-insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'seqtest8', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, '일반', sysdate);
+<<멤버 등록>>
+insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'member11', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, '일반', sysdate);
 
 
 insert into movie values 
@@ -202,4 +204,10 @@ delete from review where id='r1111111111' and writer =
 select * from movie where uploader = (select no from member where id='member11')
 
 <<영화관 등록>>
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000002')
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000001')
+
+<<영화관 삭제>>
+delete from theater where id = 't0000000001' and manager = (select no from member where id = 'seqtest8' and pw = '111111');
+
+<<상영관 등록>>
+insert into screen values ('s'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001')
