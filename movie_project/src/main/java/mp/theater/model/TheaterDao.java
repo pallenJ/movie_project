@@ -20,7 +20,7 @@ public interface TheaterDao {
 	void theateredit(Theater theater);
 	
 	//영화관 등록 삭제
-	void theaterdelete(String theaterid, String managerpw);
+	void theaterdelete(String theaterid, String sessionid, String managerpw);
 	
 //------ 고객 ------		
 	//전체 영화관 조회

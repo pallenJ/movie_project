@@ -35,12 +35,12 @@ public class MovieDaoImpl implements MovieDao {
 	//영화 등록
 	@Override
 	public void register(Movie movie) {
-		String sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Object[] args = {"'v'||LPAD(movie_seq.nextval, '10', '0')", movie.getTitle(), movie.getOpen(), movie.getClose(), 
 				movie.getDirector(), movie.getActor(), movie.getGenre(), movie.getRate(), 
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
 				movie.getProductor(), movie.getStory(), movie.getPosterpath(), 
-				movie.getPoster(), movie.getUploader()};
+				movie.getPoster(), movie.getUploader(), movie.getPrice()};
 		jdbcTemplate.update(sql, args);
 	}
 
@@ -57,12 +57,12 @@ public class MovieDaoImpl implements MovieDao {
 	public void edit(Movie movie) {
 		String sql = "update movie set title=?, open=?, close=?, director=?, actor=?, "
 				+ "genre=?, rate=?, time=?, nation=?, distributor=?, productor=?, "
-				+ "story=?, posterpath=?, poster=? where id=?";
+				+ "story=?, posterpath=?, poster=?, price = ? where id=?";
 		Object[] args = {movie.getTitle(), movie.getOpen(), movie.getClose(), 
 				movie.getDirector(), movie.getActor(), movie.getGenre(), movie.getRate(),
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
 				movie.getProductor(), movie.getStory(), movie.getPosterpath(),
-				movie.getPoster(), movie.getId()};
+				movie.getPoster(), movie.getPrice(), movie.getId()};
 		jdbcTemplate.update(sql, args);
 	}
 	
@@ -79,20 +79,20 @@ public class MovieDaoImpl implements MovieDao {
 		}
 	}
 
-	//현재 상영 영화 목록 조회
+	//현재 상영 영화 목록 조회------------------------------------------수정필요
 	@Override
 	public List<Movie> nowmovie(String sort) {
 		String sql = "select * from movie where open <= sysdate and "
 				+ "close >= sysdate order by ? desc";
-		//정렬 기준은 아직 안잡음
+		//정렬 기준은 아직 안잡음, 평점?
 		return jdbcTemplate.query(sql, mapper, sort);
 	}
 
-	//개봉 예정 영화 목록 조회
+	//개봉 예정 영화 목록 조회------------------------------------------수정필요
 	@Override
 	public List<Movie> soonmovie(String sort) {
 		String sql = "select * from movie where open > sysdate order by ? desc";
-		//정렬 기준은 아직 안잡음
+		//정렬 기준은 아직 안잡음, 평점?
 		return jdbcTemplate.query(sql, mapper, sort);
 	}
 

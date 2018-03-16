@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public class Movie {
 	private String id, title, open, close, director, actor, genre, rate, time, nation, 
 	distributor, productor, story, posterpath, poster, uploader;
+	private int price;
 	
 	public Movie() {}
 	public Movie(ResultSet rs) throws SQLException {
@@ -28,6 +29,7 @@ public class Movie {
 		setPosterpath(rs.getString("posterpath"));
 		setPoster(rs.getString("poster"));
 		setUploader(rs.getString("uploader"));
+		setPrice(rs.getInt("price"));
 	}
 
 	public String getId() {
@@ -156,6 +158,14 @@ public class Movie {
 	
 	public void setUploader(String uploader) {
 		this.uploader = uploader;
+	}
+	
+	public int getPrice() {
+		return price;
+	}
+	
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	
 }

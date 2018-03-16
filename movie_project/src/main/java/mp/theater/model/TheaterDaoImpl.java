@@ -59,16 +59,25 @@ public class TheaterDaoImpl implements TheaterDao {
 		jdbcTemplate.update(sql, args);
 	}
 
+	//영화관 삭제 (지점 입장)
 	@Override
-	public void theaterdelete(String theaterid, String managerpw) {
-		// TODO Auto-generated method stub
-		
+	public void theaterdelete(String theaterid, String sessionid, String managerpw) {
+		String sql = "delete from theater where id = ? and manager = "
+				+ "(select no from member where id = ? and pw = ?)";
+		Object[] args = {theaterid, sessionid, managerpw};
+		int result = jdbcTemplate.update(sql, args);
+		if(result == 1) {
+			log.debug("영화관이 삭제되었습니다.");
+		} else {
+			log.debug("영화관이 삭제되지 않았습니다.");
+		}
 	}
 
+	//영화관 목록 조회
 	@Override
 	public List<Theater> alltheater() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from theater";
+		return jdbcTemplate.query(sql, mapper);
 	}
 
 }
