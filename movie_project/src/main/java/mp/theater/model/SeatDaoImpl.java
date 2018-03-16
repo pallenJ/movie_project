@@ -1,13 +1,11 @@
 package mp.theater.model;
 
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -21,14 +19,6 @@ public class SeatDaoImpl implements SeatDao {
 	
 	private RowMapper<Seat> mapper = (rs, index) -> {
 		return new Seat(rs);
-	};
-	private ResultSetExtractor<Seat> extractor = rs -> {
-		if(rs.next()) {
-			return new Seat(rs);
-		} else {
-			log.debug("데이터 없음 : null값 반환!");
-			return null;
-		}
 	};
 	
 	//좌석 등록
@@ -64,9 +54,9 @@ public class SeatDaoImpl implements SeatDao {
 		String sql = "delete from seat where id = ?";
 		int result = jdbcTemplate.update(sql, seatid);
 		if(result == 0) {
-			log.debug("상영관이 삭제되었습니다!");
+			log.debug("좌석이 삭제되었습니다!");
 		} else {
-			log.debug("상영관리 삭제되지 않았습니다");
+			log.debug("좌석이 삭제되지 않았습니다");
 		}
 	}
 
