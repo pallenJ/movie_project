@@ -35,8 +35,8 @@ public class MovieDaoImpl implements MovieDao {
 	//영화 등록
 	@Override
 	public void register(Movie movie) {
-		String sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] args = {"'v'||LPAD(movie_seq.nextval, '10', '0')", movie.getTitle(), movie.getOpen(), movie.getClose(), 
+		String sql="insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Object[] args = {movie.getTitle(), movie.getOpen(), movie.getClose(), 
 				movie.getDirector(), movie.getActor(), movie.getGenre(), movie.getRate(), 
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
 				movie.getProductor(), movie.getStory(), movie.getPosterpath(), 

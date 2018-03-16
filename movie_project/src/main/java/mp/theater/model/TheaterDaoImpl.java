@@ -35,9 +35,8 @@ public class TheaterDaoImpl implements TheaterDao {
 	
 	//영화관 등록
 	public void register(Theater theater) {
-		String sql = "insert into theater values (?, ?, ?, ?, ?, ?)";
-		Object[] args = {"'t'||LPAD(theater_seq.nextval, '10', '0')", theater.getName(),
-				theater.getRegion(), theater.getAddress(), theater.getTel(), 
+		String sql = "insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), ?, ?, ?, ?, ?)";
+		Object[] args = {theater.getName(), theater.getRegion(), theater.getAddress(), theater.getTel(), 
 				theater.getManager()};
 		jdbcTemplate.update(sql, args);
 	}

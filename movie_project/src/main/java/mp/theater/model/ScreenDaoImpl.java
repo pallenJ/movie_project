@@ -33,9 +33,8 @@ public class ScreenDaoImpl implements ScreenDao {
 	//상영관 등록
 	@Override
 	public void register(Screen screen) {
-		String sql = "insert into screen value (?, ?, ?, ?, ?)";
-		Object[] args = {"'s'||LPAD(screen_seq.nextval, '10', '0')", screen.getNo(), 
-				screen.getTheaterid(), screen.getSeats(), screen.getUploader()};
+		String sql = "insert into screen value ('s'||LPAD(screen_seq.nextval, '10', '0'), ?, ?, ?, ?)";
+		Object[] args = {screen.getNo(), screen.getTheaterid(), screen.getSeats(), screen.getUploader()};
 		jdbcTemplate.update(sql, args);
 	}
 

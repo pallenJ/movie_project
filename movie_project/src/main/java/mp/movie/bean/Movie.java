@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 public class Movie {
-	private String id, title, open, close, director, actor, genre, rate, time, nation, 
-	distributor, productor, story, posterpath, poster, uploader;
+	private String id, title, open, close, director, actor, genre, rate; 
+	private int time;
+	private String nation, distributor, productor, story, posterpath, 
+	poster, uploader;
 	private int price;
 	
 	public Movie() {}
@@ -21,7 +23,7 @@ public class Movie {
 		setActor(rs.getString("actor"));
 		setGenre(rs.getString("genre"));
 		setRate(rs.getString("rate"));
-		setTime(rs.getString("time"));
+		setTime(rs.getInt("time"));
 		setNation(rs.getString("nation"));
 		setDistributor(rs.getString("distributor"));
 		setProductor(rs.getString("productor"));
@@ -96,11 +98,11 @@ public class Movie {
 		this.rate = rate;
 	}
 
-	public String getTime() {
+	public int getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(int time) {
 		this.time = time;
 	}
 
