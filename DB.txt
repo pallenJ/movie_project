@@ -147,6 +147,22 @@ screen number not null,
 price number not null);
 
 
+-- 데이터 삽입 명령문
+-- 멤버 등록
+insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'member11', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, '일반', sysdate);
+
+-- 영화 등록
+insert into movie values 
+('v'||LPAD(movie_seq.nextval, '10', '0'), 'title', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001', 10000);
+
+-- 리뷰 등록
+insert into review values ('r'||LPAD(movie_seq.nextval, '10', '0'), 10, 'm0000000001', 'content', 'v0000000001', sysdate);
+
+-- 영화관 등록
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000001');
+
+-- 상영관 등록
+insert into screen values ('s'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001');
 
 
 
@@ -156,23 +172,11 @@ price number not null);
 'm'||LPAD(member_seq.nextval, '10', '0')
 
 
-
-
 <은경 테스트 중>
 
 alter table add 필드~;
 alter table drop (필드명);
 alter table drop contraint 외래키;
-
-<<멤버 등록>>
-insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'member11', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, '일반', sysdate);
-
-
-insert into movie values 
-('m01', 'title', sysdate, sysdate, 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', '11111111111');
-
-insert into movie values 
-('m1111111111', 'title', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', '11111111111');
 
 
 <<movie 수정>>
@@ -191,10 +195,6 @@ select * from movie where open <= sysdate and close >= sysdate order by id desc;
 select * from movie where id = ?;
 
 
-<<리뷰 등록>>
-insert into review values ('r1111111111', 10, '11111111111', 'content', 'm1111111111', sysdate);
-
-
 <<리뷰 삭제>>
 delete from review where id='r1111111111' and writer = 
 (select no from member where id='member11' and pw='111111');
@@ -203,11 +203,12 @@ delete from review where id='r1111111111' and writer =
 <<내 영화 조회 (영화사입장)>>
 select * from movie where uploader = (select no from member where id='member11')
 
-<<영화관 등록>>
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000001')
 
 <<영화관 삭제>>
-delete from theater where id = 't0000000001' and manager = (select no from member where id = 'seqtest8' and pw = '111111');
+delete from theater where id = 't0000000001' and manager = (select no from member where id = 'seqtest8' and pw = '111111')
 
-<<상영관 등록>>
-insert into screen values ('s'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001')
+<<영화관 수정>>
+update screen set no = 2, theaterid = 't0000000002', seats = 100 where id = 's0000000001';
+
+<<영화관 삭제>>
+delete from screen where uploader = (select no from member where id = 'member11' and pw = '111111');
