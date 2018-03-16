@@ -17,7 +17,7 @@ import mp.member.model.MemberDao;
 @ContextConfiguration(classes=JdbcConfiguration.class)
 public class DaoTest {
 	
-	@Autowired
+	@Autowired 
 	private MemberDao memberDao;
 	private Logger log = LoggerFactory.getLogger(getClass());
 	

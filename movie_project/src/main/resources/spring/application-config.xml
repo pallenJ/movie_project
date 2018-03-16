@@ -6,10 +6,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<context:annotation-config/>
-<!-- 	<context:component-scan base-package="mp.member.model"/> -->
-<!-- 	<context:component-scan base-package="mp.movie.model"/> -->
-<!-- 	<context:component-scan base-package="mp.theater.model"/> -->
-<!-- 	<context:component-scan base-package="mp.board.model"/> -->
 	<context:component-scan base-package="mp.configuration"/> 
 	
 </beans>
