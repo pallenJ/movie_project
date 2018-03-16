@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import mp.configuration.JdbcConfiguration;
 import mp.member.bean.Member;
 import mp.member.model.MemberDao;
+import mp.schedule.model.ScheduleDao;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,4 +33,13 @@ public class DaoTest {
 		member.setPw("1234");
 		memberDao.register(member);
 	}
+	
+	@Autowired
+	private ScheduleDao scheduleDao;
+	
+	@Test
+	public void scheduleRegisterTest() {
+		
+	}
+	
 }
