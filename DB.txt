@@ -1,14 +1,38 @@
-// 계정 만들기
+-- 계정 만들기
 connect system/oracle;
 create user movie identified by movie;
 grant dba to movie;
 
 
-// 새 계정 로그인
+-- 새 계정 로그인
 conn movie/movie;
 
 
-// table, sequence 생성
+-- 여기서부터 복붙
+--테이블 드롭 (외래키 때문에 삭제 순서 중요)
+drop table schedule;
+drop sequence schedule_seq;
+drop table payment;
+drop sequence payment_seq;
+drop table qna;
+drop sequence qna_seq;
+drop table notice;
+drop sequence notice_seq;
+drop table seat;
+drop sequence seat_seq;
+drop table screen;
+drop sequence screen_seq;
+drop table theater;
+drop sequence theater_seq;
+drop table review;
+drop sequence review_seq;
+drop table movie;
+drop sequence movie_seq;
+drop table member;
+drop sequence member_seq;
+
+
+-- table, sequence 생성
 create sequence member_seq nocache;
 create table member 
 (no varchar2(11) primary key, 
@@ -38,7 +62,8 @@ productor varchar2(60) not null,
 story varchar2(400) not null, 
 posterpath varchar2(256), 
 poster varchar2(256), 
-uploader constraint fk_movie_uploader references member(no) on delete set null);
+uploader constraint fk_movie_uploader references member(no) on delete set null, 
+price number not null);
 
 create sequence review_seq nocache;
 create table review 
@@ -62,14 +87,16 @@ create sequence screen_seq nocache;
 create table screen 
 (id varchar2(11) primary key, 
 no number not null, 
-theaterid constraint fk_screen_theaterid references theater(id) on delete cascade);
+theaterid constraint fk_screen_theaterid references theater(id) on delete cascade, 
+seats number not null);
 
 create sequence seat_seq nocache;
 create table seat 
 (id varchar2(11) primary key, 
 screenid constraint fk_seat_creenid references screen(id) on delete cascade, 
 reallocation varchar2(3), 
-servicelocation varchar2(3));
+servicelocation varchar2(3), 
+seatdiscount number not null);
 
 create sequence notice_seq nocache;
 create table notice 
@@ -94,28 +121,38 @@ writer constraint fk_qna_writer references member(no) on delete cascade,
 parent number not null, 
 gno number not null);
 
+create sequence schedule_seq nocache;
+create table schedule 
+(id varchar2(11) primary key, 
+movie constraint fk_schedule_movie references movie(id) on delete cascade, 
+theater constraint fk_schedule_theater references theater(id) on delete cascade, 
+screen constraint fk_schedule_screen references screen(id) on delete cascade, 
+day date not null, 
+starttime varchar2(5) not null, 
+endtime varchar2(5) not null, 
+morning number not null, 
+night number not null, 
+uploader constraint fk_schedule_uploader references member(no) on delete set null);
+
+create sequence payment_seq nocache;
+create table payment 
+(id varchar2(11) primary key, 
+movie varchar2(100) not null, 
+day date not null, 
+starttime varchar2(5) not null, 
+endtime varchar2(5) not null, 
+theater varchar2(50) not null, 
+screen number not null, 
+price number not null);
 
 
 
-//테이블 드롭 (외래키 때문에 삭제 순서 중요)
-drop table qna;
-drop table notice;
-drop table seat;
-drop table screen;
-drop table theater;
-drop table review;
-drop table movie;
-drop table member;
 
 
 
-// 아이디 생성 (sequence 이용)
-// m-> 추가할 문자, '10' -> 0자리, '0' -> 0으로 채운다
+-- 아이디 생성 (sequence 이용)
+-- m-> 추가할 문자, '10' -> 0자리, '0' -> 0으로 채운다
 'm'||LPAD(member_seq.nextval, '10', '0')
-
-
-
-
 
 
 
@@ -126,7 +163,7 @@ alter table add 필드~;
 alter table drop (필드명);
 alter table drop contraint 외래키;
 
-insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'seqtest6', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, '일반', sysdate);
+insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'seqtest8', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, '일반', sysdate);
 
 
 insert into movie values 
@@ -161,4 +198,8 @@ delete from review where id='r1111111111' and writer =
 (select no from member where id='member11' and pw='111111');
 
 
+<<내 영화 조회 (영화사입장)>>
+select * from movie where uploader = (select no from member where id='member11')
 
+<<영화관 등록>>
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000002')
