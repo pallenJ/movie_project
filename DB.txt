@@ -162,7 +162,10 @@ insert into review values ('r'||LPAD(movie_seq.nextval, '10', '0'), 10, 'm000000
 insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000001');
 
 -- 상영관 등록
-insert into screen values ('s'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001');
+
+-- 좌석 등록
+insert into seat values ('s'||LPAD(screen_seq.nextval, '10', '0'), 'c0000000001', 'A1', 'A5', 0);
 
 
 
