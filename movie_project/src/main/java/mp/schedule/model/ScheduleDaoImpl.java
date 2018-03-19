@@ -36,22 +36,23 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	@Override
 	public void scheduleedit(Schedule schedule) {
 		String sql = "update "
-						+"member "
+						+"schedule "
 					+"set "
-						+"movie=?, theater=?, screen=?, day=?, starttime=?, endtime=?, morning=?, night=?, uploader=? "
+						+"movie=?, theater=?, screen=?, day=?, starttime=?, endtime=?, morning=?, night=? "
 					+"where "+
 						"id = ?";
 		Object[] args = {schedule.getMovie(),schedule.getTheater(),schedule.getScreen(),schedule.getDay(),
 						schedule.getStarttime(),schedule.getEndtime(),schedule.getMorning(),schedule.getNight(),
-						schedule.getUploader(), schedule.getId()};
+						schedule.getId()};
 		jdbcTemplate.update(sql,args);
+		
 	}
 
 	@Override
 	public void scheduledelete(String scheduleid, String sessionid, String uploaderpw) {
 		String sql = "delete from schedule where id=? and uploader = "
-					+"(select no from member where id=? and pw=?";
-		Object[] args = {sessionid,uploaderpw};
+					+"(select no from member where id=? and pw=?)";
+		Object[] args = {scheduleid, sessionid, uploaderpw};
 		jdbcTemplate.update(sql,args);
 	}
 	

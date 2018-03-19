@@ -3,8 +3,11 @@ package mp.payment.bean;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+
 public class Payment {
-	private String id, movie, day, starttime, endtime, theater;
+	//식별id, 멤버 이름, 영화 이름, 결제날짜, 시작시간, 종료시간, 영화관, 상영관, 가격
+	private String id, member, movie, day, starttime, endtime, theater;
 	private int screen, price;
 	public Payment() {
 		super();
@@ -13,6 +16,7 @@ public class Payment {
 			int price) {
 		super();
 		this.id = id;
+		this.member = member;
 		this.movie = movie;
 		this.day = day;
 		this.starttime = starttime;
@@ -24,6 +28,7 @@ public class Payment {
 	
 	public Payment(ResultSet rs) throws SQLException {
 		setId(rs.getString("id"));
+		setMember(rs.getString("member"));
 		setMovie(rs.getString("movie"));
 		setDay(rs.getString("day"));
 		setStarttime(rs.getString("starttime"));
@@ -80,6 +85,12 @@ public class Payment {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public String getMember() {
+		return member;
+	}
+	public void setMember(String member) {
+		this.member = member;
 	}
 	
 	

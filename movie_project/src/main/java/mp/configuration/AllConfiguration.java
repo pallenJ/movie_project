@@ -11,9 +11,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 @PropertySource("classpath:/database.properties")
 @ComponentScan(basePackages= {
-		"mp.member.model","mp.movie.model","mp.theater.model", "mp.board.model", "mp.schedule.model", "mp.payment.model"
+		"mp.member.model", "mp.member.controller", "mp.member.service", 
+		"mp.movie.model", "mp.movie.controller", "mp.movie.service",
+		"mp.theater.model", "mp.theater.controller", "mp.theater.service",
+		"mp.board.model", "mp.board.controller", "mp.board.service",
+		"mp.schedule.model", "mp.schedule.controller", "mp.schedule.service",
+		"mp.payment.model", "mp.payment.controller", "mp.payment.service"
 })
-public class JdbcConfiguration {
+public class AllConfiguration {
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		 return new PropertySourcesPlaceholderConfigurer();

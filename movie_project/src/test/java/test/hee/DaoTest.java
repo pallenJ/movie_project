@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import mp.configuration.JdbcConfiguration;
+import mp.configuration.AllConfiguration;
 import mp.member.bean.Member;
 import mp.member.model.MemberDao;
 import mp.schedule.model.ScheduleDao;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=JdbcConfiguration.class)
+@ContextConfiguration(classes=AllConfiguration.class)
 public class DaoTest {
 	
 	@Autowired 
