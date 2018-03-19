@@ -57,7 +57,7 @@ public class MovieDaoImpl implements MovieDao {
 	public void edit(Movie movie) {
 		String sql = "update movie set title=?, open=?, close=?, director=?, actor=?, "
 				+ "genre=?, rate=?, time=?, nation=?, distributor=?, productor=?, "
-				+ "story=?, posterpath=?, poster=?, price = ? where id=?";
+				+ "story=?, posterpath=?, poster=?, price = ? where id = ?";
 		Object[] args = {movie.getTitle(), movie.getOpen(), movie.getClose(), 
 				movie.getDirector(), movie.getActor(), movie.getGenre(), movie.getRate(),
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
@@ -71,7 +71,7 @@ public class MovieDaoImpl implements MovieDao {
 	public void delete(String movieid, String sessionid, String uploaderpw) {
 		String sql = "delete from movie where id = ? and uploader = " + 
 				"(select no from member where id=? and pw=?)";
-		int result = jdbcTemplate.update(sql, extactor, movieid, sessionid, uploaderpw);
+		int result = jdbcTemplate.update(sql, movieid, sessionid, uploaderpw);
 		if(result == 1) {
 			log.debug("영화가 삭제되었습니다");
 		} else {
@@ -91,7 +91,8 @@ public class MovieDaoImpl implements MovieDao {
 	//개봉 예정 영화 목록 조회------------------------------------------수정필요
 	@Override
 	public List<Movie> soonmovie(String sort) {
-		String sql = "select * from movie where open > sysdate order by ? desc";
+		String sql = "select * from movie where open > sysdate order "
+				+ "by ? desc";
 		//정렬 기준은 아직 안잡음, 평점?
 		return jdbcTemplate.query(sql, mapper, sort);
 	}
