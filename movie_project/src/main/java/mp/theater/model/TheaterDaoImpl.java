@@ -44,7 +44,8 @@ public class TheaterDaoImpl implements TheaterDao {
 	//내 영화관 조회 (지점 입장)
 	@Override
 	public Theater mytheater(String managerid) {
-		String sql = "select * from theater where manager = ?";
+		String sql = "select * from theater where manager = "
+				+ "(select no from member where id = ?)";
 		return jdbcTemplate.query(sql, extractor, managerid);
 	}
 

@@ -24,6 +24,6 @@ public interface ScreenDao {
 	void screenedit(Screen screen);
 	
 	//상영관 삭제
-	void screendelete(String screenid, String managerpw);
+	void screendelete(String screenid, String sessionid, String managerpw);
 	
 }

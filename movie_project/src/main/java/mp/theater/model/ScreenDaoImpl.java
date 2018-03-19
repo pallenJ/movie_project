@@ -33,7 +33,8 @@ public class ScreenDaoImpl implements ScreenDao {
 	//상영관 등록
 	@Override
 	public void register(Screen screen) {
-		String sql = "insert into screen value ('s'||LPAD(screen_seq.nextval, '10', '0'), ?, ?, ?, ?)";
+		String sql = "insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), ?, ?, ?, "
+				+ "(select no from member where id = ?))";
 		Object[] args = {screen.getNo(), screen.getTheaterid(), screen.getSeats(), screen.getUploader()};
 		jdbcTemplate.update(sql, args);
 	}
@@ -45,17 +46,17 @@ public class ScreenDaoImpl implements ScreenDao {
 		return jdbcTemplate.query(sql, extractor, screenid);
 	}
 
-	//상영관 목록 조회
+	//상영관 목록 조회 (지역별)
 	@Override
 	public List<Screen> screenlist(String theaterid) {
-		String sql = "select * from screen order by no asc";
-		return jdbcTemplate.query(sql, mapper);
+		String sql = "select * from screen where theaterid = ? order by no asc";
+		return jdbcTemplate.query(sql, mapper, theaterid);
 	}
 
 	//상영관 수정
 	@Override
 	public void screenedit(Screen screen) {
-		String sql = "update from screen set no = ?, theaterid = ?, seats = ? "
+		String sql = "update screen set no = ?, theaterid = ?, seats = ? "
 				+ "where id = ?";
 		Object[] args = {screen.getNo(), screen.getTheaterid(), screen.getSeats(), screen.getId()};
 		jdbcTemplate.update(sql, args);
@@ -63,10 +64,15 @@ public class ScreenDaoImpl implements ScreenDao {
 
 	//상영관 삭제
 	@Override
-	public void screendelete(String screenid, String managerpw) {
-		String sql = "delete from screen where uploader = "
-				+ "(select no from memeber where id = ? and pw = ?)";
-		jdbcTemplate.update(sql, screenid, managerpw);
+	public void screendelete(String screenid, String sessionid, String managerpw) {
+		String sql = "delete from screen where id = ? and uploader = "
+				+ "(select no from member where id = ? and pw = ?)";
+		int result = jdbcTemplate.update(sql, screenid, sessionid, managerpw);
+		if(result == 1) {
+			log.debug("상영관 삭제가 완료되었습니다");
+		} else {
+			log.debug("상영관이 삭제되지 않았습니다");
+		}
 	}
 
 }

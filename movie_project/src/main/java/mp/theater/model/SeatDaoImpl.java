@@ -29,6 +29,7 @@ public class SeatDaoImpl implements SeatDao {
 		Object[] args = {seat.getScreenid(), seat.getReallocation(), 
 				seat.getServicelocation(), seat.getSeatdiscount()};
 		jdbcTemplate.update(sql, args);		
+		log.debug("좌석 등록이 완료되었습니다");
 	}
 
 	//상영관 당 좌석 목록 조회
@@ -42,10 +43,11 @@ public class SeatDaoImpl implements SeatDao {
 	@Override
 	public void seatedit(Seat seat) {
 		String sql = "update seat set screenid = ?, reallocation=?, "
-				+ "servicelocation=?, seatdiscount = ? where id = ?";
+				+ "servicelocation = ?, seatdiscount = ? where id = ?";
 		Object[] args = {seat.getScreenid(), seat.getReallocation(), 
 				seat.getServicelocation(), seat.getSeatdiscount(), seat.getId()};
 		jdbcTemplate.update(sql, args);
+		log.debug("좌석이 수정되었습니다");
 	}
 
 	//좌석 삭제
