@@ -70,7 +70,7 @@ create table review
 (id varchar2(11) primary key, 
 star number not null, 
 writer constraint fk_review_writer references member(no) on delete cascade, 
-content varchar2(12) not null, 
+content varchar2(210) not null, 
 movieid constraint fk_review_movieid references movie(id) on delete cascade, 
 reg date not null);
 
@@ -138,6 +138,7 @@ uploader constraint fk_schedule_uploader references member(no) on delete set nul
 create sequence payment_seq nocache;
 create table payment 
 (id varchar2(11) primary key, 
+member varchar2(12) not null, 
 movie varchar2(100) not null, 
 day date not null, 
 starttime varchar2(5) not null, 
@@ -156,7 +157,7 @@ insert into movie values
 ('v'||LPAD(movie_seq.nextval, '10', '0'), 'title', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001', 10000);
 
 -- 리뷰 등록
-insert into review values ('r'||LPAD(movie_seq.nextval, '10', '0'), 10, 'm0000000001', 'content', 'v0000000001', sysdate);
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 10, 'm0000000001', 'content', 'v0000000001', sysdate);
 
 -- 영화관 등록
 insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000001');
@@ -165,7 +166,7 @@ insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점',
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001');
 
 -- 좌석 등록
-insert into seat values ('s'||LPAD(screen_seq.nextval, '10', '0'), 'c0000000001', 'A1', 'A5', 0);
+insert into seat values ('s'||LPAD(seat_seq.nextval, '10', '0'), 'c0000000001', 'A1', 'A5', 0);
 
 
 
@@ -215,3 +216,9 @@ update screen set no = 2, theaterid = 't0000000002', seats = 100 where id = 's00
 
 <<영화관 삭제>>
 delete from screen where uploader = (select no from member where id = 'member11' and pw = '111111');
+
+<<좌석 수정>>
+update seat set screenid = 'c0000000001', reallocation='B1', servicelocation='B4', seatdiscount = 0 where id = 's0000000001';
+
+<<좌석 삭제>>
+delete from seat where id = 's0000000002';
