@@ -1,10 +1,10 @@
 
--- »õ °èÁ¤ ·Î±×ÀÎ
+-- ìƒˆ ê³„ì • ë¡œê·¸ì¸
 conn movie/movie;
 
 
--- ¿©±â¼­ºÎÅÍ º¹ºÙ
---Å×ÀÌºí µå·Ó (¿Ü·¡Å° ¶§¹®¿¡ »èÁ¦ ¼ø¼­ Áß¿ä)
+-- ì—¬ê¸°ì„œë¶€í„° ë³µë¶™
+--í…Œì´ë¸” ë“œë¡­ (ì™¸ë˜í‚¤ ë•Œë¬¸ì— ì‚­ì œ ìˆœì„œ ì¤‘ìš”)
 drop table schedule;
 drop sequence schedule_seq;
 drop table payment;
@@ -27,7 +27,7 @@ drop table member;
 drop sequence member_seq;
 
 
--- table, sequence »ı¼º
+-- table, sequence ìƒì„±
 create sequence member_seq nocache;
 create table member 
 (no varchar2(11) primary key, 
@@ -133,6 +133,7 @@ uploader constraint fk_schedule_uploader references member(no) on delete set nul
 create sequence payment_seq nocache;
 create table payment 
 (id varchar2(11) primary key, 
+member varchar2(12) not null, 
 movie varchar2(100) not null, 
 day date not null, 
 starttime varchar2(5) not null, 
@@ -142,58 +143,55 @@ screen number not null,
 price number not null);
 
 
+--ìƒ˜í”Œë°ì´í„°
 
 
+--ë©¤ë²„ ì¶”ê°€
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test1','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test2','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test3','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test4','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test5','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test6','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test7','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test8','1234','1993-01-07','01012341234','test@test.com',0,'ì¼ë°˜',sysdate);
 
---»ùÇÃµ¥ÀÌÅÍ
-
-
---¸â¹ö Ãß°¡
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test1','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test2','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test3','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test4','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test5','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test6','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test7','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test8','1234','1993-01-07','01012341234','test@test.com',0,'ÀÏ¹İ',sysdate);
-
---¿µÈ­ Ãß°¡
-insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'Á¶¼±¸íÅ½Á¤', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
+--ì˜í™” ì¶”ê°€
+insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'ì¡°ì„ ëª…íƒì •', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
 insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), '1987', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
-insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), '±×·¹ÀÌÀÇ 50°¡Áö ±×¸²ÀÚ', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
-insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'ÀÎ¼Á¼Ç', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
-insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), '¹Ù¶÷°úÇÔ²² »ç¶óÁö´Ù', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
-insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'ÈïºÎÀü', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
-insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'ÇŞ´Ô°ú´Ş´Ô', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
-insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), '°ú¼Ó½ºÄµµé', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
+insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'ê·¸ë ˆì´ì˜ 50ê°€ì§€ ê·¸ë¦¼ì', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
+insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'ì¸ì…‰ì…˜', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
+insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'ë°”ëŒê³¼í•¨ê»˜ ì‚¬ë¼ì§€ë‹¤', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
+insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'í¥ë¶€ì „', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
+insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'í–‡ë‹˜ê³¼ë‹¬ë‹˜', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
+insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), 'ê³¼ì†ìŠ¤ìº”ë“¤', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001',8000);
 
--- ¸®ºä µî·Ï
-insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 10, 'm0000000001', 'Àç¹Õ³×¿ä', 'v0000000001', sysdate);
-insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', '±×³É ±×·¡¿ä', 'v0000000001', sysdate);
-insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', '±×³É ±×·¡¿ä', 'v0000000001', sysdate);
-insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', '±×³É ±×·¡¿ä', 'v0000000001', sysdate);
-insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', '±×³É ±×·¡¿ä', 'v0000000001', sysdate);
-insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', '±×³É ±×·¡¿ä', 'v0000000001', sysdate);
-insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', '±×³É ±×·¡¿ä', 'v0000000001', sysdate);
-insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 7, 'm0000000001', '½ÉÄôÇß¾î¿ä~', 'v0000000001', sysdate);
+-- ë¦¬ë·° ë“±ë¡
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 10, 'm0000000001', 'ì¬ë°Œë„¤ìš”', 'v0000000001', sysdate);
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', 'ê·¸ëƒ¥ ê·¸ë˜ìš”', 'v0000000001', sysdate);
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', 'ê·¸ëƒ¥ ê·¸ë˜ìš”', 'v0000000001', sysdate);
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', 'ê·¸ëƒ¥ ê·¸ë˜ìš”', 'v0000000001', sysdate);
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', 'ê·¸ëƒ¥ ê·¸ë˜ìš”', 'v0000000001', sysdate);
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', 'ê·¸ëƒ¥ ê·¸ë˜ìš”', 'v0000000001', sysdate);
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 9, 'm0000000001', 'ê·¸ëƒ¥ ê·¸ë˜ìš”', 'v0000000001', sysdate);
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 7, 'm0000000001', 'ì‹¬ì¿µí–ˆì–´ìš”~', 'v0000000001', sysdate);
 insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 10, 'm0000000001', 'GOOD MOVIE!!', 'v0000000001', sysdate);
 
--- ¿µÈ­°ü µî·Ï
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '°¡µğÁ¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000001');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '±¸·ÎÁ¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000001');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ÀÌ¸§Á¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000002');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'º¹Á¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000003');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ÁÜ¼øÀÌÁ¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000003');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '¹äÁ¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000003');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '±×³ÉÁ¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000004');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '»óµµÁ¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000001');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'º¹¾îÁ¡', '¼­¿ï', '¼­¿ï½Ã ³ë¿ø±¸ »ó°èµ¿', '0212341234', 'm0000000001');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '»ó¾îÁ¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000002');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ÇÇÄ«ÃòÁ¡', '¼­¿ï', '¼­¿ï½Ã ±İÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000003');
+-- ì˜í™”ê´€ ë“±ë¡
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ê°€ë””ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000001');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'êµ¬ë¡œì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000001');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ì´ë¦„ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000002');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ë³µì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000003');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ì¤Œìˆœì´ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000003');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ë°¥ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000003');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ê·¸ëƒ¥ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000004');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ìƒë„ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000001');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ë³µì–´ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ë…¸ì›êµ¬ ìƒê³„ë™', '0212341234', 'm0000000001');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ìƒì–´ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000002');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'í”¼ì¹´ì¸„ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000003');
 
--- »ó¿µ°ü µî·Ï
+-- ìƒì˜ê´€ ë“±ë¡
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001');
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 2, 't0000000001', 0, 'm0000000001');
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 3, 't0000000001', 0, 'm0000000001');
@@ -207,7 +205,7 @@ insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 4, 't000000
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 5, 't0000000001', 0, 'm0000000002');
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 6, 't0000000001', 0, 'm0000000002');
 
--- »ó¿µ½Ã°£Ç¥ µî·Ï
+-- ìƒì˜ì‹œê°„í‘œ ë“±ë¡
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-17','13:30','15:30',3000,3000,'m0000000001');
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-17','15:30','17:30',3000,3000,'m0000000001');
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-17','21:30','23:30',3000,3000,'m0000000001');
@@ -218,7 +216,23 @@ insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v00000000
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-19','15:30','17:30',3000,3000,'m0000000001');
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-19','21:30','23:30',3000,3000,'m0000000001');
 
+-- ê²°ì œ ë“±ë¡
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','ë†€ë¶€ì „','2018-03-11','11:30','20:00','êµ¬ë¡œì ',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','ì‹¬ì²­ì´','2018-03-18','11:30','20:00','êµ¬ë¡œì ',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','í¥ë¶€ì „','2018-03-10','11:30','20:00','êµ¬ë¡œì ',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','ì„êº½ì •','2018-03-19','11:30','20:00','êµ¬ë¡œì ',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','í™ê¸¸ë™','2018-03-18','11:30','20:00','êµ¬ë¡œì ',3,3000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','ê´´ë¬¼2','2018-03-13','11:30','20:00','êµ¬ë¡œì ',3,3000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','ì“°ë¦¬ë¹Œë³´ë“œ','2018-03-12','11:30','20:00','êµ¬ë¡œì ',3,3000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','ì“°ë¦¬ë¹Œë³´ë“œ','2018-03-10','11:30','20:00','êµ¬ë¡œì ',3,3000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','ë†€ë¶€ì „','2018-03-18','11:30','20:00','êµ¬ë¡œì ',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','ì“°ë¦¬ë¹Œë³´ë“œ','2018-03-11','11:30','20:00','êµ¬ë¡œì ',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','ì“°ë¦¬ë¹Œë³´ë“œ','2018-03-13','11:30','20:00','êµ¬ë¡œì ',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','ë†€ë¶€ì „','2018-03-14','11:30','20:00','êµ¬ë¡œì ',3,2000);
+
 commit;
+
+
 
 
 
