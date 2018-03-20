@@ -44,7 +44,7 @@ public class MovieDaoImpl implements MovieDao {
 		jdbcTemplate.update(sql, args);
 	}
 
-	//영화 목록 조회
+	//영화 목록 조회 (영화사 입장)
 	@Override
 	public List<Movie> mymovielist(String uploader) {
 		String sql = "select * from movie where uploader = "

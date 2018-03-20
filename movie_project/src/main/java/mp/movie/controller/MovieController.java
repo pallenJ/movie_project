@@ -1,11 +1,15 @@
 package mp.movie.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import mp.movie.bean.Movie;
+import mp.movie.model.MovieDao;
 import mp.movie.service.MovieService;
 
 @Controller
@@ -17,16 +21,19 @@ public class MovieController {
 	public String register() {
 		return "movie/register";
 	}
-
+	private MovieDao movieDao;
+	private Logger log = LoggerFactory.getLogger(getClass());
 	@RequestMapping(value="/movie/register", method=RequestMethod.POST)
 	public String register(String title, String open, String close, 
 			String director, String actor, String genre, String rate, String time,
 			String nation, String distributor, String productor, String story, 
-			String posterpath, String poster, String uploader, String price) {
+			String posterpath, String poster, String uploader, String price, Model model) {
 		movieService.register(title, open, close, director, actor, genre, 
 				rate, time, nation, distributor, productor, story, posterpath, 
 				poster, uploader, price);
-		return "redirect:/movie/list";
+		//model.addAttribute("movie", ?);
+		log.debug("영화 등록 완료");
+		return "redirect:info";
 	}
 	
 	@RequestMapping("/movie/list")
@@ -46,7 +53,8 @@ public class MovieController {
 	}
 	
 	@RequestMapping(value= {"movie/now", "movie"})
-	public String now() {
+	public String now(Model model) {
+		model.addAttribute("list", movieService.getNow());
 		return "movie/now";
 	}
 	
