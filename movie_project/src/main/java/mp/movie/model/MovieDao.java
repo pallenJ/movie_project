@@ -9,11 +9,11 @@ import mp.movie.bean.Movie;
 //영화관리 DAO 
 @Repository
 public interface MovieDao {
-//------ 업로더 ------
+//------ 영화사 ------
 	//영화 등록
-	void register(Movie movie);
+	String register(Movie movie);
 	
-	//영화 조회(자신이 올린 영화 목록) 
+	//영화 목록 조회(영화사 입장) 
 	List<Movie> mymovielist(String uploader);
 	
 	//영화 정보 수정

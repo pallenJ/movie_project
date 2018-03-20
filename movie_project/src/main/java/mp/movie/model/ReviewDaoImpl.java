@@ -25,8 +25,10 @@ public class ReviewDaoImpl implements ReviewDao {
 	//리뷰 등록
 	@Override 
 	public void register(Review review) {
-		String sql = "insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), ?, ?, ?, ?, sysdate)";
-		Object[] args = {review.getStar(), review.getWriter(), review.getContent(), review.getMovieid()};
+		String sql = "select 'r'||LPAD(review_seq.nextval, '10', '0') from dual";
+		String id = jdbcTemplate.queryForObject(sql, String.class);
+		sql = "?, ?, ?, ?, ?, sysdate)";
+		Object[] args = {id, review.getStar(), review.getWriter(), review.getContent(), review.getMovieid()};
 		jdbcTemplate.update(sql, args);
 	}
 

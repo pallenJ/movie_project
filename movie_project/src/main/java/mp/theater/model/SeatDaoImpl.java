@@ -24,9 +24,10 @@ public class SeatDaoImpl implements SeatDao {
 	//좌석 등록
 	@Override
 	public void register(Seat seat) {
-		String sql = "insert into seat values ('s'||LPAD(seat_seq.nextval, '10', "
-				+ "'0'), ?, ?, ?, ?)";
-		Object[] args = {seat.getScreenid(), seat.getReallocation(), 
+		String sql = "select 's'||LPAD(seat_seq.nextval, '10', '0') from dual";
+		String id = jdbcTemplate.queryForObject(sql, String.class);
+		sql = "insert into seat values (?, '10', '0'), ?, ?, ?, ?)";
+		Object[] args = {id, seat.getScreenid(), seat.getReallocation(), 
 				seat.getServicelocation(), seat.getSeatdiscount()};
 		jdbcTemplate.update(sql, args);		
 		log.debug("좌석 등록이 완료되었습니다");

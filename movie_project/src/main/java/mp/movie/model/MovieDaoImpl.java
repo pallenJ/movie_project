@@ -32,16 +32,32 @@ public class MovieDaoImpl implements MovieDao {
 		}
 	};
 	
+	private ResultSetExtractor<String> extractorString = rs -> {
+		if(rs.next()) {
+			return rs.getString(1);
+		} else {
+			log.debug("데이터 없음 : null값 반환!");
+			return null;
+		}
+	};
+	
 	//영화 등록
 	@Override
-	public void register(Movie movie) {
-		String sql="insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] args = {movie.getTitle(), movie.getOpen(), movie.getClose(), 
+	public String register(Movie movie) {
+		String sql = "select 'v'||LPAD(movie_seq.nextval, '10', '0') from dual";
+		String id = jdbcTemplate.queryForObject(sql, String.class);
+		sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Object[] args = {id, movie.getTitle(), movie.getOpen(), movie.getClose(), 
 				movie.getDirector(), movie.getActor(), movie.getGenre(), movie.getRate(), 
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
 				movie.getProductor(), movie.getStory(), movie.getPosterpath(), 
 				movie.getPoster(), movie.getUploader(), movie.getPrice()};
 		jdbcTemplate.update(sql, args);
+		log.debug("영화 등록 완료");
+		sql = "select MAX(id) from movie";
+		//sql = "select last_number from user_sequences where sequence_name = 'movie_seq'";
+		String movieid = jdbcTemplate.query(sql, extractorString);
+		return movieid;
 	}
 
 	//영화 목록 조회 (영화사 입장)
@@ -63,7 +79,8 @@ public class MovieDaoImpl implements MovieDao {
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
 				movie.getProductor(), movie.getStory(), movie.getPosterpath(),
 				movie.getPoster(), movie.getPrice(), movie.getId()};
-		jdbcTemplate.update(sql, args);
+		int result = jdbcTemplate.update(sql, args);
+		log.debug("영화 수정 완료");
 	}
 	
 	//영화 삭제 메소드
@@ -71,6 +88,9 @@ public class MovieDaoImpl implements MovieDao {
 	public void delete(String movieid, String sessionid, String uploaderpw) {
 		String sql = "delete from movie where id = ? and uploader = " + 
 				"(select no from member where id=? and pw=?)";
+		log.debug(movieid);
+		log.debug(sessionid);
+		log.debug(uploaderpw);
 		int result = jdbcTemplate.update(sql, movieid, sessionid, uploaderpw);
 		if(result == 1) {
 			log.debug("영화가 삭제되었습니다");
