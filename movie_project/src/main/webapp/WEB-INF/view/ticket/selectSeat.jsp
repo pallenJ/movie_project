@@ -14,17 +14,16 @@
             <h1>theater : ${theaterid}</h1>
             <h1>schedule : ${scheduleid}</h1>
                 
-        <form action ="<c:url value='/payment'/>" method="post">
+        <form action ="<c:url value='/payment'/>" method="get">
             <input type = "hidden" name="date" value="${date}"><br>
             <input type = "hidden" name="theaterid" value="${theaterid}"><br>
             <input type = "hidden" name="movieid" value="${movieid}" ><br>
             <input type = "hidden" name="scheduleid" value="${scheduleid}" ><br>
   
-            <input type = "text" name = "adult" placeholder="성인 몇 분"><br>
-            <input type = "text" name = "child" placeholder="어린이 몇 분"><br>
-            <input type = "text" name = "senior" placeholder="어르신 몇 분 =?"><br>
-            <input type = "text" name="theater" placeholder="장애인 몇 분"><br>
-            <input type = "text" name="seat" placeholder="좌석선택 ex)a1"><br>
+            <input type = "text" name = "adult" placeholder="성인 몇 분" value="1"><br>
+            <input type = "text" name = "child" placeholder="어린이 몇 분" value="0"><br>
+            <input type = "text" name = "senior" placeholder="어르신 몇 분 " value="0"><br>
+            <input type = "text" name="seat" placeholder="좌석선택 ex)a1" value="a1"><br>
             <input type = "submit" value="다음단계">
         </form>
     </div>
