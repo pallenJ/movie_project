@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import mp.movie.bean.Movie;
 import mp.movie.service.MovieService;
 
 @Controller
@@ -69,7 +68,6 @@ public class MovieController {
 		//일단 세션아이디 임의로 지정--------------------------------------------------------------
 		session.setAttribute("id", "member11");
 		model.addAttribute("movieid", movieid);
-		log.debug(movieid);
 		return "/movie/delete";
 	}
 	@RequestMapping(value="/movie/delete", method=RequestMethod.POST)

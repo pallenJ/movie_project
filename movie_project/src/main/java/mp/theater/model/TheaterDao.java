@@ -11,7 +11,7 @@ import mp.theater.bean.Theater;
 public interface TheaterDao {
 //------ 지점장 ------
 	//영화관 등록(지점 등록)
-	void register(Theater theater);
+	String register(Theater theater);
 	
 	//내 영화관 정보 조회(지점장 본인의 영화관 조회)
 	Theater mytheater(String managerid);
@@ -25,4 +25,7 @@ public interface TheaterDao {
 //------ 고객 ------		
 	//전체 영화관 조회
 	List<Theater> alltheater();
+	
+	//영화관 상세 조회
+	Theater theaterdetail(String theaterid);
 }

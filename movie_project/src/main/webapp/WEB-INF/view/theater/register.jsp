@@ -7,9 +7,9 @@
 		<input type="text" name="region" placeholder="지역"><br>
 		<input type="text" name="address" placeholder="주소"><br>
 		<input type="text" name="tel" placeholder="전화번호"><br>
-		<input type="text" name="manager" value="${session.id }"><br>
+		<input type="text" name="manager" value="${sessionScope.id }" readonly="readonly"><br>
 		<input type="submit" value="등록">
 	</form>
 </div>
 
-<h2>${session.id }</h2>
+<h2></h2>

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import mp.theater.bean.Screen;
-import mp.theater.bean.Seat;
   
 //상영관관리 DAO(영화관 내 각 상영관)
 @Repository 

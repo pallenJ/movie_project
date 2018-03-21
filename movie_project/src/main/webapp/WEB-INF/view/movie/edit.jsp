@@ -6,7 +6,7 @@
 <h1>영화 수정 화면</h1>
 <div>
 	<form action="edit" method="post">
-		<input type="hidden" name="id" value=${list.id }><br>
+		<input type="hidden" name="id" value="${list.id }"><br>
 		<input type="text" name="title" value="${list.title }" placeholder="영화제목"><br>
 		<input type="date" name="open" value="${fn:substring(list.open, 0, 10) }" placeholder="개봉일"><br>
 		<input type="date" name="close" value="${fn:substring(list.close, 0, 10) }" placeholder="상영일"><br>
