@@ -52,7 +52,12 @@
          
          <tr>
             <th scope="row" colspan="40%">비밀번호</th>
-            <td>${myInfo.pw}</td>
+            <td><input type="text" class="form-control" id="pw" name="pw" value="${myInfo.pw}" required></td>
+         </tr>
+         
+         <tr>
+            <th scope="row" colspan="40%">비밀번호 확인</th>
+            <td><input type="text" class="form-control" id="pw" name="pwCheck" value="${myInfo.pw}" required></td>
          </tr>
          
          <tr>
@@ -91,13 +96,11 @@
       </table>
       <br> <hr>
     
-    <button type="submit" class="btn btn-primary" style="width: 100px">내정보 수정</button>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary" style="width: 100px">수정완료</button>
     <button type="button" onClick="history.back();" class="btn btn-warning"  style="width: 100px">취소</button>
+    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
    </form>
-    <form action="logout" id="forLogout">
-     <button type="submit" class="btn btn-default" style="width: 200px" >로그아웃</button>
-    </form>
+   
     
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

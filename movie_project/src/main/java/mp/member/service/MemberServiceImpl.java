@@ -1,25 +1,27 @@
 package mp.member.service;
 
-import javax.servlet.ServletContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import mp.member.bean.Member;
+import mp.member.controller.MemberController;
 import mp.member.model.MemberDao;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService{
 	
-	@Autowired
-	ServletContext servletContext;
+	private Logger log = LoggerFactory.getLogger(MemberController.class);
+	
 	@Autowired
 	MemberDao memberdao;
 	
 	@Override
 	public boolean login(String id, String pw) {
 		// TODO Auto-generated method stub
-		
 		return memberdao.login(id, pw);
 	}
 
@@ -30,21 +32,44 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void logout() {
+	public void logout(Model model) {
 		// TODO Auto-generated method stub
-		
+		model.addAttribute("loginCondition", false);
+	}
+	
+	@Override
+	public boolean exit(String id,String pw) {
+		// TODO Auto-generated method stub
+		return memberdao.delete(id, pw);
 	}
 
 	@Override
-	public void exit() {
+	public Member myinfo(String id) {
 		// TODO Auto-generated method stub
-		
+		return memberdao.myinfo(id);
 	}
 
 	@Override
-	public Member myinfo() {
+	public boolean register(String id, String pw, String birth, String phone, String email) {
 		// TODO Auto-generated method stub
-		return null;
+		Member member = new Member();
+		
+		member.setId(id);
+		member.setPw(pw);
+		member.setBirth(birth);
+		member.setPhone(phone);
+		member.setEmail(email);
+		
+		log.debug("result={}",member==null);
+		
+		try {
+		memberdao.register(member);
+		return true;	
+		} catch (Exception e) {
+		return false;
+		}
 	}
+
+	
 
 }

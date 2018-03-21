@@ -44,12 +44,12 @@
         </div>
         
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="home">
+          <form role="form" action="register" method="post">
             <!-- 아이디 입력 및 중복확인 기능-->
              <div class="form-group">
               <label for="id">아이디</label>
               <div class="input-group">
-                <input type="id" class="form-control" id="id" placeholder="아이디">
+                <input type="text" class="form-control" id="id" name="id" placeholder="아이디" required>
                 <span class="input-group-btn">
                   <button class="btn btn-default">중복 확인<i class="fa fa-mail-forward spaceLeft"></i></button>
                 </span>
@@ -57,32 +57,32 @@
             </div>
             <!--비밀번호 입력--> 
             <div class="form-group">
-              <label for="pw1">비밀번호</label>
-              <input type="password" class="form-control" id="pw1" placeholder="비밀번호">
+              <label for="pw">비밀번호</label>
+              <input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호" required>
             </div>
             <!--비밀번호 확인-->
             <div class="form-group">
-              <label for="pw2">비밀번호 확인</label>
-              <input type="password" class="form-control" id="pw2" placeholder="비밀번호 확인">
+              <label for="pwcheck">비밀번호 확인</label>
+              <input type="password" class="form-control" id="pwcheck" name="pwcheck" placeholder="비밀번호 확인">
               <p class="help-block">비밀번호 확인을 위해 다시한번 입력 해 주세요</p>
             </div>
-            <!--이름 입력-->
-             <div class="form-group">
-              <label for="name">이름</label>
-              <input type="text" class="form-control" id="name" placeholder="이름을 입력해 주세요">
+            
+            <div class="form-group">
+              <label for="birth">비밀번호 확인</label>
+              <input type="number" class="form-control" id="birth" name="birth" placeholder="주민번호 앞 6자리" required>
+            </div>
+            
+            <!--핸드폰   입력-->
+            <div class="form-group">
+              <label for="tel">핸드폰 번호</label>
+              <input type="tel" class="form-control" id="phone" name="phone" placeholder="-없이 입력해주세요" required>
             </div>
             
             <!--이메일 입력-->
             <div class="form-group">
-              <label for="tel">핸드폰 번호</label>
-              <input type="tel" class="form-control" id="phone" placeholder="-없이 입력해주세요">
-            </div>
-            
-            <!--핸드폰 인증  입력-->
-            <div class="form-group">
               <label for="phone1">E-mail</label>
               <div class="input-group">
-                <input type="email" class="form-control" id="phone1" placeholder="이메일 주소">
+                <input type="email" class="form-control" id="email" name="email" placeholder="이메일 주소" required>
                 <span class="input-group-btn">
                   <button class="btn btn-success">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>
                 </span>
@@ -93,7 +93,7 @@
             <div class="form-group">
               <label for="email-check">인증번호 입력</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="email-check" placeholder="인증번호">
+                <input type="number" class="form-control" id="email-check" name="emailCheck" placeholder="인증번호">
                 <span class="input-group-btn">
                   <button class="btn btn-success">인증번호 입력<i class="fa fa-edit spaceLeft"></i></button>
                 </span>

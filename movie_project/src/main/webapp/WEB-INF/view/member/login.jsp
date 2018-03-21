@@ -23,7 +23,7 @@
 <div align="center">
 	<br><br><br><br><br>
 	<h1>Sign in</h1><br>
-	<form class="form-inline" action="login">
+	<form class="form-inline" action="login" method="post">
   
   	<div class="form-group">
     	

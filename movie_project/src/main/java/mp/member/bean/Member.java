@@ -30,6 +30,10 @@ public class Member {
 	 }
  	 public Member() {
 		super();
+		setNo("0");
+		setPoint(0);
+		setGrade("normal");
+		setReg("0");
 	 }
 	public String getNo() {
 		return no;
