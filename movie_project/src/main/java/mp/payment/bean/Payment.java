@@ -6,92 +6,134 @@ import java.sql.SQLException;
 
 
 public class Payment {
-	//식별id, 멤버 이름, 영화 이름, 결제날짜, 시작시간, 종료시간, 영화관, 상영관, 가격
-	private String id, member, movie, day, starttime, endtime, theater;
-	private int screen, price;
+
+	private String id, memberid, movieid, theaterid, screenid, seatid, scheduleid;
+	private String paydate;
+	private int paytotal;
+	
 	public Payment() {
 		super();
 	}
-	public Payment(String id, String movie, String day, String starttime, String endtime, String theater, int screen,
-			int price) {
+	
+	public Payment(String id, String memberid, String movieid, String theaterid, String screenid, String seatid,
+			String scheduleid, String paydate, int paytotal) {
 		super();
 		this.id = id;
-		this.member = member;
-		this.movie = movie;
-		this.day = day;
-		this.starttime = starttime;
-		this.endtime = endtime;
-		this.theater = theater;
-		this.screen = screen;
-		this.price = price;
+		this.memberid = memberid;
+		this.movieid = movieid;
+		this.theaterid = theaterid;
+		this.screenid = screenid;
+		this.seatid = seatid;
+		this.scheduleid = scheduleid;
+		this.paydate = paydate;
+		this.paytotal = paytotal;
 	}
-	
+
+
+
 	public Payment(ResultSet rs) throws SQLException {
 		setId(rs.getString("id"));
-		setMember(rs.getString("member"));
-		setMovie(rs.getString("movie"));
-		setDay(rs.getString("day"));
-		setStarttime(rs.getString("starttime"));
-		setEndtime(rs.getString("endtime"));
-		setTheater(rs.getString("theater"));
-		setScreen(rs.getInt("screen"));
-		setPrice(rs.getInt("price"));
+		setMemberid(rs.getString("memberid"));
+		setMovieid(rs.getString("movieid"));
+		setTheaterid(rs.getString("theaterid"));
+		setScreenid(rs.getString("screenid"));
+		setSeatid(rs.getString("seatid"));
+		setScheduleid(rs.getString("scheduleid"));
+		setPaydate(rs.getString("paydate"));
+		setPaytotal(rs.getInt("paytotal"));
+		
 	}
-	
+
+
 	public String getId() {
 		return id;
 	}
+
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getMovie() {
-		return movie;
+
+
+	public String getMemberid() {
+		return memberid;
 	}
-	public void setMovie(String movie) {
-		this.movie = movie;
+
+
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
 	}
-	public String getDay() {
-		return day;
+
+
+	public String getMovieid() {
+		return movieid;
 	}
-	public void setDay(String day) {
-		this.day = day;
+
+
+	public void setMovieid(String movieid) {
+		this.movieid = movieid;
 	}
-	public String getStarttime() {
-		return starttime;
+
+
+	public String getTheaterid() {
+		return theaterid;
 	}
-	public void setStarttime(String starttime) {
-		this.starttime = starttime;
+
+
+	public void setTheaterid(String theaterid) {
+		this.theaterid = theaterid;
 	}
-	public String getEndtime() {
-		return endtime;
+
+
+	public String getScreenid() {
+		return screenid;
 	}
-	public void setEndtime(String endtime) {
-		this.endtime = endtime;
+
+
+	public void setScreenid(String screenid) {
+		this.screenid = screenid;
 	}
-	public String getTheater() {
-		return theater;
+
+
+	public String getSeatid() {
+		return seatid;
 	}
-	public void setTheater(String theater) {
-		this.theater = theater;
+
+
+	public void setSeatid(String seatid) {
+		this.seatid = seatid;
 	}
-	public int getScreen() {
-		return screen;
+
+
+	public String getScheduleid() {
+		return scheduleid;
 	}
-	public void setScreen(int screen) {
-		this.screen = screen;
+
+
+	public void setScheduleid(String scheduleid) {
+		this.scheduleid = scheduleid;
 	}
-	public int getPrice() {
-		return price;
+
+
+	public String getPaydate() {
+		return paydate;
 	}
-	public void setPrice(int price) {
-		this.price = price;
+
+
+	public void setPaydate(String paydate) {
+		this.paydate = paydate;
 	}
-	public String getMember() {
-		return member;
+
+
+	public int getPaytotal() {
+		return paytotal;
 	}
-	public void setMember(String member) {
-		this.member = member;
+
+
+	public void setPaytotal(int paytotal) {
+		this.paytotal = paytotal;
 	}
+	
 	
 	
 	

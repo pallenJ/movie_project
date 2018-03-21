@@ -27,7 +27,6 @@
             <input type = "text" name="date" placeholder="날짜 ex) 2018-03-03" value="2018-03-03"><br>
             <input type = "text" name="theaterid" placeholder="영화관id" value="t0000000001"><br>
             <input type = "text" name="movieid" placeholder="영화id" value="v0000000001"><br>
-
             <input type = "text" name="scheduleid" placeholder="상영시간표id" value="s0000000001"><br>
             <input type = "submit" value="예매하기">
         </form>
