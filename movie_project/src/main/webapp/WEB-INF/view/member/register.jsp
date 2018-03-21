@@ -68,8 +68,8 @@
             </div>
             
             <div class="form-group">
-              <label for="birth">비밀번호 확인</label>
-              <input type="number" class="form-control" id="birth" name="birth" placeholder="주민번호 앞 6자리" required>
+              <label for="birth">생년월일</label>
+              <input type="text" class="form-control" id="birth" name="birth" placeholder="주민번호 앞 6자리" required>
             </div>
             
             <!--핸드폰   입력-->
@@ -84,7 +84,7 @@
               <div class="input-group">
                 <input type="email" class="form-control" id="email" name="email" placeholder="이메일 주소" required>
                 <span class="input-group-btn">
-                  <button class="btn btn-success">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>
+                  <button class="btn btn-default">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>
                 </span>
               </div>
             </div>
@@ -93,9 +93,9 @@
             <div class="form-group">
               <label for="email-check">인증번호 입력</label>
               <div class="input-group">
-                <input type="number" class="form-control" id="email-check" name="emailCheck" placeholder="인증번호">
+                <input type="text" class="form-control" id="email-check" name="emailCheck" placeholder="인증번호">
                 <span class="input-group-btn">
-                  <button class="btn btn-success">인증번호 입력<i class="fa fa-edit spaceLeft"></i></button>
+                  <button class="btn btn-success">인증 완료<i class="fa fa-edit spaceLeft"></i></button>
                 </span>
               </div>
             </div>

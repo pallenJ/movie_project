@@ -34,7 +34,7 @@ public class MemberController {
 		if(nowLogin) {
 			String id = (String) session.getAttribute("loginId");	
 			log.debug("{}님이 이미 로그인 한 상태 입니다. 먼저 로그아웃 해주세요",id);	
-			return 	"/myInfo";
+			return 	"member/myInfo";
 			}
 		return "member/login";
 	}
@@ -47,6 +47,7 @@ public class MemberController {
 		session.setAttribute("loginCondition", loginflag);
 		session.setAttribute("loginId", id);
 		session.setAttribute("loginGrade", memberservice.myinfo(id).getGrade());
+		session.setAttribute("myInfo", memberservice.myinfo(id));
 		
 		log.debug("로그인"+(loginflag?"성공":"실패!"));
 		id = (String) session.getAttribute("loginId");
@@ -65,7 +66,7 @@ public class MemberController {
 	}
 //-----------------------------------------------------------------------------------------	
 	@RequestMapping(value = {"/myInfo","/myinfo"})//다중매핑(둘중 어느걸로 들어가도 상관 없음)
-	public String myinfo(Model model) {
+	public String myinfo() {
 		boolean nowLogin =false;
 		try {
 			nowLogin = (boolean)session.getAttribute("loginCondition");
@@ -76,11 +77,10 @@ public class MemberController {
 			log.debug("먼저 로그인 해주세요");
 			return "member/login";
 			}
-		String id = (String) session.getAttribute("loginId");
-		model.addAttribute("myInfo", memberservice.myinfo(id));
+		
 		return "member/myInfo";
 	}
-	@RequestMapping("edit")
+	@RequestMapping("/edit")
 	public String edit() {
 		boolean nowLogin =false;
 		try {
@@ -96,10 +96,14 @@ public class MemberController {
 	}
 	@RequestMapping(value="edit", method=RequestMethod.POST)
 	public String edit(String pw,String phone,String email) {
-		return "member/edit";
+		String id= (String) session.getAttribute("loginId");
+		memberservice.edit(id, pw, phone, email);
+		session.setAttribute("myInfo", memberservice.myinfo(id));
+		return "member/myInfo";
 	}
 	
 	//-----------------------------------------------
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/logout")
 	public String logout() {
 		boolean flag = false;
@@ -109,10 +113,10 @@ public class MemberController {
 				log.debug("로그인상태가 아닙니다.");
 				throw new Exception();
 				}
-				
-			session.setAttribute("loginId",null);	
-			session.setAttribute("loginGrade", null);
-			session.setAttribute("loginCondition",false);	
+			session.removeValue("loginId");
+			session.removeValue("loginGrade");
+			session.removeValue("loginCondition");
+			session.removeValue("myInfo");
 			
 			log.debug("로그아웃 완료");
 		} catch (Exception e) {

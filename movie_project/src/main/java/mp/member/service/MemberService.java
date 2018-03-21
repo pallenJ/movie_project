@@ -9,6 +9,7 @@ public interface MemberService {
 	   boolean loginCondition();
 	   void logout(Model model);
 	   boolean exit(String id,String pw);
+	   void edit(String id,String pw,String phone,String email);
 	   Member myinfo(String id);
 	   boolean register(String id, String pw, String birth, String phone, String email);
 	   

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,12 +52,12 @@
          
          <tr>
             <th scope="row" colspan="40%">비밀번호</th>
-            <td><input type="text" class="form-control" id="pw" name="pw" value="${myInfo.pw}" required></td>
+            <td><input type="password" class="form-control" id="pw" name="pw" value="${myInfo.pw}" required></td>
          </tr>
          
          <tr>
             <th scope="row" colspan="40%">비밀번호 확인</th>
-            <td><input type="text" class="form-control" id="pw" name="pwCheck" value="${myInfo.pw}" required></td>
+            <td><input type="password" class="form-control" id="pw" name="pwCheck" value="${myInfo.pw}" required></td>
          </tr>
          
          <tr>
@@ -67,12 +67,12 @@
          
         <tr>
             <th scope="row" colspan="40%">이메일</th>
-            <td>${myInfo.email}</td>
+            <td><input type="email" class="form-control" id="email" name="email" value="${myInfo.email}" required></td>
           </tr>
           
          <tr>
             <th scope="row" colspan="40%">전화번호</th>
-            <td>${myInfo.phone}</td>
+            <td><input type="text" class="form-control" id="phone" name="phone" value="${myInfo.phone}" required></td>
          </tr>
           
          <tr>

@@ -70,6 +70,20 @@ public class MemberServiceImpl implements MemberService{
 		}
 	}
 
+	@Override
+	public void edit(String id,String pw, String phone, String email) {
+		// TODO Auto-generated method stub
+		Member member = new Member();
+		
+		member.setId(id);
+		member.setPw(pw);
+		member.setPhone(phone);
+		member.setEmail(email);
+		
+		memberdao.edit(member);
+	}
+
+
 	
 
 }
