@@ -11,7 +11,7 @@ import mp.theater.bean.Screen;
 public interface ScreenDao {
 	
 	//상영관 등록
-	void register(Screen screen);
+	String register(Screen screen);
 	
 	//상영관 정보 
 	Screen screendetail(String screenid);

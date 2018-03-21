@@ -54,10 +54,7 @@ public class MovieDaoImpl implements MovieDao {
 				movie.getPoster(), movie.getUploader(), movie.getPrice()};
 		jdbcTemplate.update(sql, args);
 		log.debug("영화 등록 완료");
-		sql = "select MAX(id) from movie";
-		//sql = "select last_number from user_sequences where sequence_name = 'movie_seq'";
-		String movieid = jdbcTemplate.query(sql, extractorString);
-		return movieid;
+		return id;
 	}
 
 	//영화 목록 조회 (영화사 입장)

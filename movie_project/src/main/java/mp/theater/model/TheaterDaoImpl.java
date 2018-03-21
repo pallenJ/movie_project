@@ -50,9 +50,7 @@ public class TheaterDaoImpl implements TheaterDao {
 				theater.getManager() };
 		jdbcTemplate.update(sql, args);
 		log.debug("영화관 등록이 완료되었습니다");
-		sql = "select MAX(id) from theater";
-		String movieid = jdbcTemplate.query(sql, extractorString);
-		return movieid;
+		return id;
 	}
 
 	// 영화관 상세 조회 (지점 입장)

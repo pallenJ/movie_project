@@ -32,13 +32,15 @@ public class ScreenDaoImpl implements ScreenDao {
 	
 	//상영관 등록
 	@Override
-	public void register(Screen screen) {
+	public String register(Screen screen) {
 		String sql = "select 'c'||LPAD(screen_seq.nextval, '10', '0') from dual";
 		String id = jdbcTemplate.queryForObject(sql, String.class);
-		sql = "insert into screen values (?, '10', '0'), ?, ?, ?, "
-				+ "(select no from member where id = ?))";
+		sql = "insert into screen values (?, ?, (select id from theater where name = ?),"
+				+ " ?, (select no from member where id = ?))";
 		Object[] args = {id, screen.getNo(), screen.getTheaterid(), screen.getSeats(), screen.getUploader()};
 		jdbcTemplate.update(sql, args);
+		log.debug("상영관 등록이 완료되었습니다");
+		return id;
 	}
 
 	//상영관 상세 조회
@@ -62,6 +64,7 @@ public class ScreenDaoImpl implements ScreenDao {
 				+ "where id = ?";
 		Object[] args = {screen.getNo(), screen.getTheaterid(), screen.getSeats(), screen.getId()};
 		jdbcTemplate.update(sql, args);
+		log.debug("상영관 수정이 완료되었습니다");
 	}
 
 	//상영관 삭제
