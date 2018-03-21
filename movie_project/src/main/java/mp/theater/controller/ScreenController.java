@@ -1,7 +1,11 @@
 package mp.theater.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import mp.theater.service.ScreenService;
 public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
+	private Logger log = LoggerFactory.getLogger(getClass());
 	 
 	//상영관 등록
 	@RequestMapping("/screen/register")
@@ -25,27 +30,47 @@ public class ScreenController {
 	@RequestMapping(value="/screen/register", method=RequestMethod.POST)
 	public String register(String no, String theater, String seats, String uploader) {
 		String screenid = screenService.register(no, theater, seats, uploader);
-		return "/redirect:/screen/detail?screenid="+screenid;
+		return "redirect:/screen/detail?screenid="+screenid;
 	}
 	
+	//상영관 상세 조회
 	@RequestMapping("/screen/detail")
 	public String detail(String screenid, Model model) {
 		model.addAttribute("screen", screenService.detail(screenid));
 		return "/screen/detail";
 	}
 	
+	//상영관 목록 조회 (지점별)
 	@RequestMapping(value= {"/screen/list", "/screen"})
-	public String list() {
+	public String list(HttpSession session, Model model) {
+		session.setAttribute("id", "member11"); //세션아이디 임의 추가
+		List<Screen> list = screenService.list(session.getAttribute("id").toString());
+		model.addAttribute("list", list);
 		return "/screen/list";
 	}
 	
+	//상영관 수정
 	@RequestMapping("/screen/edit")
-	public String edit() {
+	public String edit(String screenid, Model model) {
+		model.addAttribute("screen", screenService.detail(screenid));
 		return "/screen/edit";
 	}
+	@RequestMapping(value="/screen/edit", method=RequestMethod.POST)
+	public String edit(String id, String no, String theaterid, String seats) {
+		screenService.edit(no, theaterid, seats, id);
+		return "redirect:/screen/detail?screenid="+id;
+	}
 	
+	//상영관 삭제
 	@RequestMapping("/screen/delete")
-	public String delete() {
+	public String delete(String screenid, Model model) {
+		model.addAttribute("screenid", screenid);
 		return "/screen/delete";
 	}
+	@RequestMapping(value="/screen/delete", method=RequestMethod.POST)
+	public String delete(String screenid, HttpSession session, String managerpw) {
+		screenService.delete(screenid, session.getAttribute("id").toString(), managerpw);
+		return "redirect:/screen";
+	}
+	
 }

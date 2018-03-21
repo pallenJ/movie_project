@@ -1,5 +1,7 @@
 package mp.theater.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +26,26 @@ public class ScreenServiceImpl implements ScreenService {
 	@Override
 	public Screen detail(String screenid) {
 		return screenDao.screendetail(screenid);
+	}
+
+	//상영관 목록 조회
+	@Override
+	public List<Screen> list(String sessionid) {
+		return screenDao.screenlist(sessionid);
+	}
+
+	//상영관 수정
+	@Override
+	public void edit(String no, String theaterid, String seats, String id) {
+		Screen s = new Screen();
+		s.setNo(Integer.parseInt(no)); s.setTheaterid(theaterid);
+		s.setSeats(Integer.parseInt(seats)); s.setId(id);
+		screenDao.screenedit(s);
+	}
+
+	//상영관 삭제
+	@Override
+	public void delete(String screenid, String sessionid, String managerpw) {
+		screenDao.screendelete(screenid, sessionid, managerpw);
 	}
 }
