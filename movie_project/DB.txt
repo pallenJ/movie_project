@@ -1,14 +1,38 @@
-// ê³„ì • ë§Œë“¤ê¸°
+-- °èÁ¤ ¸¸µé±â
 connect system/oracle;
 create user movie identified by movie;
 grant dba to movie;
 
 
-// ìƒˆ ê³„ì • ë¡œê·¸ì¸
+-- »õ °èÁ¤ ·Î±×ÀÎ
 conn movie/movie;
 
 
-// table, sequence ìƒì„±
+-- ¿©±â¼­ºÎÅÍ º¹ºÙ
+--Å×ÀÌºí µå·Ó (¿Ü·¡Å° ¶§¹®¿¡ »èÁ¦ ¼ø¼­ Áß¿ä)
+drop table schedule;
+drop sequence schedule_seq;
+drop table payment;
+drop sequence payment_seq;
+drop table qna;
+drop sequence qna_seq;
+drop table notice;
+drop sequence notice_seq;
+drop table seat;
+drop sequence seat_seq;
+drop table screen;
+drop sequence screen_seq;
+drop table theater;
+drop sequence theater_seq;
+drop table review;
+drop sequence review_seq;
+drop table movie;
+drop sequence movie_seq;
+drop table member;
+drop sequence member_seq;
+
+
+-- table, sequence »ý¼º
 create sequence member_seq nocache;
 create table member 
 (no varchar2(11) primary key, 
@@ -38,14 +62,15 @@ productor varchar2(60) not null,
 story varchar2(400) not null, 
 posterpath varchar2(256), 
 poster varchar2(256), 
-uploader constraint fk_movie_uploader references member(no) on delete set null);
+uploader constraint fk_movie_uploader references member(no) on delete set null, 
+price number not null);
 
 create sequence review_seq nocache;
 create table review 
 (id varchar2(11) primary key, 
 star number not null, 
 writer constraint fk_review_writer references member(no) on delete cascade, 
-content varchar2(12) not null, 
+content varchar2(210) not null, 
 movieid constraint fk_review_movieid references movie(id) on delete cascade, 
 reg date not null);
 
@@ -62,14 +87,17 @@ create sequence screen_seq nocache;
 create table screen 
 (id varchar2(11) primary key, 
 no number not null, 
-theaterid constraint fk_screen_theaterid references theater(id) on delete cascade);
+theaterid constraint fk_screen_theaterid references theater(id) on delete cascade, 
+seats number not null, 
+uploader constraint fk_screen_uploader references member(no) on delete set null);
 
 create sequence seat_seq nocache;
 create table seat 
 (id varchar2(11) primary key, 
 screenid constraint fk_seat_creenid references screen(id) on delete cascade, 
 reallocation varchar2(3), 
-servicelocation varchar2(3));
+servicelocation varchar2(3), 
+seatdiscount number not null);
 
 create sequence notice_seq nocache;
 create table notice 
@@ -90,19 +118,108 @@ secret varchar2(5) not null,
 content varchar2(4000) not null, 
 reg date not null, 
 read number not null, 
-writer constraint fk_qna_writer references member(no) on delete cascade, 
+writerno constraint fk_qna_writer references member(no) on delete cascade, 
+writerid varchar2(12) not null, 
 parent number not null, 
 gno number not null);
 
+create sequence schedule_seq nocache;
+create table schedule 
+(id varchar2(11) primary key, 
+movie constraint fk_schedule_movie references movie(id) on delete cascade, 
+theater constraint fk_schedule_theater references theater(id) on delete cascade, 
+screen constraint fk_schedule_screen references screen(id) on delete cascade, 
+day date not null, 
+starttime varchar2(5) not null, 
+endtime varchar2(5) not null, 
+morning number not null, 
+night number not null, 
+uploader constraint fk_schedule_uploader references member(no) on delete set null);
+
+create sequence payment_seq nocache;
+create table payment 
+(id varchar2(11) primary key, 
+memberid varchar2(12) not null, 
+movieid varchar2(11) not null, 
+theaterid varchar2(11) not null, 
+screenid varchar2(11) not null, 
+seatid varchar2(150) not null,
+scheduleid varchar2(11) not null, 
+paydate varchar2(10) not null, 
+paytotal number not null);
+
+
+-- µ¥ÀÌÅÍ »ðÀÔ ¸í·É¹®
+-- ¸â¹ö µî·Ï
+insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'member11', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, 'ÀÏ¹Ý', sysdate);
+
+-- ¿µÈ­ µî·Ï
+insert into movie values 
+('v'||LPAD(movie_seq.nextval, '10', '0'), 'title', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001', 10000);
+
+-- ¸®ºä µî·Ï
+insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 10, 'm0000000001', 'content', 'v0000000001', sysdate);
+
+-- ¿µÈ­°ü µî·Ï
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '°¡µðÁ¡', '¼­¿ï', '¼­¿ï½Ã ±ÝÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000001');
+
+-- »ó¿µ°ü µî·Ï
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001');
+
+-- ÁÂ¼® µî·Ï
+insert into seat values ('s'||LPAD(seat_seq.nextval, '10', '0'), 'c0000000001', 'A1', 'A5', 0);
 
 
 
-//í…Œì´ë¸” ë“œë¡­ (ì™¸ëž˜í‚¤ ë•Œë¬¸ì— ì‚­ì œ ìˆœì„œ ì¤‘ìš”)
-drop table qna;
-drop table notice;
-drop table seat;
-drop table screen;
-drop table theater;
-drop table review;
-drop table movie;
-drop table member;
+
+-- ¾ÆÀÌµð »ý¼º (sequence ÀÌ¿ë)
+-- m-> Ãß°¡ÇÒ ¹®ÀÚ, '10' -> 0ÀÚ¸®, '0' -> 0À¸·Î Ã¤¿î´Ù
+'m'||LPAD(member_seq.nextval, '10', '0')
+
+
+<Àº°æ Å×½ºÆ® Áß>
+
+alter table add ÇÊµå~;
+alter table drop (ÇÊµå¸í);
+alter table drop contraint ¿Ü·¡Å°;
+
+
+<<movie ¼öÁ¤>>
+update movie set time=200 where id='m1111111111';
+
+
+<<movie »èÁ¦ id, pw È®ÀÎ>>
+delete from movie where id = 'movieid' and uploader = 
+(select no from member where id='test11' and pw='test22');
+
+
+<<¿µÈ­ ¸ñ·Ï Á¶È¸>>
+select * from movie where open <= sysdate and close >= sysdate order by id desc;
+
+<<¿µÈ­ »ó¼¼ Á¶È¸>>
+select * from movie where id = ?;
+
+
+<<¸®ºä »èÁ¦>>
+delete from review where id='r1111111111' and writer = 
+(select no from member where id='member11' and pw='111111');
+
+
+<<³» ¿µÈ­ Á¶È¸ (¿µÈ­»çÀÔÀå)>>
+select * from movie where uploader = (select no from member where id='member11')
+
+
+<<¿µÈ­°ü »èÁ¦>>
+delete from theater where id = 't0000000001' and manager = (select no from member where id = 'seqtest8' and pw = '111111')
+
+<<¿µÈ­°ü ¼öÁ¤>>
+update screen set no = 2, theaterid = 't0000000002', seats = 100 where id = 's0000000001';
+
+<<¿µÈ­°ü »èÁ¦>>
+delete from screen where uploader = (select no from member where id = 'member11' and pw = '111111');
+
+<<ÁÂ¼® ¼öÁ¤>>
+update seat set screenid = 'c0000000001', reallocation='B1', servicelocation='B4', seatdiscount = 0 where id = 's0000000001';
+
+<<ÁÂ¼® »èÁ¦>>
+delete from seat where id = 's0000000002';
