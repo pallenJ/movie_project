@@ -138,14 +138,14 @@ uploader constraint fk_schedule_uploader references member(no) on delete set nul
 create sequence payment_seq nocache;
 create table payment 
 (id varchar2(11) primary key, 
-member varchar2(12) not null, 
-movie varchar2(100) not null, 
-day date not null, 
-starttime varchar2(5) not null, 
-endtime varchar2(5) not null, 
-theater varchar2(50) not null, 
-screen number not null, 
-price number not null);
+memberid varchar2(12) not null, 
+movieid varchar2(11) not null, 
+theaterid varchar2(11) not null, 
+screenid varchar2(11) not null, 
+seatid varchar2(150) not null,
+scheduleid varchar2(11) not null, 
+paydate varchar2(10) not null, 
+paytotal number not null);
 
 
 -- 데이터 삽입 명령문
