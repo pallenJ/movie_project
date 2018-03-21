@@ -15,7 +15,7 @@ import mp.theater.service.ScreenService;
 public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
-	
+	 
 	//상영관 등록
 	@RequestMapping("/screen/register")
 	public String register(HttpSession session) {
