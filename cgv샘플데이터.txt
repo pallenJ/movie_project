@@ -133,14 +133,14 @@ uploader constraint fk_schedule_uploader references member(no) on delete set nul
 create sequence payment_seq nocache;
 create table payment 
 (id varchar2(11) primary key, 
-member varchar2(12) not null, 
-movie varchar2(100) not null, 
-day date not null, 
-starttime varchar2(5) not null, 
-endtime varchar2(5) not null, 
-theater varchar2(50) not null, 
-screen number not null, 
-price number not null);
+memberid varchar2(12) not null, 
+movieid varchar2(11) not null, 
+theaterid varchar2(11) not null, 
+screenid varchar2(11) not null, 
+seatid varchar2(150) not null,
+scheduleid varchar2(11) not null, 
+paydate varchar2(10) not null, 
+paytotal number not null);
 
 
 --샘플데이터
@@ -217,18 +217,6 @@ insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v00000000
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-19','21:30','23:30',3000,3000,'m0000000001');
 
 -- 결제 등록
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','놀부전','2018-03-11','11:30','20:00','구로점',3,2000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','심청이','2018-03-18','11:30','20:00','구로점',3,2000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','흥부전','2018-03-10','11:30','20:00','구로점',3,2000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','임꺽정','2018-03-19','11:30','20:00','구로점',3,2000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','홍길동','2018-03-18','11:30','20:00','구로점',3,3000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','괴물2','2018-03-13','11:30','20:00','구로점',3,3000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','쓰리빌보드','2018-03-12','11:30','20:00','구로점',3,3000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','쓰리빌보드','2018-03-10','11:30','20:00','구로점',3,3000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','놀부전','2018-03-18','11:30','20:00','구로점',3,2000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','쓰리빌보드','2018-03-11','11:30','20:00','구로점',3,2000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','쓰리빌보드','2018-03-13','11:30','20:00','구로점',3,2000);
-insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','놀부전','2018-03-14','11:30','20:00','구로점',3,2000);
 
 commit;
 
