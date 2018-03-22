@@ -29,10 +29,6 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	PaymentDao paymentDao;
 	
-	@Override
-	public void register() {
-		System.out.println("등록서비스 작동");
-	}
 
 	@Override
 	public Member getMemberInfo(String memberid) {
@@ -63,10 +59,37 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public void register(Payment payment) {
-		paymentDao.register(payment);
-		log.debug("paymentServiceimpl register 등록 완료 ");
+	public boolean register(Payment payment) {
+		
+		//좌석이 s00000001,s00000002 String형태로 넘어온 상태기에 split를 이용해서 배열로 추가
+
+		log.debug("serviceimpl scheduleid : {}",payment.getScheduleid());
+		String seatidbundle = payment.getSeatid();
+		log.debug("seatidbundle : {}",seatidbundle);
+		String[] seatidArray = seatidbundle.split(",");
+		log.debug("seatidArray[0] : {}, length : {}",seatidArray[0],seatidArray.length);
+		boolean check = true;
+		
+		//기존 예매 좌석인지 확인
+		for(String seatid: seatidArray) {
+			payment.setSeatid(seatid);
+			check =  paymentDao.checkRegister(payment.getScheduleid(),seatid);
+			if(!check) {
+				return false;	//중복 등록시 false반환
+			}
+		}
+		
+		//중복값 없을 시
+		//결제 정보 등록 seatid별로 반복처리
+		for(String seatid: seatidArray) {
+			payment.setSeatid(seatid);
+		    paymentDao.register(payment);
+		}		
+
+		log.debug("paymentServiceimpl register메소드 등록 여부 : {}",check);
+		return check;
 	}
+
 	
 	
 

@@ -62,13 +62,14 @@ public class PaymentController {
 	@RequestMapping("/ticket/register")
 	public String ticketRegister(Payment payment) {
 		log.debug("ajax넘겨온 Controller");
-//		log.debug("movieid:{}",movieid);
-		log.debug("ajax넘겨온 payment payment : {}",payment.getMovieid());
-		paymentService.register(payment);
-		return "/ticket/complete";
+		log.debug("ajax넘겨온 payment payment : {}",payment.getScheduleid());
+		boolean check = paymentService.register(payment);	//회원가입 성공 여부 반납
+		if(check) {
+			return "/ticket/complete";
+		}else {
+			return "/ticket/fail";
+		}
 	}
-	
-	
 	
 	@RequestMapping("/ticket/complete")
 	public String ticketComplete() {

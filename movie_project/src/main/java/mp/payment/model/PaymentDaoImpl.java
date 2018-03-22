@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -49,4 +50,21 @@ public class PaymentDaoImpl implements PaymentDao {
 	private RowMapper<Payment> mapper = (rs,index)->{
 		return new Payment(rs);
 	};
+	
+	private ResultSetExtractor<Payment> extractor = rs->{
+		if(rs.next()) {
+			return new Payment(rs);
+		}else {
+			return null;
+		}
+	};
+
+	@Override
+	public boolean checkRegister(String scheduleid, String seatid) {
+		String sql = "select * from payment where scheduleid=? and seatid=?";
+		Object[] args = {scheduleid,seatid};
+		boolean result = jdbcTemplate.query(sql, extractor, args)==null;
+		log.debug("PaymentDaoImpl checkRegister 결과 : {}",result);
+		return result;
+	}
 }

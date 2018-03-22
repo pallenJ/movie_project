@@ -8,7 +8,6 @@ import mp.payment.bean.Payment;
 
 @Service
 public interface PaymentService {
-	void register();
 
 	//회원 정보가져오는 메소드
 	Member getMemberInfo(String memberid);
@@ -20,5 +19,5 @@ public interface PaymentService {
 	Payment setPaymentInfo(Payment payment, int adult, int child, int senior);
 
 	//결제(예매)정보 데이터베이스에 등록
-	void register(Payment payment);
+	boolean register(Payment payment);
 }	
