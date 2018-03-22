@@ -42,7 +42,7 @@ public class PaymentController {
 	
 	
 	@RequestMapping("/payment")
-	public String stepaymentinfo(Payment payment, 
+	public String paymentinfo(Payment payment, 
 								@RequestParam(defaultValue="0") int adult, 
 								@RequestParam(defaultValue="0") int child, 
 								@RequestParam(defaultValue="0") int senior, 

@@ -20,8 +20,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	
 	@Override
 	public void register(Schedule schedule) {
-		String sql ="insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),?,?,?,?,?,?,?,?,?)";
-		Object[] args = {schedule.getMovie(),schedule.getTheater(),schedule.getScreen(),schedule.getDay(),schedule.getStarttime(),
+		String sql = "select 'd'||LPAD(schedule_seq.nextval,'10','0') from dual";
+		String id = jdbcTemplate.queryForObject(sql, String.class);
+		sql = "insert into payment values(?,?,?,?,?,?,?,?,?,?)";
+		Object[] args = {id,schedule.getMovie(),schedule.getTheater(),schedule.getScreen(),schedule.getDay(),schedule.getStarttime(),
 						schedule.getEndtime(),schedule.getMorning(),schedule.getNight(),schedule.getUploader()};
 		jdbcTemplate.update(sql,args);
 	}
