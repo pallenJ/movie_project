@@ -50,10 +50,12 @@ public class QnaController {
 		model.addAttribute("lastPage",last);
 		model.addAttribute("pg",page);
 		
-		log.debug("page={}",last+(allCount%pnum==0?0:1));
 		log.debug("page={}",page);
 		log.debug("page={}",qnaService.qnaPaging(page, cnum));
 		return "board/qna";
 	}
-	
+	@RequestMapping(value={"/qnashow","/qnaShow","/qna_show"})
+	public String qnaShow() {
+		return "board/qna_show";
+	}
 }

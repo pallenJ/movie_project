@@ -23,7 +23,7 @@ public class QnaServiceImpl implements QnaService{
 		/*int pageFirst = 10*(page/10)+1;
 		int pageLast = 10*(page/10+1);*/
 		List<Qna> list = qnadao.qnalist(); 
-		Collections.reverse(list);
+//		Collections.reverse(list);
 		
 		int maximum = list.size();
 		int start = 10*(page-1);

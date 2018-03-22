@@ -39,7 +39,7 @@
   <body>
        
     <div align="center">
-      <form action="edit" id="forEdit">
+      <form action="edit" method="post" id="forEdit">
       <!-- Table -->
       <table class="table table-bordered" align="center"  style="position: relative; width: 400px; top:30px">
         
@@ -52,12 +52,12 @@
          
          <tr>
             <th scope="row" colspan="40%">비밀번호</th>
-            <td><input type="password" class="form-control" id="pw" name="pw" value="${myInfo.pw}" required></td>
+            <td><input type="password" class="form-control" id="pw" name="pw" required></td>
          </tr>
          
          <tr>
             <th scope="row" colspan="40%">비밀번호 확인</th>
-            <td><input type="password" class="form-control" id="pw" name="pwCheck" value="${myInfo.pw}" required></td>
+            <td><input type="password" class="form-control" id="pw" name="pwCheck" required></td>
          </tr>
          
          <tr>
