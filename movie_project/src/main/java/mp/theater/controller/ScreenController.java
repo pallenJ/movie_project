@@ -68,7 +68,8 @@ public class ScreenController {
 		return "/screen/delete";
 	}
 	@RequestMapping(value="/screen/delete", method=RequestMethod.POST)
-	public String delete(String screenid, HttpSession session, String managerpw) {
+	public String delete(String screenid, String managerpw, HttpSession session) {
+		log.debug(screenid, managerpw, session.getAttribute("id").toString());
 		screenService.delete(screenid, session.getAttribute("id").toString(), managerpw);
 		return "redirect:/screen";
 	}
