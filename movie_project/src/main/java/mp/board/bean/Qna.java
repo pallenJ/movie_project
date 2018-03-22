@@ -26,7 +26,8 @@ public class Qna {
 	String content;
 	String reg;
 	int read;
-	String writer;
+	String writerNo;
+	String writerId;
 	int parent;
 	int gno;
 	
@@ -39,7 +40,8 @@ public class Qna {
 		setContent(rs.getString("content"));
 		setReg(rs.getString("reg"));
 		setRead(rs.getInt("read"));
-		setWriter(rs.getString("writer"));
+		setWriterNo(rs.getString("writerNo"));
+		setWriterId(rs.getString("writerId"));
 		setParent(rs.getInt("parent")); 
 		setGno(rs.getInt("gno"));
 		
@@ -60,7 +62,7 @@ public class Qna {
 		return head;
 	}
 	public void setHead(String head) {
-		this.head = head;
+		this.head = "["+head+"]";
 	}
 	public String getTitle() {
 		return title;
@@ -92,11 +94,11 @@ public class Qna {
 	public void setRead(int read) {
 		this.read = read;
 	}
-	public String getWriter() {
-		return writer;
+	public String getWriterNo() {
+		return writerNo;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setWriterNo(String writer) {
+		this.writerNo = writer;
 	}
 	public int getParent() {
 		return parent;
@@ -109,6 +111,12 @@ public class Qna {
 	}
 	public void setGno(int gno) {
 		this.gno = gno;
+	}
+	public String getWriterId() {
+		return writerId;
+	}
+	public void setWriterId(String writerId) {
+		this.writerId = writerId;
 	}
 	
 	

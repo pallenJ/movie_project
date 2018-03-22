@@ -42,16 +42,18 @@
     </thead>
 
     <!-- 샘플로 넣은 데이터-->    
+	
 
+		
     <tbody>
-    	<c:forEach begin="1" end="10" varStatus="page">
+    	<c:forEach var="qnaitem" items="${qnalist}">
         	<tr>
-            <td>${page.end-page.index+1}</td>    
-            <td><font color="gray" size="2">[말머리]</font>
-            ${page.end-page.index+1}</td>    
-            <td>멤버</td>    
-            <td>2018-03-19</td>    
-            <td>${page.end-page.index+1}</td>    
+            <td>${qnaitem.no}</td>    
+            <td><font color="gray" size="2">${qnaitem.head}</font>
+                <a href="#">${qnaitem.title}</a></td>    
+            <td>${qnaitem.writerId}</td>    
+            <td>${qnaitem.reg}</td>    
+            <td>${qnaitem.read}</td>    
         </tr>
         </c:forEach>
     
@@ -101,19 +103,43 @@
     <nav>
       <ul class="pagination">
         <li>
-          <a href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
+        	<c:if test="${pagingNum>0}">        	
+               <a href='<c:url value='/qna'></c:url>?pg=${pagingNum}' aria-label="Previous">
+        	    <span aria-hidden="true">&laquo;</span>
+		          </a>
+        	</c:if>
                 </li>
-                
-                <c:forEach begin="1" end="10" varStatus="page">
-                <li><a href="#">${page.count}</a></li>
+
+                <c:forEach begin="1" end="${pageLast}" varStatus="page">
+                <c:set var="pageidx" value="${pagingNum+page.count}" />
+               <c:choose>
+               <c:when test="${pageidx == pg}">
+               
+                <li>
+                <a style="background-color: #98DFFF;" 
+                href='<c:url value='/qna'></c:url>?pg=${pageidx}'>${pageidx}</a>
+                </li>
+               </c:when>
+               
+   				<c:otherwise>
+   					<li>
+                <a
+                href='<c:url value='/qna'></c:url>?pg=${pageidx}'>${pageidx}</a>
+                </li>
+   				</c:otherwise>
+               
+               </c:choose>
    				</c:forEach>
 
                 <li>
-          <a href="#" aria-label="Next">
+                
+          <c:if test="${lastPage-pagingNum>10}">
+          <a href='<c:url value='/qna'></c:url>?pg=${pagingNum+11}' aria-label="Next">
+            
             <span aria-hidden="true">&raquo;</span>
-          </a>
+          </a>          
+          </c:if>
+          
         </li>
       </ul>
     </nav>

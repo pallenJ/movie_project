@@ -20,9 +20,9 @@ public class QnaDaoImpl implements QnaDao{
 		@Override
 		public void register(Qna qna) {
 		// TODO Auto-generated method stub
-		String sql = "insert into qna values(qna_seq.nextval,?,?,?,?,sysdate,0,?,?,?)";
+		String sql = "insert into qna values(qna_seq.nextval,?,?,?,?,sysdate,0,?,?,?,?)";
 		Object[] args= {qna.getHead(),  qna.getTitle(), qna.getSecret(),qna.getContent(),
-						qna.getWriter(),qna.getParent(),qna.getGno()
+						qna.getWriterNo(),qna.getWriterId(),qna.getParent(),qna.getGno()
 					};
 		jdbcTemplate.update(sql,args);
 		
@@ -37,9 +37,10 @@ public class QnaDaoImpl implements QnaDao{
 		public List<Qna> qnalist() {
 		// TODO Auto-generated method stub
 		String sql ="select * from qna order by no asc";
-		List<Qna> list = jdbcTemplate.query(sql, mapper);	
+		List<Qna> list = jdbcTemplate.query(sql, mapper);
 		return list;
 		}
+		
 		
 		private ResultSetExtractor<Qna> extractor= rs->{//return rs.next()?new Qna(rs):null;
 			if(rs.next()) return new Qna(rs);
@@ -67,7 +68,7 @@ public class QnaDaoImpl implements QnaDao{
 		// TODO Auto-generated method stub
 			//[1]qnadetail 메소드로 글정보 가져오기
 			Qna qna = qnadetail(no);
-			String memNo = qna.getWriter();
+			String memNo = qna.getWriterNo();
 			//[2]ResultSetExtractor로 패스워드 가져오기
 			String sql = "select pw from member where no=?";
 			String pw = jdbcTemplate.query(sql, rs->{

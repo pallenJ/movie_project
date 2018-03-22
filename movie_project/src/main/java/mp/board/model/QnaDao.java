@@ -23,6 +23,8 @@ public interface QnaDao {
 	
 	//삭제
 	boolean qnadelete(int no, String userpw);
+
+
 	
 	//
 }
