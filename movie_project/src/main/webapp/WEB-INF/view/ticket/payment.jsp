@@ -95,19 +95,17 @@
             						paytotal:'${payment.paytotal}'
             				},
             				dataType:"text",
+
             				success:function(count){
-            					var c = parseInt(count);
-            					console.log(c);
-            					if(c > 0){
-            						$("span").text("결제내역 등록 성공");
-            					}
-            					else if(c == 0){
-            						$("span").text("결제내역 등록 실패");
-            					}
-            				}
+            					alert(msg);
+            					location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
+            					//console.log(c);
+            				},
+           		        	error : function(xhr, status, error) {
+         		                alert("이미 구매된 좌석이 포함되어 있어 결제를 취소합니다.");
+           		       	    }
             			});
-	            	    alert(msg);
-	            	    location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
+	            	   // location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
 
             	        
             	        

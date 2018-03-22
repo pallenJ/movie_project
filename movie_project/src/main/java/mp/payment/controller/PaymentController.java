@@ -60,14 +60,17 @@ public class PaymentController {
 	}	
 	
 	@RequestMapping("/ticket/register")
-	public String ticketRegister(Payment payment) {
+	public String ticketRegister(Payment payment) throws Exception {
 		log.debug("ajax넘겨온 Controller");
 		log.debug("ajax넘겨온 payment payment : {}",payment.getScheduleid());
 		boolean check = paymentService.register(payment);	//회원가입 성공 여부 반납
+		
+		//작동하지 않는 것인가?? ajax는 페이지 이동은 안되는 가
 		if(check) {
-			return "/ticket/complete";
+			return "/ticket/complete";	
 		}else {
-			return "/ticket/fail";
+			throw new Exception();
+		
 		}
 	}
 	

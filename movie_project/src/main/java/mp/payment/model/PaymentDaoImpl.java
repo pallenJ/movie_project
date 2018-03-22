@@ -22,11 +22,13 @@ public class PaymentDaoImpl implements PaymentDao {
 
 	@Override
 	public void register(Payment payment) {
-		String sql ="insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),?,?,?,?,?,?,?,?)";
-		log.debug("PaymentDaoImpl register  movieid:{}",payment.getMemberid());
-		log.debug("PaymentDaoImpl register  movieid:{}",payment.getMovieid());
-		log.debug("PaymentDaoImpl register  paytotal:{}",payment.getPaytotal());
+		
+		String sql ="select 'p'||LPAD(payment_seq.nextval,'10','0') from dual";
+		String id = jdbcTemplate.queryForObject(sql, String.class);
+		log.debug("paymentdaoimpl register 시퀀스 : {}",id);
+		sql = "insert into payment values(?,?,?,?,?,?,?,?,?)";
 		Object[] args = {
+				id,
 				payment.getMemberid(),
 				payment.getMovieid(),
 				payment.getTheaterid(),
@@ -36,7 +38,9 @@ public class PaymentDaoImpl implements PaymentDao {
 				payment.getPaydate(),
 				payment.getPaytotal()
 		};
-		jdbcTemplate.update(sql,args);
+		log.debug("등록 중");
+		jdbcTemplate.update(sql,args);		
+		
 	}
 
 	@Override
