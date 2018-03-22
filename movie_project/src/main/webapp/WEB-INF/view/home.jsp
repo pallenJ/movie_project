@@ -20,5 +20,6 @@
 	<h1><a href="<c:url value='/movie'/>">영화 페이지로 이동</a></h1>
 	<h1><a href="<c:url value='/theater'/>">영화관 페이지로 이동</a></h1>
 	<h1><a href="<c:url value='/screen'/>">스크린 페이지로 이동</a></h1>
+	<h1><a href="<c:url value='/seat'/>">좌석 페이지로 이동</a></h1>
 </body>
 </html>

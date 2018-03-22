@@ -5,23 +5,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class SeatController {
-	@RequestMapping("seat/register")
+	@RequestMapping("/seat/register")
 	public String register() {
-		return "seat/register";
+		return "/seat/register";
 	}
 	
-	@RequestMapping("seat/list")
+	@RequestMapping(value= {"/seat", "/seat/list"})
 	public String list() {
-		return "seat/list";
+		return "/seat/list";
 	}
 	
-	@RequestMapping("seat/edit")
+	@RequestMapping("/seat/edit")
 	public String edit() {
-		return "seat/edit";
+		return "/seat/edit";
 	}
 	
-	@RequestMapping("seat/delete")
+	@RequestMapping("/seat/delete")
 	public String delete() {
-		return "seat/register";
+		return "/seat/delete";
 	}
 }
