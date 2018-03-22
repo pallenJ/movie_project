@@ -118,7 +118,8 @@ secret varchar2(5) not null,
 content varchar2(4000) not null, 
 reg date not null, 
 read number not null, 
-writer constraint fk_qna_writer references member(no) on delete cascade, 
+writerno constraint fk_qna_writer references member(no) on delete cascade, 
+writerid varchar2(12) not null, 
 parent number not null, 
 gno number not null);
 
@@ -142,7 +143,7 @@ memberid varchar2(12) not null,
 movieid varchar2(11) not null, 
 theaterid varchar2(11) not null, 
 screenid varchar2(11) not null, 
-seatid varchar2(150) not null,
+seatid varchar2(11) not null,
 scheduleid varchar2(11) not null, 
 paydate varchar2(10) not null, 
 paytotal number not null);
