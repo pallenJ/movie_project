@@ -4,17 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Schedule {
-	private String id, movie, theater, screen, day, starttime, endtime, uploader;
-	int morning, night;
+	private String id, movie, movietitle, theater, screen, day, starttime, endtime, uploader;
+	int morning, night, screenno, seats;
 	public Schedule() {
 		super();
 	}
-	
-	public Schedule(String id, String movie, String theater, String screen, String day, String starttime,
-			String endtime, int morning, int night, String uploader) {
+	public Schedule(String id, String movie, String movietitle, String theater, String screen, String day,
+			String starttime, String endtime, String uploader, int morning, int night, int screenno, int seats) {
 		super();
 		this.id = id;
 		this.movie = movie;
+		this.movietitle = movietitle;
 		this.theater = theater;
 		this.screen = screen;
 		this.day = day;
@@ -23,7 +23,12 @@ public class Schedule {
 		this.uploader = uploader;
 		this.morning = morning;
 		this.night = night;
+		this.screenno = screenno;
+		this.seats = seats;
 	}
+
+
+
 
 	public Schedule(ResultSet rs) throws SQLException {
 		setId(rs.getString("id"));
@@ -36,6 +41,9 @@ public class Schedule {
 		setMorning(rs.getInt("morning"));
 		setNight(rs.getInt("night"));
 		setUploader(rs.getString("uploader"));
+		setMovietitle(rs.getString("movietitle"));
+		setScreenno(rs.getInt("screenno"));
+		setSeats(rs.getInt("seats"));
 	}
 
 	public String getId() {
@@ -118,6 +126,31 @@ public class Schedule {
 		this.night = night;
 	}
 
+	public String getMovietitle() {
+		return movietitle;
+	}
+
+	public void setMovietitle(String movietitle) {
+		this.movietitle = movietitle;
+	}
+
+	public int getScreenno() {
+		return screenno;
+	}
+
+	public void setScreenno(int screenno) {
+		this.screenno = screenno;
+	}
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+
+	
 
 	
 	

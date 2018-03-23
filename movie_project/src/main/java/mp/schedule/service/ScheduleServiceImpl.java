@@ -1,5 +1,7 @@
 package mp.schedule.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 		scheduleDao.register(schedule);
 		log.debug("scheduleservieimle register dao접근 이후");
+	}
+
+	@Override
+	public List<Schedule> getlist(String uploader) {
+		log.debug("scheduleservieimle getlist uploader : {}",uploader);
+		List<Schedule> list = scheduleDao.schedulelist(uploader);
+		log.debug("scheduleservieimle getlist uploader list내용물 하나 : {}",list.get(0).getId());		//-------지울것
+		return list;
 	}
 
 }

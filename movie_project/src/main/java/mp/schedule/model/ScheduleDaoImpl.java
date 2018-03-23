@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import mp.payment.bean.Payment;
 import mp.schedule.bean.Schedule;
+import mp.theater.bean.Screen;
+import mp.theater.bean.Seat;
 
 //상영시간표 DAO IMPL
 
@@ -28,8 +30,8 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	public void register(Schedule schedule) {
 		String sql = "select 'd'||LPAD(schedule_seq.nextval,'10','0') from dual";
 		String id = jdbcTemplate.queryForObject(sql, String.class);
-		sql = "insert into schedule values(?,?,?,?,?,?,?,?,?,?)";
-		Object[] args = {id,schedule.getMovie(),schedule.getTheater(),schedule.getScreen(),schedule.getDay(),schedule.getStarttime(),
+		sql = "insert into schedule values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		Object[] args = {id,schedule.getMovie(),schedule.getMovietitle(),schedule.getTheater(),schedule.getScreen(),schedule.getScreenno(),schedule.getSeats(),schedule.getDay(),schedule.getStarttime(),
 						schedule.getEndtime(),schedule.getMorning(),schedule.getNight(),schedule.getUploader()};
 		log.debug("scheduledaoimpl register 디비접근 직전 : {}",schedule.getDay());
 		log.debug("scheduledaoimpl register 디비접근 직전 : {}",schedule.getStarttime());
@@ -83,12 +85,6 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 	@Override
 	public boolean check(Schedule schedule) { 
-		//등록할 상영시작시간 < 기존종료시간    또는    등록할 종료시간   < 기존시작시간 일때
-		//정상처리 :  등록할 상영시작시간 11:30 < 기존종료시간 03:30 13:30      그리고
-		//  등록할 종료시간 13:30 < 기존시작시간 11:10, 15:10
-		//정상처리 경우가 두가지다.
-		
-		
 		//같은 날, 같은 상영관
 		String sql = "select * from schedule where day =? and screen=?";
 		Object[] args = {schedule.getDay(),schedule.getScreen()};
@@ -116,6 +112,15 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		int result = hour*60+minute;
 		log.debug("시간 계산 메소드 결과 : {}",result);
 		return result;
+	}
+
+
+	@Override
+	public List<Schedule> schedulelist(String uploader) {
+		String sql = "select * from schedule where uploader=?";
+		Object[] args = {uploader};
+		log.debug("ScheduleDaoImple schedulelist 작동 중 업로더 : {}",uploader);
+		return jdbcTemplate.query(sql, mapper,args);
 	}
 	
 

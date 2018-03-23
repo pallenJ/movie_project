@@ -62,7 +62,6 @@ public class PaymentServiceImpl implements PaymentService {
 	public boolean register(Payment payment) {
 		
 		//좌석이 s00000001,s00000002 String형태로 넘어온 상태기에 split를 이용해서 배열로 추가
-
 		log.debug("serviceimpl scheduleid : {}",payment.getScheduleid());
 		String seatidbundle = payment.getSeatid();
 		log.debug("seatidbundle : {}",seatidbundle);
