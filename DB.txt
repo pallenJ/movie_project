@@ -127,8 +127,11 @@ create sequence schedule_seq nocache;
 create table schedule 
 (id varchar2(11) primary key, 
 movie constraint fk_schedule_movie references movie(id) on delete cascade, 
+movietitle varchar2(100) not null, 
 theater constraint fk_schedule_theater references theater(id) on delete cascade, 
 screen constraint fk_schedule_screen references screen(id) on delete cascade, 
+screenno number not null, 
+seats number not null, 
 day date not null, 
 starttime varchar2(5) not null, 
 endtime varchar2(5) not null, 
