@@ -8,6 +8,6 @@ import mp.schedule.bean.Schedule;
 public interface ScheduleService {
 
 	//상영시간표 등록
-	void register(Schedule schedule);
+	void register(Schedule schedule) throws Exception;
 
 }

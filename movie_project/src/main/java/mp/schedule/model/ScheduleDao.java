@@ -22,4 +22,7 @@ public interface ScheduleDao {
 		//상영시간표 삭제
 		void scheduledelete(String scheduleid, String sessionid, String uploaderpw);
 
+		//상영시간표 중복 확인(중복 시간대)
+		boolean check(Schedule schedule);
+
 }

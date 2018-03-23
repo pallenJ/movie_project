@@ -23,15 +23,23 @@ public class ScheduleController {
 		return "/schedule/main";
 	}
 	
-	@RequestMapping(value="/schedule/register", method=RequestMethod.POST)
-	public String scheduleregister(Schedule schedule) {
-		scheduleService.register(schedule);
-		return "/schedule/complete";
-	}	
-	
 	
 	@RequestMapping("/schedule/register")
 	public String register() {
 		return "/schedule/register";
+	}
+	
+	@RequestMapping(value="/schedule/register", method=RequestMethod.POST)
+	public void scheduleregister(Schedule schedule) throws Exception {
+		log.debug("scheduleController register : {}",schedule.getMovie());
+		log.debug("scheduleController register : {}",schedule.getDay());
+		scheduleService.register(schedule);
+		log.debug("scheduleController register 등록 직후");
+	}	
+
+	
+	@RequestMapping("/schedule/list")
+	public String list() {
+		return "/schedule/list";
 	}
 }
