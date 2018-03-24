@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 
 import mp.board.bean.Qna;
 import mp.board.model.QnaDao;
+import mp.member.model.MemberDao;
 
 @Service("qnaService")
 public class QnaServiceImpl implements QnaService{
+	
+	@Autowired
+	MemberDao memDao;
 	
 	@Autowired
 	QnaDao qnadao;
@@ -45,6 +49,26 @@ public class QnaServiceImpl implements QnaService{
 		int pagingNum=pnum*((page-1)/pnum);
 		int pageLast = last-pagingNum>=pnum?pnum:last%pnum;
 		return new int[]{pagingNum,pageLast,last,page};
+	}
+
+	@Override
+	public void qnaWrite(String id,String head, String title, String secret, 
+			String content, String parent, String gno) {
+		// TODO Auto-generated method stub
+		String no = memDao.myinfo(id).getNo();
+		
+		Qna qna = new Qna();
+		
+		qna.setHead(head);
+		qna.setTitle(title);
+		qna.setSecret(secret);
+		qna.setContent(content);
+		qna.setWriterNo(no);
+		qna.setWriterId(id);
+		qna.setParent(Integer.parseInt(parent));
+		qna.setGno(Integer.parseInt(gno));
+		
+		qnadao.register(qna);
 	}
 
 	

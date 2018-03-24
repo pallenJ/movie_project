@@ -20,8 +20,8 @@ public class QnaDaoImpl implements QnaDao{
 		@Override
 		public void register(Qna qna) {
 		// TODO Auto-generated method stub
-		String sql = "insert into qna values(?,?,?,?,?,sysdate,0,?,?,?,?)";
-		Object[] args= {"qna_seq.nextval",qna.getHead(),  qna.getTitle(), qna.getSecret(),qna.getContent(),
+		String sql = "insert into qna values(qna_seq.nextval,?,?,?,?,sysdate,0,?,?,?,?)";
+		Object[] args= {qna.getHead(),  qna.getTitle(), qna.getSecret(),qna.getContent(),
 						qna.getWriterNo(),qna.getWriterId(),qna.getParent(),qna.getGno()
 					};
 		jdbcTemplate.update(sql,args);
@@ -53,7 +53,8 @@ public class QnaDaoImpl implements QnaDao{
 			Qna qna= jdbcTemplate.query(sql, extractor,no);
 			return qna;
 		}
-
+		
+	
 		@Override
 		public void qnaedit(Qna qna) {
 		// TODO Auto-generated method stub

@@ -49,7 +49,7 @@ public class Qna {
 	public Qna() {
 		super();
 	}
-
+	
 
 
 	public int getNo() {

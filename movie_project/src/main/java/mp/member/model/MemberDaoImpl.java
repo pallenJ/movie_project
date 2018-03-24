@@ -2,6 +2,8 @@ package mp.member.model;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -9,11 +11,12 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import mp.member.bean.Member;
+import mp.member.controller.MemberController;
 
 //회원관리 DAO
 @Repository("memberDao")	
 public class MemberDaoImpl implements MemberDao{ 
-	
+	private Logger log = LoggerFactory.getLogger(MemberController.class);
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -55,7 +58,8 @@ public class MemberDaoImpl implements MemberDao{
 		//pw, phone ,email 변경가능 
 		String sql = "update member set pw=?, phone=?, email=? where id=?";//id로 검색
 		Object[] args = {member.getPw(),member.getPhone(),member.getEmail(),member.getId()};
-		jdbcTemplate.update(sql,args);
+		int rs=jdbcTemplate.update(sql,args);
+		log.debug("rs={}",rs>0?"성공":"실패");
 	}
 
 	@Override

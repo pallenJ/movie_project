@@ -1,6 +1,7 @@
 package mp.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -21,6 +22,12 @@ public class MemberController {
 	private HttpSession session;
 	
 	@Autowired
+	private HttpServletRequest request;
+	
+	@Autowired
+	private HttpServletResponse response;
+	
+	@Autowired
 	private MemberService memberservice;
 	
 	@RequestMapping("/login")
@@ -29,23 +36,24 @@ public class MemberController {
 		try {
 			nowLogin = (boolean)session.getAttribute("loginCondition");
 			log.debug("login={}",nowLogin);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			// TODO: handle exception
 		}
 		if(nowLogin) {
 			String id = (String) session.getAttribute("loginId");	
 			log.debug("{}님이 이미 로그인 한 상태 입니다. 먼저 로그아웃 해주세요",id);	
-			return 	"redirect:member/myInfo";
+			return 	"redirect:/myInfo";
 			}
 		return "member/login";
 	}
 
 	@RequestMapping(value = "/login",method=RequestMethod.POST)
-	public String login(String id, String pw,HttpServletRequest request) {
+	public String login(String id, String pw) {
 		
 		
 		boolean loginflag=memberservice.login(id, pw);
 		session.setAttribute("loginCondition", loginflag);
+		session.setAttribute("loginId", id);
 		request.setAttribute("loginId", id);
 		session.setAttribute("loginGrade", memberservice.myinfo(id).getGrade());
 		session.setAttribute("myInfo", memberservice.myinfo(id));
@@ -95,9 +103,9 @@ public class MemberController {
 			}
 		return "member/edit";
 	}
+	
 	@RequestMapping(value="edit", method=RequestMethod.POST)
-	public String edit(String pw,String phone,String email) {
-		String id= (String) session.getAttribute("loginId");
+	public String edit(String id,String pw,String phone,String email) {
 		memberservice.edit(id, pw, phone, email);
 		session.setAttribute("myInfo", memberservice.myinfo(id));
 		return "member/myInfo";
