@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <html>
 <head>
-	<title>글보기</title>
+	<title>글쓰기</title>
 	<!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -25,25 +25,40 @@
 
 </head>
 <body>
-	<table class="table table-bordered  table-hover" align="center"  style="position: relative; width: 70%; top:30px">
+	<table class="table table-bordered  table-hover" align="center"  style="position: relative; width: 80%; top:30px">
 
 		<thead>
 			<tr>
-				<th colspan="100%"><h1 align="center"> 글보기 </h1></th>
+				<th colspan="100%"><h1 align="center"> 글쓰기 </h1></th>
 			</tr>
 			<tr>
-				<th><h4> <font color="gray">${contents.head}</font> </h4></th>
-				
+				<th><h4> 글머리 </h3></th>
+					<td>
+
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+								Dropdown
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+							</ul>
+						</div>
+
+					</td>
 					<th colspan="30%"><h4>제목</h4></th>
-					<td colspan="50%"> ${contents.title} </td></tr>
+					<td colspan="50%"><input type="text" style="width: 100%;"></td>
+					<tr></tr>
+					<tr></tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="100%" style="height: 80%;">
-							<div align="center">
-								 ${contents.content}
-							</div>
-						</td>
+						<th colspan="100%" style="height: 500px;">
+							<textarea style="width:100%; height: 100%"></textarea>
+						</th>
 					</tr>
 
 
@@ -59,7 +74,7 @@
 								</div>
 
 								<div class="btn-group" role="group">
-									<button type="button" class="btn btn-default">글목록</button>
+									<button type="button" class="btn btn-default">취소</button>
 								</div>
 
 							</div>

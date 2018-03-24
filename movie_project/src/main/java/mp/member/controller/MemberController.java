@@ -1,5 +1,6 @@
 package mp.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -34,25 +35,25 @@ public class MemberController {
 		if(nowLogin) {
 			String id = (String) session.getAttribute("loginId");	
 			log.debug("{}님이 이미 로그인 한 상태 입니다. 먼저 로그아웃 해주세요",id);	
-			return 	"member/myInfo";
+			return 	"redirect:member/myInfo";
 			}
 		return "member/login";
 	}
 
 	@RequestMapping(value = "/login",method=RequestMethod.POST)
-	public String login(String id, String pw) {
+	public String login(String id, String pw,HttpServletRequest request) {
 		
 		
 		boolean loginflag=memberservice.login(id, pw);
 		session.setAttribute("loginCondition", loginflag);
-		session.setAttribute("loginId", id);
+		request.setAttribute("loginId", id);
 		session.setAttribute("loginGrade", memberservice.myinfo(id).getGrade());
 		session.setAttribute("myInfo", memberservice.myinfo(id));
 		
 		log.debug("로그인"+(loginflag?"성공":"실패!"));
-		id = (String) session.getAttribute("loginId");
+		id = (String) request.getParameter("loginId");
 		log.debug("id={}",id);
-		return loginflag?"/home":"member/login";
+		return loginflag?"/home":"redirect:/login";
 	}
 //--------------------------------------------------------------------------
 	@RequestMapping("/register")
@@ -62,7 +63,7 @@ public class MemberController {
 	@RequestMapping(value="/register",method=RequestMethod.POST)
 	public String register(String id, String pw, String birth, String phone, String email) {
 		boolean flag = memberservice.register(id, pw, birth, phone, email);
-		return flag?"/home":"member/register";
+		return flag?"/home":"redirect:/register";
 	}
 //-----------------------------------------------------------------------------------------	
 	@RequestMapping(value = {"/myInfo","/myinfo"})//다중매핑(둘중 어느걸로 들어가도 상관 없음)
@@ -75,7 +76,7 @@ public class MemberController {
 		}
 		if(!nowLogin) {
 			log.debug("먼저 로그인 해주세요");
-			return "member/login";
+			return "redirect:/login";
 			}
 		
 		return "member/myInfo";
@@ -90,7 +91,7 @@ public class MemberController {
 		}
 		if(!nowLogin) {
 			log.debug("먼저 로그인 해주세요");
-			return "member/login";
+			return "redirect:/login";
 			}
 		return "member/edit";
 	}
@@ -122,7 +123,7 @@ public class MemberController {
 		} catch (Exception e) {
 		    log.debug("로그아웃 실패");	
 		}
-		return "/member/login";
+		return "redirect:/login";
 	}
 	//--------------------------------------------------------
 }

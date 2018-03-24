@@ -1,14 +1,11 @@
 package mp.board.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mp.board.bean.Notice;
 import mp.board.bean.Qna;
 import mp.board.model.QnaDao;
 
@@ -27,7 +24,7 @@ public class QnaServiceImpl implements QnaService{
 		
 		int maximum = list.size();
 		int start = 10*(page-1);
-		int end   = Math.min(10*page-1, maximum);
+		int end   = Math.min(10*page, maximum);
 		
 		return list.subList(start, end);
 	}
@@ -38,6 +35,20 @@ public class QnaServiceImpl implements QnaService{
 		return qnaPaging(1,cnum);
 	}
 
+	@Override
+	public int[] qnaPaging(int cnum, int pnum, int page) {
+		// TODO Auto-generated method stub
+		
+		int allCount = qnadao.qnalist().size();
+		int last = allCount/cnum+(allCount%cnum==0?0:1);
+		if(page>last) page = last;
+		int pagingNum=pnum*((page-1)/pnum);
+		int pageLast = last-pagingNum>=pnum?pnum:last%pnum;
+		return new int[]{pagingNum,pageLast,last,page};
+	}
+
+	
+	
 	
 
 }

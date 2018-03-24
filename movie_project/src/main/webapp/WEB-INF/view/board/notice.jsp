@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-<title>Qna게시판</title>
+<title>notice게시판</title>
 
 <!-- 부트스트랩 -->
 <link rel="stylesheet"
@@ -29,7 +29,7 @@
 
 </head>
 <body>
-	 <form action="<c:url value='/qnawrite'></c:url>">	
+	 <form action="<c:url value='/noticewrite'></c:url>">	
 		<div align="center">
 			<button type="submit" class="btn btn-default" style= "position: relative; left: 360px;">글쓰기</button>
 			</div>
@@ -59,14 +59,14 @@
 
 
 			<tbody>
-				<c:forEach var="qnaitem" items="${qnalist}">
+				<c:forEach var="noticeitem" items="${noticelist}">
 					<tr>
-						<td>${qnaitem.no}</td>
-						<td><font color="gray" size="2">${qnaitem.head}</font> <a
-							href="<c:url value='/qnaShow'></c:url>?no=${qnaitem.no}">${qnaitem.title}</a></td>
-						<td>${qnaitem.writerId}</td>
-						<td>${qnaitem.reg}</td>
-						<td>${qnaitem.read}</td>
+						<td>${noticeitem.no}</td>
+						<td><font color="gray" size="2">${noticeitem.head}</font> <a
+							href="<c:url value='/noticeShow'></c:url>?no=${noticeitem.no}">${noticeitem.title}</a></td>
+						<td>${noticeitem.writer}</td>
+						<td>${noticeitem.reg}</td>
+						<td>${noticeitem.read}</td>
 					</tr>
 				</c:forEach>
 
@@ -118,7 +118,7 @@
 			<nav>
 				<ul class="pagination">
 					<c:if test="${pagingNum>0}">
-						<li><a href='<c:url value='/qna'></c:url>?pg=${pagingNum}'
+						<li><a href='<c:url value='/notice'></c:url>?pg=${pagingNum}'
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 					</c:if>
@@ -129,12 +129,12 @@
 							<c:when test="${pageidx == param.pg}">
 
 								<li><a style="background-color: #98DFFF;"
-									href='<c:url value='/qna'></c:url>?pg=${pageidx}'>${pageidx}</a>
+									href='<c:url value='/notice'></c:url>?pg=${pageidx}'>${pageidx}</a>
 								</li>
 							</c:when>
 
 							<c:otherwise>
-								<li><a href='<c:url value='/qna'></c:url>?pg=${pageidx}'>${pageidx}</a>
+								<li><a href='<c:url value='/notice'></c:url>?pg=${pageidx}'>${pageidx}</a>
 								</li>
 							</c:otherwise>
 
@@ -142,7 +142,7 @@
 					</c:forEach>
 
 					<li><c:if test="${lastPage-pagingNum>10}">
-							<a href='<c:url value='/qna'></c:url>?pg=${pagingNum+11}'
+							<a href='<c:url value='/notice'></c:url>?pg=${pagingNum+11}'
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 							</a>
 						</c:if></li>
