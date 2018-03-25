@@ -20,13 +20,30 @@ public class QnaDaoImpl implements QnaDao{
 		@Override
 		public void register(Qna qna) {
 		// TODO Auto-generated method stub
-		String sql = "insert into qna values(qna_seq.nextval,?,?,?,?,sysdate,0,?,?,?,?)";
-		Object[] args= {qna.getHead(),  qna.getTitle(), qna.getSecret(),qna.getContent(),
-						qna.getWriterNo(),qna.getWriterId(),qna.getParent(),qna.getGno()
+		String sql = "select qna_seq.nextval from dual";
+		int no = jdbcTemplate.queryForObject(sql, Integer.class);	
+		sql = "insert into qna values(?,?,?,?,?,sysdate,0,?,?,?,0)";
+		Object[] args= {no,qna.getHead(),  qna.getTitle(), qna.getSecret(),qna.getContent(),
+						qna.getWriterNo(),qna.getWriterId(),no
 					};
 		jdbcTemplate.update(sql,args);
 		
 		}
+		
+		@Override
+		public void register(Qna qna,int parent) {
+			// TODO Auto-generated method stub
+			String sql = "select qna_seq.nextval from dual";
+			int no = jdbcTemplate.queryForObject(sql, Integer.class);	
+			
+			sql = "insert into qna values(?,?,?,?,?,sysdate,0,?,?,?,1)";
+			Object[] args= {no,qna.getHead(),  qna.getTitle(), qna.getSecret(),qna.getContent(),
+							qna.getWriterNo(),qna.getWriterId(),parent
+						};
+			jdbcTemplate.update(sql,args);
+				
+		}
+	
 		
 		private RowMapper<Qna> mapper = (rs,idx)->{//return new Qna(rs);};
 			Qna qna =new Qna(rs);
@@ -36,7 +53,7 @@ public class QnaDaoImpl implements QnaDao{
 		@Override
 		public List<Qna> qnalist() {
 		// TODO Auto-generated method stub
-		String sql ="select * from qna order by no desc";
+		String sql ="select * from qna order by parent desc, gno asc, no asc";
 		List<Qna> list =jdbcTemplate.query(sql, mapper);
 		return list;
 		}
@@ -79,8 +96,21 @@ public class QnaDaoImpl implements QnaDao{
 			//[3]패스워드가 다르거나 오류 발생시 false 반환
 			if(pw==null||!pw.equals(userpw))
 			return false;
-			sql= "delete qna where no=?";
+			//[4] 답글이 달린 글이면 답글까지 삭제, 답글이면 답글만 삭제
+			sql= "delete qna where "+
+			(qna.getNo()==0?"parent":"no")+"=?";
 			return jdbcTemplate.update(sql,no)>0;
 		}
-	
+
+
+		@Override
+		public List<Qna> qnaSearch(String search, String keyword) {
+			String sql = "select * from qna where "+search
+					+ " like '%'||?||'%' order by no desc";
+			List<Qna> list = jdbcTemplate.query(sql, mapper,keyword);
+			return list;
+		}
+
+
+		
 	}

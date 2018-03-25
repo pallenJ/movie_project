@@ -62,7 +62,7 @@ public class Qna {
 		return head;
 	}
 	public void setHead(String head) {
-		this.head = "["+head+"]";
+		this.head = head;
 	}
 	public String getTitle() {
 		return title;

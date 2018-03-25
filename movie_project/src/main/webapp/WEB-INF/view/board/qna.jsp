@@ -62,7 +62,12 @@
 				<c:forEach var="qnaitem" items="${qnalist}">
 					<tr>
 						<td>${qnaitem.no}</td>
-						<td><font color="gray" size="2">${qnaitem.head}</font> <a
+						<td>
+						<c:if test="${qnaitem.gno>0}">
+						&nbsp; └
+						</c:if>
+						
+						<font color="gray" size="2">${qnaitem.head}</font> <a
 							href="<c:url value='/qnaShow'></c:url>?no=${qnaitem.no}">${qnaitem.title}</a></td>
 						<td>${qnaitem.writerId}</td>
 						<td>${qnaitem.reg}</td>
@@ -79,36 +84,34 @@
 
 		<!-- ==================================================== -->
 		<!-- 검색 기능 -->
+		<form action="<c:url value='/qna'></c:url>">
 		<div class=".col-lg-6" align="center" style="width: 500px">
 			<div class="input-group">
 
 				<!--       검색 옵션 선택(드롭다운)-->
 				<div class="input-group-btn">
 
-					<button type="button" class="btn btn-default dropdown-toggle"
-						data-toggle="dropdown" aria-expanded="false">
-						Action <span class="caret"></span>
-					</button>
-
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-					</ul>
+					<div class="dropdown" style="width:90px;">
+							<select class="form-control btn btn-default" name="search">
+								<option value="title">제목</option>
+								<option value="content">내용</option>
+								<option value="writerId">작성자</option>
+							</select>
+						</div>
 
 				</div>
 				<!-- 검색할 단어 입력-->
-				<input type="text" class="form-control" placeholder="Search for...">
+				<input type="text" class="form-control" name="keyword" placeholder="Search for...">
 
 				<span class="input-group-btn"> <!-- 검색버튼-->
-					<button class="btn btn-default" type="button">Go!</button>
+					<button class="btn btn-default" type="submit">검색</button>
 				</span>
 
 			</div>
 			<!-- /input-group -->
 		</div>
+		
+		</form>
 		<!-- /.col-lg-6 -->
 		<br>
 		<!-- ==================================================== -->

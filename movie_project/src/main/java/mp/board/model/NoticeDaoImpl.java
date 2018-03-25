@@ -26,7 +26,7 @@ public class NoticeDaoImpl implements NoticeDao{
 		jdbcTemplate.update(sql, args);
 	}
 	private RowMapper<Notice>mapper = (rs,idx)->{
-		return rs.next()?new Notice(rs):null;
+		return new Notice(rs);
 		};
 	@Override
 	public List<Notice> noticelist() {

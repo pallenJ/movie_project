@@ -32,8 +32,10 @@
 <body>
 
 	<form action="<c:url value='/qnawrite'></c:url>" method='post'>
-		<input type="hidden" name="parent" value="0">
-		<input type="hidden" name="gno" value="0">
+		<c:if test="${!empty requestScope.gno}">
+			<input type="hidden" name="parent" value="${requestScope.parent}">
+			<input type="hidden" name="gno" value="${requestScope.gno}">
+		</c:if>
 		<table class="table table-bordered  table-hover" align="center"
 			style="position: relative; width: 80%; top: 30px">
 
@@ -100,6 +102,7 @@
 									<button type="button" class="btn btn-default">취소</button>
 								</div>
 
+								
 							</div>
 						</div>
 					</td>

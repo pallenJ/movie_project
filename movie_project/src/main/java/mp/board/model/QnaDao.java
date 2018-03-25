@@ -11,6 +11,7 @@ public interface QnaDao {
 	
 	//문의글 등록
 	void register(Qna qna);
+	void register(Qna qna,int parent);
 	
 	//문의글 전체 목록
 	List<Qna> qnalist();
@@ -24,7 +25,7 @@ public interface QnaDao {
 	//삭제
 	boolean qnadelete(int no, String userpw);
 
-	
+	List<Qna> qnaSearch(String search,String keyword);
 
 
 	

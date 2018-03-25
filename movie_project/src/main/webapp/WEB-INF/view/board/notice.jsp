@@ -128,7 +128,7 @@
 						<c:choose>
 							<c:when test="${pageidx == param.pg}">
 
-								<li><a style="background-color: #98DFFF;"
+								<li><a style="background-color: lightyellow;"
 									href='<c:url value='/notice'></c:url>?pg=${pageidx}'>${pageidx}</a>
 								</li>
 							</c:when>

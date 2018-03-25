@@ -50,7 +50,7 @@ public class NoticeController {
 		int pageLast = addValue[1];
 		int last     = addValue[2];
 			page     = addValue[3];
-
+		log.debug("={}",noticeDao.noticelist().size());	
 		model.addAttribute("noticelist", noticeService.noticePaging(page, cnum));
 		model.addAttribute("pagingNum", pagingNum);
 		model.addAttribute("pageLast",  pageLast);

@@ -20,6 +20,7 @@ public class NoticeServiceImpl implements NoticeService{
 		/*int pageFirst = 10*(page/10)+1;
 		int pageLast = 10*(page/10+1);*/
 		List<Notice> list = noticeDao.noticelist(); 
+		
 //		Collections.reverse(list);
 		
 		int maximum = list.size();
