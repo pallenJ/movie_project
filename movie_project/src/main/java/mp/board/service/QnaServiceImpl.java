@@ -17,13 +17,13 @@ public class QnaServiceImpl implements QnaService{
 	MemberDao memDao;
 	
 	@Autowired
-	QnaDao qnadao;
+	QnaDao qnaDao;
 	
 	@Override
 	public List<Qna> qnaPaging(int page,int cnum) {
 		/*int pageFirst = 10*(page/10)+1;
 		int pageLast = 10*(page/10+1);*/
-		List<Qna> list = qnadao.qnalist(); 
+		List<Qna> list = qnaDao.qnalist(); 
 //		Collections.reverse(list);
 		
 		int maximum = list.size();
@@ -37,7 +37,7 @@ public class QnaServiceImpl implements QnaService{
 	public List<Qna> qnaPaging(int page,int cnum,String search,String keyword) {
 		/*int pageFirst = 10*(page/10)+1;
 		int pageLast = 10*(page/10+1);*/
-		List<Qna> list = qnadao.qnaSearch(search, keyword); 
+		List<Qna> list = qnaDao.qnaSearch(search, keyword); 
 //		Collections.reverse(list);
 		
 		int maximum = list.size();
@@ -57,7 +57,7 @@ public class QnaServiceImpl implements QnaService{
 	public int[] qnaPaging(int cnum, int pnum, int page) {
 		// TODO Auto-generated method stub
 		
-		int allCount = qnadao.qnalist().size();
+		int allCount = qnaDao.qnalist().size();
 		int last = allCount/cnum+(allCount%cnum==0?0:1);
 		if(page>last) page = last;
 		int pagingNum=pnum*((page-1)/pnum);
@@ -69,7 +69,7 @@ public class QnaServiceImpl implements QnaService{
 	public int[] qnaPaging(int cnum, int pnum, int page,String search,String keyword) {
 		// TODO Auto-generated method stub
 		
-		int allCount = qnadao.qnaSearch(search, keyword).size();
+		int allCount = qnaDao.qnaSearch(search, keyword).size();
 		int last = allCount/cnum+(allCount%cnum==0?0:1);
 		if(page>last) page = last;
 		int pagingNum=pnum*((page-1)/pnum);
@@ -92,7 +92,7 @@ public class QnaServiceImpl implements QnaService{
 		qna.setWriterNo(no);
 		qna.setWriterId(id);
 		
-		qnadao.register(qna);
+		qnaDao.register(qna);
 	}
 
 	@Override
@@ -110,10 +110,8 @@ public class QnaServiceImpl implements QnaService{
 		qna.setWriterNo(no);
 		qna.setWriterId(id);
 		
-		qnadao.register(qna, Integer.parseInt(parent));
+		qnaDao.register(qna, Integer.parseInt(parent));
 	}
-
-	
 	
 	
 

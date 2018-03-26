@@ -27,7 +27,7 @@ public interface QnaDao {
 
 	List<Qna> qnaSearch(String search,String keyword);
 
-
+	
 	
 	//
 }

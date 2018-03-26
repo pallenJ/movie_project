@@ -176,8 +176,21 @@ public class QnaController {
 	
 	@RequestMapping(value= {"/qnaDelete","/qnadelete","/qna_delete"})
 	public String qnaDelete(HttpServletRequest request,String no) {
-		int dno = Integer.parseInt(no);
-		request.setAttribute("no", dno);
+		int bno = Integer.parseInt(no);
+		Qna qna = qnaDao.qnadetail(bno);
+		
+		if(!session.getAttribute("loginId").equals(qna.getWriterId())) {
+		return "redirect:/qna";
+		}
+		request.setAttribute("no", bno);
+		return "board/qna_delete";
+	}
+	@RequestMapping(value= {"/qnaDelete","/qnadelete","/qna_delete"},method=RequestMethod.POST)
+	public String qnaDelete(HttpServletRequest request,String no,String pw) {
+		int bno = Integer.parseInt(no);
+		
+		boolean flag=qnaDao.qnadelete(bno, pw);
+		log.debug("삭제"+(flag?"성공":"삭제"));
 		return "redirect:/qna";
 	}
 }

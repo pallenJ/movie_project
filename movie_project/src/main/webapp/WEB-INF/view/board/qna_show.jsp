@@ -39,18 +39,20 @@
 			</tr>
 			<tr>
 
-				<th colspan="15%"><h4><font color="gray">${contents.head}</font>제목</h4></th>
+				<th colspan="15%"><h4>
+						<font color="gray">${contents.head}</font>제목
+					</h4></th>
 				<td colspan="35%">${contents.title}</td>
 				<th colspan="15%">조회수</th>
 				<td colspan="35%">${contents.read}</td>
-				
+
 			</tr>
 			<tr>
-			    <th colspan="15%">글쓴이</th>
+				<th colspan="15%">글쓴이</th>
 				<td colspan="35%">${contents.writerId}</td>
-			    <th colspan="15%">작성날짜</th>
+				<th colspan="15%">작성날짜</th>
 				<td colspan="35%">${contents.reg}</td>
-			
+
 			</tr>
 
 		</thead>
@@ -78,8 +80,10 @@
 									<form class="btn-group" role="group">
 										<button type="button" class="btn btn-default">수정</button>
 									</form>
-									<form class="btn-group" role="group">
-										<button type="button" class="btn btn-default">삭제</button>
+									<form action="<c:url value='/qnadelete'></c:url>"
+										class="btn-group" role="group">
+										<input type="hidden" name="no" value="${contents.no}">
+										<button type="submit" class="btn btn-default">삭제</button>
 									</form>
 								</c:when>
 
@@ -96,10 +100,10 @@
 
 
 
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default"
-									onclick="location.href = <c:url value='/qna'></c:url>">글목록</button>
-							</div>
+							<form action="<c:url value='/qna'></c:url>" class="btn-group"
+								role="group">
+								<button type="submit" class="btn btn-default">글목록</button>
+							</form>
 
 						</div>
 					</div>
@@ -107,7 +111,16 @@
 			</tr>
 		</tfoot>
 	</table>
-
+	<br>
+	<br>
+	<br>
+	<br>
+	<c:if test="${contents.gno>0}">
+		<div align="right">
+			<a href='<c:url value="qnaShow"></c:url>?no=${contents.parent}'
+				style="position: relative; right: 250px"><h4>원래글로 가기</h4></a>
+		</div>
+	</c:if>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
