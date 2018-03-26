@@ -84,6 +84,8 @@
                 for(var j=1; j<=23; j++){
                     var id = String.fromCharCode(i)+j;
                     createSeat(id, i - "A".charCodeAt(0), j, true);
+                    if(id.eq(${}))
+                    
                 }
             }
         });
