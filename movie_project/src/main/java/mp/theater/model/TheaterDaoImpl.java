@@ -23,15 +23,6 @@ public class TheaterDaoImpl implements TheaterDao {
 		return new Theater(rs);
 	};
 	
-	private ResultSetExtractor<String> extractorString = rs -> {
-		if(rs.next()) {
-			return rs.getString(1);
-		} else {
-			log.debug("데이터 없음 : null값 반환!");
-			return null;
-		}
-	};
-
 	private ResultSetExtractor<Theater> extractor = rs -> {
 		if (rs.next()) {
 			return new Theater(rs);
