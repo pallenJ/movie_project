@@ -17,3 +17,4 @@
 </div>
 <h3><a href='<c:url value="/schedule/edit?scheduleid=${schedule.id }"/>'>상영시간표 수정</a></h3>
 <h3><a href='<c:url value="/schedule/delete?scheduleid=${schedule.id }"/>'>상영시간표 삭제</a></h3>
+<h3><a href='<c:url value="/schedule/list"/>'>목록으로</a></h3>

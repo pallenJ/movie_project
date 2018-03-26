@@ -38,48 +38,7 @@
             	        msg += '카드 승인번호 : ' + rsp.apply_num;
             	        
             	        
-//                	        //ajax이용하여 결제내역 저장
-//             			$.ajax({
-//             				url:"http://localhost:8080/movie_project/ticket/register",
-//             				type:"get",
-//             				//ajax 요청을 보내면서 결제내역 정보 데이터를 첨부
-//             				data:{
-//             						memberid:'${member.id}',
-//                 					movieid:'${payment.movieid}',
-//                 					theaterid:'${payment.theaterid}',
-//                 					screenid:'test관',
-//                 					seatid:'${payment.seatid}',
-//                 					scheduleid:'${payment.scheduleid}',
-//                 					paydate:'${payment.paydate}',
-//             						paytotal:'${payment.paytotal}'
-//             				},
-//             				dataType:"text",
-//             				success:function(count){
-//             					var c = parseInt(count);
-//             					console.log(c);
-//             					if(c > 0){
-//             						$("span").text("결제내역 등록 성공");
-//             					}
-//             					else if(c == 0){
-//             						$("span").text("결제내역 등록 실패");
-//             					}
-//             				}
-//             			});
-// 	            	    alert(msg);
-// 	            	    location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
-
-            	        
-            	        
-            	        
-            	        
-
-            	    } else {
-            	        var msg = '결제에 실패하였습니다.';
-            	        msg += '에러내용 : ' + rsp.error_msg;
-          
-            	        
-            	        
-           	        //ajax이용하여 결제내역 저장
+             	        //ajax이용하여 결제내역 저장
             			$.ajax({
             				url:"http://localhost:8080/movie_project/ticket/register",
             				type:"get",
@@ -105,8 +64,19 @@
          		                alert("이미 구매된 좌석이 포함되어 있어 결제를 취소합니다.");
            		       	    }
             			});
-	            	   // location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
 
+            	        
+            	        
+            	        
+            	        
+
+            	    } else {
+            	        var msg = '결제에 실패하였습니다.';
+            	        msg += '에러내용 : ' + rsp.error_msg;
+          
+            	        
+            	        
+          
             	        
             	        
             	        

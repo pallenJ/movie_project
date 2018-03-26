@@ -7,7 +7,6 @@
     <title></title>
 </head>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <script>
         $(document).ready(function(){
         	//버튼 클릭시 상영시간표 등록
@@ -36,14 +35,9 @@
         					location.href = 'http://localhost:8080/movie_project/schedule/list';	//자바스크립트 페이지 강제이동	
         				},
        		        	error : function(xhr, status, error) {
-     		                alert("등록 실패했습니다.(상영시간 중복 확인 바랍니다)");
+     		                alert("등록 실패했습니다.(상영 시작시간이 종료시간보다 늦거나 상영시간이 중복됩니다.)");
        		       	    }
         			});
-            	   // location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
-
-        	        
-            	        
- 
            
             });
         });

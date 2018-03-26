@@ -10,10 +10,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import mp.payment.bean.Payment;
 import mp.schedule.bean.Schedule;
-import mp.theater.bean.Screen;
-import mp.theater.bean.Seat;
 
 //상영시간표 DAO IMPL
 
@@ -52,22 +49,21 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		String sql = "update "
 						+"schedule "
 					+"set "
-						+"movie=?, theater=?, screen=?, day=?, starttime=?, endtime=?, morning=?, night=? "
+						+"movie=?, theater=?, screen=?, day=?, starttime=?, endtime=?, morning=?, night=?, movietitle=?,screenno=?,seats=? "
 					+"where "+
 						"id = ?";
 		Object[] args = {schedule.getMovie(),schedule.getTheater(),schedule.getScreen(),schedule.getDay(),
 						schedule.getStarttime(),schedule.getEndtime(),schedule.getMorning(),schedule.getNight(),
-						schedule.getId()};
+						schedule.getMovietitle(),schedule.getScreenno(),schedule.getSeats(),schedule.getId()};
 		jdbcTemplate.update(sql,args);
-		
 	}
 
 	@Override
-	public void scheduledelete(String scheduleid, String sessionid, String uploaderpw) {
+	public Boolean scheduledelete(String scheduleid, String sessionid, String uploaderpw) {
 		String sql = "delete from schedule where id=? and uploader = "
 					+"(select no from member where id=? and pw=?)";
 		Object[] args = {scheduleid, sessionid, uploaderpw};
-		jdbcTemplate.update(sql,args);
+		return jdbcTemplate.update(sql,args)>0;
 	}
 	
 	private RowMapper<Schedule> mapper = (rs,index)->{
@@ -83,25 +79,46 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		}
 	};
 
+	
 	@Override
-	public boolean check(Schedule schedule) { 
-		//같은 날, 같은 상영관
-		String sql = "select * from schedule where day =? and screen=?";
-		Object[] args = {schedule.getDay(),schedule.getScreen()};
-		List<Schedule> selectedlist = jdbcTemplate.query(sql,mapper,args);
+	public boolean check(Schedule schedule, String type) {
+		String sql= null;
+		List<Schedule> selectedlist= null;
+		
+		//등록일때는 id가 중복되면 안되나, 수정일 때는 id가 같을 때는 상영시간 중복되도 수정되도록 해야한다.
+		if(type.equals("수정")) {
+			//같은 날, 같은 상영관
+			log.debug("daoimple check 수정");
+			sql = "select * from schedule where day =? and screen=?and id!=?";
+			Object[] args = {schedule.getDay(),schedule.getScreen(),schedule.getId()};
+			selectedlist = jdbcTemplate.query(sql,mapper,args);
+			
+		}else {
+			log.debug("daoimple check 등록");
+			sql = "select * from schedule where day =? and screen=?";
+			Object[] args = {schedule.getDay(),schedule.getScreen()};
+			selectedlist = jdbcTemplate.query(sql,mapper,args);
+		}
 		//상영시간 중복 확인
 		boolean check = true;
+		
+		//상영시작시간이 종료시간보다 늦거나 같을 때
+		if(caltime(schedule.getStarttime())>=caltime(schedule.getEndtime())){
+			return false;
+		}
+		
 		for(Schedule selected: selectedlist) {
-			if(caltime(schedule.getStarttime()) < caltime(selected.getEndtime())
-			   && caltime(schedule.getEndtime()) > caltime(selected.getStarttime())	
+			if(caltime(schedule.getStarttime()) <= caltime(selected.getEndtime())
+			   && caltime(schedule.getEndtime()) >= caltime(selected.getStarttime())	
 			) {
 				check = false;
 				break;	//중복확인으로 break
 			}
 		}
-		log.debug("ScheduleDaoImple checkRegister 결과 : {}",check);
+		log.debug("ScheduleDaoImple check 결과 : {}",check);
 		return check;
 	}
+	
 	
 	//시간 계산 메소드(01:30 -> 90)
 	private int caltime(String time) {
@@ -121,6 +138,15 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		Object[] args = {uploader};
 		log.debug("ScheduleDaoImple schedulelist 작동 중 업로더 : {}",uploader);
 		return jdbcTemplate.query(sql, mapper,args);
+	}
+
+
+	@Override
+	public Schedule scheduleinfo(String scheduleid) {
+		String sql = "select * from schedule where id=?";
+		Object[] args = {scheduleid};
+		log.debug("ScheduleDaoImple scheduleinfo 작동 중 scheduleid: {}",scheduleid);
+		return jdbcTemplate.query(sql,extractor,args);
 	}
 	
 

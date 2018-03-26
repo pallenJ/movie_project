@@ -1,6 +1,9 @@
 package mp.schedule.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +63,6 @@ public class ScheduleController {
 		log.debug("scheduleController register 등록 직후");
 			
 	}	
-
 	
 	@RequestMapping("/schedule/list")
 	public String list(Model model) {
@@ -71,7 +73,57 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping("/schedule/info")
-	public String info(String scheduleid) {
+	public String info(String scheduleid, Model model) {
+		log.debug("Controller info test");
+		Schedule schedule = scheduleService.getinfo(scheduleid);
+		log.debug("ScheduleController info return직전 : {}", schedule.getMovietitle());
+		model.addAttribute(schedule);
 		return "/schedule/info";
 	}
+	
+	
+	@RequestMapping("/schedule/edit")
+	public String edit(String scheduleid, Model model) {
+		Schedule schedule = scheduleService.getinfo(scheduleid);
+		model.addAttribute(schedule);
+		return "/schedule/edit";	
+	}	
+	
+	@RequestMapping(value="/schedule/edit",method=RequestMethod.POST)
+	public String editpost(Schedule schedule, HttpServletResponse response) throws IOException {
+		log.debug("Controller editpost test schedule 넘어온값 : {}",schedule.getId());
+		Boolean result = scheduleService.edit(schedule);
+		log.debug("ScheduleController editpost 리다이렉트 직전");
+		//edit후 info페이지로 이동
+		if(result) {
+			return "redirect:/schedule/info?scheduleid="+schedule.getId();
+		}else {
+			return "redirect:/schedule/editfail";
+		}
+	}
+	
+	@RequestMapping("/schedule/editfail")
+	public String editfail(String model) {
+		log.debug("Controller editfail test");
+		return "/schedule/editfail";
+	}
+	
+	@RequestMapping("/schedule/delete")
+	public String delete(String scheduleid) {
+		log.debug("Controller delete test");
+		return "/schedule/delete";
+	}
+	
+	//수정해야하마.
+	@RequestMapping(value="/schedule/delete",method=RequestMethod.POST)
+	public String deletepost(String scheduleid, String password) throws Exception {
+		log.debug("Controller deletepost test scheduleid : {} password : {}",scheduleid, password);
+		scheduleService.delete(scheduleid,"m0000000002",password); //세션변경
+		log.debug("ScheduleController deletepost return직전");
+		return "redirect:/schedule/list";
+	}
+	
+
+		
+	
 }
