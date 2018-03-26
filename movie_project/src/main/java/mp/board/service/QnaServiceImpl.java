@@ -112,6 +112,19 @@ public class QnaServiceImpl implements QnaService{
 		
 		qnaDao.register(qna, Integer.parseInt(parent));
 	}
+
+	@Override
+	public void qnaEdit(String no, String head, String title, String content, String secret) {
+		// TODO Auto-generated method stub
+		Qna qna = qnaDao.qnadetail(Integer.parseInt(no));
+		
+		qna.setHead(head);
+		qna.setTitle(title);
+		qna.setContent(content);
+		qna.setSecret(secret);
+		
+		qnaDao.qnaedit(qna);
+	}
 	
 	
 

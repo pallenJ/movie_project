@@ -67,8 +67,13 @@
 						&nbsp; └
 						</c:if>
 						
-						<font color="gray" size="2">${qnaitem.head}</font> <a
-							href="<c:url value='/qnaShow'></c:url>?no=${qnaitem.no}">${qnaitem.title}</a></td>
+						<font color="gray" size="2">[${qnaitem.head}]</font> <a
+							href="<c:url value='/qnaShow'></c:url>?no=${qnaitem.no}">${qnaitem.title}</a>
+							<c:if test="${qnaitem.secret == 's'}">
+							<font color="red" size="2">[비밀글]</font>
+							</c:if>
+							
+							</td>
 						<td>${qnaitem.writerId}</td>
 						<td>${qnaitem.reg}</td>
 						<td>${qnaitem.read}</td>

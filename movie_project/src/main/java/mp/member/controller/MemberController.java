@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import mp.member.bean.Member;
+import mp.member.model.MemberDao;
 import mp.member.service.MemberService;
 
 @Controller
@@ -24,9 +25,14 @@ public class MemberController {
 	@Autowired
 	private HttpServletRequest request;
 	
-	@Autowired
+	/*@Autowired
 	private HttpServletResponse response;
+	*/
 	
+	
+	
+	@Autowired
+	private MemberDao memDao;
 	@Autowired
 	private MemberService memberservice;
 	
@@ -53,15 +59,20 @@ public class MemberController {
 		
 		boolean loginflag=memberservice.login(id, pw);
 		session.setAttribute("loginCondition", loginflag);
+		if(!loginflag) return "redirect:/login";
+		
+		String  grade	 =memDao.myinfo(id).getGrade();
+		
 		session.setAttribute("loginId", id);
-		request.setAttribute("loginId", id);
+		session.setAttribute("grade", grade);
+//		request.setAttribute("loginId", id);
 		session.setAttribute("loginGrade", memberservice.myinfo(id).getGrade());
 		session.setAttribute("myInfo", memberservice.myinfo(id));
 		
 		log.debug("로그인"+(loginflag?"성공":"실패!"));
 		id = (String) request.getParameter("loginId");
 		log.debug("id={}",id);
-		return loginflag?"/home":"redirect:/login";
+		return "/home";
 	}
 //--------------------------------------------------------------------------
 	@RequestMapping("/register")

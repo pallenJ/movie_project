@@ -1,21 +1,14 @@
 package mp.board.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +18,7 @@ import mp.board.bean.Qna;
 import mp.board.model.QnaDao;
 import mp.board.service.QnaService;
 import mp.member.controller.MemberController;
+import mp.member.model.MemberDao;
 
 @Controller
 public class QnaController {
@@ -34,8 +28,13 @@ public class QnaController {
 	private HttpSession session;
 	//HttpServletResponse response,
 	
+	
+	
 	@Autowired
 	private QnaService qnaService;  
+	
+	@Autowired
+	private MemberDao memDao;
 	
 	@Autowired
 	private QnaDao qnaDao;  
@@ -104,13 +103,14 @@ public class QnaController {
 	}
 	@RequestMapping(value={"/qnashow","/qnaShow","/qna_show"})
 	public String qnaShow(HttpServletRequest request,Model model) {
-		
-		if(session.getAttribute("loginId")==null) {
+		//비로그인 상태일시 로그인 후 글을 볼 수 있음
+		String loginId = (String) session.getAttribute("loginId");
+		if(loginId==null) {
 			log.debug("먼저 로그인 하세요");
 			return "redirect:/login";
 		}
 		
-		
+		//글번호 정보가 없을때 예외처리.(글목록으로 보냄)
 		int no;
 		
 		try {
@@ -118,10 +118,19 @@ public class QnaController {
 		} catch (Exception e) {
 			return "redirect:/qna";
 		}
+			
+		//자신 이외의 사람이 글을 읽을경우 조회수 증가
 		    Qna qna = qnaDao.qnadetail(no);
-		    String head = qna.getHead();
-		    if(!head.contains("[")||!head.contains("]"))
-			qna.setHead("["+head+"]");
+		    if(!loginId.equals(qna.getWriterId())) {
+		    	//비밀글은 자신이나 관리자만 읽을 수 있음
+		    	String grade = memDao.myinfo(loginId).getGrade();
+		    	if(qna.getSecret().equals("s")&&!grade.equals("admin")&&!grade.equals("관리자")) {
+		    	 log.debug("비밀글입니다");	
+				 return "redirect:/qna";
+		    	}
+		    	qna = qnaDao.readPlus(qna);
+		    }
+		    
 		
 		model.addAttribute("contents",qna);
 		log.debug(qna.toString());
@@ -157,9 +166,6 @@ public class QnaController {
 		
 		String id = (String) session.getAttribute("loginId");
 		
-		if(!head.contains("[")||!head.contains("]")) {
-			head = "["+head+"]";
-		}
 		
 		log.debug("qna id={}",id);
 		if(id.equals("")||id==null) {
@@ -178,19 +184,42 @@ public class QnaController {
 	public String qnaDelete(HttpServletRequest request,String no) {
 		int bno = Integer.parseInt(no);
 		Qna qna = qnaDao.qnadetail(bno);
+		String grade = (String) session.getAttribute("grade");
 		
-		if(!session.getAttribute("loginId").equals(qna.getWriterId())) {
+		if(!session.getAttribute("loginId").equals(qna.getWriterId())&&!grade.equals("admin")
+				&&!grade.equals("관리자")) {
 		return "redirect:/qna";
+		}else if(grade.equals("admin")||grade.equals("관리자")) {
+			if(qnaDao.qnadelete(bno)) 
+				return "redirect:/qna";
 		}
 		request.setAttribute("no", bno);
 		return "board/qna_delete";
 	}
 	@RequestMapping(value= {"/qnaDelete","/qnadelete","/qna_delete"},method=RequestMethod.POST)
-	public String qnaDelete(HttpServletRequest request,String no,String pw) {
+	public String qnaDelete(String no,String pw) {
 		int bno = Integer.parseInt(no);
-		
 		boolean flag=qnaDao.qnadelete(bno, pw);
+		
 		log.debug("삭제"+(flag?"성공":"삭제"));
+		
 		return "redirect:/qna";
 	}
+	
+	@RequestMapping(value= {"/qnaEdit","/qnaedit","/qna_edit"})
+	public String qnaEdit(HttpServletRequest request,String no,Model model) {
+		int bno = Integer.parseInt(no);
+		request.setAttribute("no", bno);
+		
+		Qna qna = qnaDao.qnadetail(bno);
+		model.addAttribute("before",qna);
+		return "board/qna_edit";
+	}
+	@RequestMapping(value= {"/qnaEdit","/qnaedit","/qna_edit"},method=RequestMethod.POST)
+	public String qnaEdit(String no,String head,String title,String content, String secret) {
+		qnaService.qnaEdit(no, head, title, content, secret);
+		return "redirect:/qna";
+	}
+	
+	
 }

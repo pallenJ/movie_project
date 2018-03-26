@@ -45,7 +45,7 @@
 				<td colspan="35%">${contents.title}</td>
 				<th colspan="15%">조회수</th>
 				<td colspan="35%">${contents.read}</td>
-
+				
 			</tr>
 			<tr>
 				<th colspan="15%">글쓴이</th>
@@ -76,9 +76,12 @@
 
 							<c:choose>
 
-								<c:when test="${sessionScope.loginId eq contents.writerId}">
-									<form class="btn-group" role="group">
-										<button type="button" class="btn btn-default">수정</button>
+								<c:when test="${(sessionScope.loginId eq contents.writerId)
+								or sessionScope.grade eq 'admin' or sessionScope.grade eq '관리자'
+								}">
+									<form action="<c:url value='/qnaedit'></c:url>" class="btn-group" role="group">
+										<input type="hidden" name="no" value="${contents.no}">
+										<button type="submit" class="btn btn-default">수정</button>
 									</form>
 									<form action="<c:url value='/qnadelete'></c:url>"
 										class="btn-group" role="group">

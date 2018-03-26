@@ -24,8 +24,11 @@ public interface QnaDao {
 	
 	//삭제
 	boolean qnadelete(int no, String userpw);
+	boolean qnadelete(int no);
 
 	List<Qna> qnaSearch(String search,String keyword);
+	
+	Qna readPlus(Qna qna);
 
 	
 	

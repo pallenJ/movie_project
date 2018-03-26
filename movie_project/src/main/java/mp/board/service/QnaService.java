@@ -16,5 +16,5 @@ public interface QnaService {
 	List<Qna> qnaPaging(int page, int cnum, String search, String keyword);
 	
 	int[] qnaPaging(int cnum, int pnum, int page, String search, String keyword);
-	
+	void qnaEdit(String no,String head,String title,String content, String secret);
 }
