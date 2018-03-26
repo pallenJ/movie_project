@@ -1,10 +1,15 @@
 package mp.theater.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -23,13 +28,30 @@ public class SeatDaoImpl implements SeatDao {
 	
 	//좌석 등록
 	@Override
-	public void register(Seat seat) {
-		String sql = "select 's'||LPAD(seat_seq.nextval, '10', '0') from dual";
-		String id = jdbcTemplate.queryForObject(sql, String.class);
-		sql = "insert into seat values (?, '10', '0'), ?, ?, ?, ?)";
-		Object[] args = {id, seat.getScreenid(), seat.getReallocation(), 
-				seat.getServicelocation(), seat.getSeatdiscount()};
-		jdbcTemplate.update(sql, args);		
+	public void register(List<Seat> list) {
+		//seat 시퀀스 번호 추출
+		String sql = "select 's'||LPAD(seat_seq.nextval, '10', '0') from dual connect by level <= ?";
+		List<String> seq = jdbcTemplate.queryForList(sql, String.class, list.size());
+		
+		//batchUpdate -> 다중 sql 명령문 처리 위해서 사용 
+		sql = "insert into seat values (?, ?, ?, ?, ?)";
+		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps, int index) throws SQLException {
+				//ps가 명령 생성기		ps.set???
+				//index				위치(list에서의 위치)
+				ps.setString(1, seq.get(index));
+				ps.setString(2, list.get(index).getScreenid());
+				ps.setString(3, list.get(index).getReallocation());
+				ps.setString(4, list.get(index).getServicelocation());
+				ps.setInt(5, list.get(index).getSeatdiscount());
+			}
+			@Override
+			public int getBatchSize() {
+				// return 반복할횟수;
+				return list.size();
+			}
+		});
 		log.debug("좌석 등록이 완료되었습니다");
 	}
 

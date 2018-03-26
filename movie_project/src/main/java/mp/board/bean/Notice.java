@@ -17,6 +17,7 @@ public class Notice {
 		setHead(rs.getString("head"));
 		setTitle(rs.getString("title"));
 		setContent(rs.getString("content"));
+		setReg(rs.getString("reg"));
 		setRead(rs.getInt("read"));
 		setWriter(rs.getString("writer"));
 	}
@@ -38,7 +39,7 @@ public class Notice {
 	}
 
 	public void setHead(String head) {
-		this.head = head;
+		this.head = "["+head+"]";
 	}
 
 	public String getTitle() {

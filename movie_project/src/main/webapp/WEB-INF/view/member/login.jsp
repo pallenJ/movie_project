@@ -41,16 +41,17 @@
  
   
   	<br><br>
-  	<button type="submit" class="btn btn-default">Sign in</button>
+  	<button type="submit" class="btn btn-default" style="width:15%; height:50px;">Sign in</button>
   	<br>
-    <label>
+   <!--  <label>
       <input type="checkbox"> Remember me
-    </label>
-    <br><br>
+    </label> -->
+    <br>
 	</form>
 	
     <form action="register">
-    <button type="submit" class="btn btn-primary btn-lg" style="width:22%">Sign up</button>
+    <hr style="width: 30%">
+    <button type="submit" class="btn btn-primary btn-lg" style="width:22%; height: 70px;">Sign up now!</button>
     </form>
 
 </div>

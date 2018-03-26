@@ -21,25 +21,23 @@ public class NoticeDaoImpl implements NoticeDao{
 	@Override
 	public void register(Notice notice) {
 		// TODO Auto-generated method stub
-		String sql = "insert into notice values(notice_seq.nextval,?,?,?,sysdate,0,?)";
-		Object[] args= {notice.getHead(),notice.getTitle(),notice.getContent(),notice.getWriter()};
+		String sql = "insert into notice values(?,?,?,?,sysdate,0,?)";
+		Object[] args= {"notice_seq.nextval",notice.getHead(),notice.getTitle(),notice.getContent(),notice.getWriter()};
 		jdbcTemplate.update(sql, args);
 	}
 	private RowMapper<Notice>mapper = (rs,idx)->{
-		Notice notice = new Notice(rs);			//return new Notice(rs);
-		return notice;
+		return new Notice(rs);
 		};
 	@Override
 	public List<Notice> noticelist() {
 		// TODO Auto-generated method stub
-		String sql="select * from notice";
+		String sql="select * from notice order by no desc";
 		List<Notice> list = jdbcTemplate.query(sql, mapper);
 		return list;
 	}
+	
 	private ResultSetExtractor<Notice> extractor=rs->{
-//		return new Notice(rs);
-		Notice notice = new Notice(rs);
-		return notice;
+		return rs.next()?new Notice(rs):null;
 	}; 
 	@Override
 	public Notice noticedetail(int no) {

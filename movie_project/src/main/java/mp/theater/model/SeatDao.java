@@ -10,7 +10,7 @@ import mp.theater.bean.Seat;
 @Repository 
 public interface SeatDao {
 	//좌석 추가
-	void register(Seat seat);
+	void register(List<Seat> list);
 	
 	//상영관 내 좌석 목록
 	List<Seat> seatlist(String screenid);
