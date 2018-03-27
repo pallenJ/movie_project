@@ -24,7 +24,7 @@ public class ScreenController {
 	//상영관 등록
 	@RequestMapping("/screen/register")
 	public String register(HttpSession session) {
-		session.setAttribute("id", "member11"); //세션 임의로 등록
+		session.setAttribute("id", "test"); //세션 임의로 등록
 		return "/screen/register";
 	}
 	@RequestMapping(value="/screen/register", method=RequestMethod.POST)
@@ -43,7 +43,7 @@ public class ScreenController {
 	//상영관 목록 조회 (지점별)
 	@RequestMapping(value= {"/screen/list", "/screen"})
 	public String list(HttpSession session, Model model) {
-		session.setAttribute("id", "member11"); //세션아이디 임의 추가
+		session.setAttribute("id", "test"); //세션아이디 임의 추가
 		List<Screen> list = screenService.list(session.getAttribute("id").toString());
 		model.addAttribute("list", list);
 		return "/screen/list";

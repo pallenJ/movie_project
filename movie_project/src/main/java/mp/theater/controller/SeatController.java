@@ -1,9 +1,13 @@
 package mp.theater.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,35 +26,40 @@ public class SeatController {
 	@Autowired
 	private ScreenService screenService;
 	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	
 	//좌석 등록
 	@RequestMapping("/seat/register")
 	public String register(HttpSession session, Model model) {
-		session.setAttribute("id", "member11"); //임의로 세션 저장
+		session.setAttribute("id", "test"); //임의로 세션 저장
 		List<Screen> screen = screenService.list(session.getAttribute("id").toString());
 		model.addAttribute("screen", screen);
 		return "/seat/register";
 	}
 	@RequestMapping(value="/seat/register", method=RequestMethod.POST)
 	public String register(String seat, String screen) {
+		log.debug(seat, screen);
 		seatService.register(seat, screen);
-		return "redirect:/seat/list";
+		return "redirect:/seat/list?screenid="+screen;
 	}
 	
 	@RequestMapping(value= {"/seat", "/seat/list"})
 	public String list(HttpSession session, Model model){
-		session.setAttribute("id", "member11");
+		session.setAttribute("id", "test");
 		List<Screen> screen = screenService.list(session.getAttribute("id").toString());
 		model.addAttribute("screen", screen);
 		return "/seat/list";
 	}
-	@RequestMapping(value="/seat/list")
-	public String list(String screenid, HttpSession session, Model model) {
+	@RequestMapping(value="/seat/list", method=RequestMethod.POST)
+//	@ResponseBody//view resolver의 기본 설정을 무시하고 지금 현재 반환 내용을 응답 데이터로 설정
+	public String list(String screenid, HttpServletResponse response, HttpSession session, Model model) throws IOException {
 		List<Screen> screen = screenService.list(session.getAttribute("id").toString());
 		List<Seat> seat = seatService.list(screenid);
-		model.addAttribute("screen", screen);
-		model.addAttribute("seat", seat);
-		return "/seat/list";
+		//model.addAttribute("screen", screen);//상영관
+		model.addAttribute("seat", seat);//좌석
+		return "/seat/view";//view
 	}
+	
 	
 	@RequestMapping("/seat/edit")
 	public String edit() {

@@ -1,9 +1,7 @@
 package mp.theater.model;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -58,6 +56,7 @@ public class SeatDaoImpl implements SeatDao {
 	//상영관 당 좌석 목록 조회
 	@Override
 	public List<Seat> seatlist(String screenid) {
+		log.debug(screenid);
 		String sql = "select * from seat where screenid = ?";
 		return jdbcTemplate.query(sql, mapper, screenid);
 	}

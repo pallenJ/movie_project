@@ -4,7 +4,6 @@
 <h1>좌석 등록 페이지</h1>
 <html>
 <head>
-    <meta content-type="text/html; charset=UTF-8">
     <title>jQuery 배우기</title>
     <style>
         .empty-row{
@@ -75,9 +74,9 @@
             }
              
         });
-       	/*
+       	
         $("#list").submit(function(){
-        	var str = "sdf";  
+        	var str = "";  
             $("input[type=checkbox]:checked").each(function (index) {  
                 str += $(this).val() + ",";  
             });  
@@ -85,7 +84,7 @@
             console.log(str);
             return true;
         });
-       	*/
+       	
         
         function send(){
        		//var str = "";  

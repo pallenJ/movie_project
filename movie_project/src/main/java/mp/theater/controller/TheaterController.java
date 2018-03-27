@@ -23,7 +23,7 @@ public class TheaterController {
 	//영화관 등록
 	@RequestMapping("/theater/register")
 	public String register(HttpSession session) {
-		session.setAttribute("id", "member11");
+		session.setAttribute("id", "test");
 		return "/theater/register";
 	}
 	@RequestMapping(value="/theater/register", method=RequestMethod.POST)
@@ -41,7 +41,7 @@ public class TheaterController {
 	//영화관 상세 조회 (지점 입장)
 	@RequestMapping("/theater/my")
 	public String my(HttpSession session, Model model) {
-		session.setAttribute("id", "member11");
+		session.setAttribute("id", "test");
 		Theater t = theaterService.my(session.getAttribute("id").toString());
 		model.addAttribute("theater", t);
 		return "/theater/my";
