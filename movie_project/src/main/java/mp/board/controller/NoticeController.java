@@ -98,10 +98,7 @@ public class NoticeController {
 		
 		int no;
 		String id = (String) session.getAttribute("loginId");
-		if(id==null||id=="") {
-			model.addAttribute("re_login_myInfo", true);
-			return "member/login";
-		}
+		
 		try {
 			no=Integer.parseInt(request.getParameter("no"));
 		} catch (Exception e) {
@@ -110,6 +107,11 @@ public class NoticeController {
 		String grade = (String)session.getAttribute("loginGrade");
 		Notice notice = noticeDao.noticedetail(no);
 		
+		if(id==null||id=="") {
+			model.addAttribute("contents",notice);
+//			log.debug(noticeDao.noticedetail(no).toString());
+			return "board/notice_show";
+		}
 		if(!grade.equals("관리자")&&!grade.equals("admin")){	
 		notice=noticeDao.readPlus(notice);
 		}
