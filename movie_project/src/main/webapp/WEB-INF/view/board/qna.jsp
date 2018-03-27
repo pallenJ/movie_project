@@ -23,6 +23,9 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
+
+
 <div align="center">
 	<h1>게시판</h1>
 
@@ -75,7 +78,15 @@
 	</c:if>
 
 
-
+	<script type="text/javascript">
+	  	$(document).ready(function() {
+	  		$(".form").submit(function() {
+	  			event.preventDefault();
+	  			submitIgnoreGuard(this);
+	  		})
+	  	})u
+	
+	</script>
 
 
 
@@ -117,7 +128,7 @@
 						<td><c:if test="${qnaitem.gno>0}">
 						&nbsp; └
 						</c:if> <font color="gray" size="2">[${qnaitem.head}]</font> <a
-							href="<c:url value='/qnaShow'></c:url>?no=${qnaitem.no}">${qnaitem.title}</a>
+							href="<c:url value='/qnaShow'></c:url>?no=${qnaitem.no}" onclick="moveIgnoreGuard($(location).attr('href'))">${qnaitem.title}</a>
 							<c:if test="${qnaitem.secret == 's'}">
 								<font color="red" size="2">[비밀글]</font>
 							</c:if></td>

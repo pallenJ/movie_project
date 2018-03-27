@@ -30,7 +30,7 @@
 <c:if test="${re_login_login}">
 	<script type="text/javascript">
 		alert('이미 로그인한 상태입니다.');
-		history.back(-2);
+		history.back();
 	</script>
 </c:if>
 

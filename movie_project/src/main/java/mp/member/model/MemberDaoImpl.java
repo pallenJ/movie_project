@@ -123,5 +123,12 @@ public class MemberDaoImpl implements MemberDao{
 		String sql = "delete * from member where id=? and pw=? and grade='관리자'";
 		return jdbcTemplate.update(sql,adminpw,memberid)>0;
 	}
-	
+	@Override
+	public int idCheck(String id) {
+		String sql = "select * from member where id = ?";
+		int size = (jdbcTemplate.query(sql,mapper, id)).size();
+		
+		log.debug("size={}",size);
+		return size;
+	}
 }

@@ -25,6 +25,7 @@
 
 </head>
 <body>
+	<form action="<c:url value='/noticewrite'></c:url>" method="post">
 	<table class="table table-bordered  table-hover" align="center"  style="position: relative; width: 80%; top:30px">
 
 		<thead>
@@ -32,32 +33,27 @@
 				<th colspan="100%"><h1 align="center"> 글쓰기 </h1></th>
 			</tr>
 			<tr>
-				<th><h4> 글머리 </h3></th>
+				<th><h3> 글머리 </h3></th>
 					<td>
 
 						<div class="dropdown">
-							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-								Dropdown
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-							</ul>
+							<select class="form-control" name="head">
+								<option>공지사항</option>
+								<option>이벤트</option>
+								<option>기타</option>
+							</select>
 						</div>
 
 					</td>
 					<th colspan="30%"><h4>제목</h4></th>
-					<td colspan="50%"><input type="text" style="width: 100%;"></td>
+					<td colspan="50%"><input type="text" style="width: 100%;" name="title" required/></td>
 					<tr></tr>
 					<tr></tr>
 				</thead>
 				<tbody>
 					<tr>
 						<th colspan="100%" style="height: 500px;">
-							<textarea style="width:100%; height: 100%"></textarea>
+							<textarea style="width:100%; height: 100%" name="content" required/></textarea>
 						</th>
 					</tr>
 
@@ -70,7 +66,7 @@
 							<div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
 
 								<div class="btn-group" role="group">
-									<button type="button" class="btn btn-default">글쓰기</button>
+									<button type="submit" class="btn btn-default">글쓰기</button>
 								</div>
 
 								<div class="btn-group" role="group">
@@ -81,7 +77,7 @@
 						</div></td></tr>
 					</tfoot>
 				</table>
-
+				</form>
 				<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 				<!-- Include all compiled plugins (below), or include individual files as needed -->

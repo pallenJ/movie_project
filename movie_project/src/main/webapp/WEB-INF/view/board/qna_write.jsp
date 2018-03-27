@@ -50,7 +50,7 @@
 					<td>
 
 						<div class="dropdown">
-							<select id="company" class="form-control" name="head">
+							<select class="form-control" name="head">
 								<option>일반문의</option>
 								<option>정보관련</option>
 								<option>환불관련</option>

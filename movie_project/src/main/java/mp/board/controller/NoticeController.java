@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import mp.board.bean.Notice;
+import mp.board.bean.Qna;
 import mp.board.model.NoticeDao;
 import mp.board.service.NoticeService;
 import mp.member.controller.MemberController;
@@ -23,13 +26,17 @@ import mp.member.model.MemberDao;
 @Controller
 public class NoticeController {
 	
-	private Logger log = LoggerFactory.getLogger(MemberController.class);
+	private Logger log = LoggerFactory.getLogger(getClass());
 //	@Autowired
 //	private HttpSession session;
 	//HttpServletResponse response,
 	
 	@Autowired
 	HttpSession session;
+	
+	@Autowired
+	HttpServletRequest request;
+	
 	@Autowired
 	private NoticeService noticeService;  
 	
@@ -40,7 +47,7 @@ public class NoticeController {
 	private MemberDao memDao;  
 	
 	@RequestMapping("/notice")
-	public String notice(HttpServletRequest request,Model model) {
+	public String notice(Model model) {
 		int cnum=10;
 		int pnum=10;
 		
@@ -70,7 +77,7 @@ public class NoticeController {
 		return "board/notice";
 	}
 	@RequestMapping(value={"/noticeshow","/noticeShow","/notice_show"})
-	public String noticeShow(HttpServletRequest request,Model model) {
+	public String noticeShow(Model model) {
 		
 		int no;
 		
@@ -85,9 +92,9 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value= {"/noticeWrite","/noticewrite","/notice_write"})
-	public String noticeWrite(HttpServletRequest request) {
+	public String noticeWrite() {
 		String id = (String) session.getAttribute("loginId");
-		String grade = (String) session.getAttribute("grade");
+		String grade = (String) session.getAttribute("loginGrade");
 		boolean flag = id!=null;
 		if(!flag) {
 			log.debug("먼저 로그인 해주세요");
@@ -99,4 +106,42 @@ public class NoticeController {
 		  
 		return "/board/notice_write";
 	}
+
+	@RequestMapping(value= {"/noticeWrite","/noticewrite","/notice_write"}, method = RequestMethod.POST)
+	public String noticeWrite(String head, String title,String content) {
+		String id = (String) session.getAttribute("loginId");
+		noticeService.noticeWrite(id, head, title, content);
+		return "redirect:/notice";
+	}
+	
+	@RequestMapping(value= {"/noticeDelete","/noticedelete","/notice_delete"})
+	public String noticeDelete(String no,Model model) {
+		String grade = (String) session.getAttribute("loginGrade");
+		
+		if(!grade.equals("admin")&&!grade.equals("관리자")) {
+			log.debug("권한이 부족합니다.");
+			return "redirect:/notice";
+		}
+		request.setAttribute("no", Integer.parseInt(no));
+		return "board/notice_delete";
+	}
+	
+	@RequestMapping(value= {"/noticeDelete","/noticedelete","/notice_delete"}, method = RequestMethod.POST)
+	public String noticeDelete(String no,String pw,Model model) {
+		int bno = Integer.parseInt(no);
+		boolean flag=noticeDao.noticedelete(bno, pw);
+		
+		log.debug("no={}",bno);
+		log.debug("pw={}",pw);
+		log.debug("삭제"+(flag?"성공":"실패"));
+		return "redirect:/notice";
+	}
+	
+	@RequestMapping(value={})
+	public String noticeEdit() {
+//		String grade = session.get
+		
+		return "board/notice_edit";
+	}
+	
 }

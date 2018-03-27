@@ -12,6 +12,7 @@ public interface NoticeDao {
 	  
 	//전체 공지 목록
 	List<Notice> noticelist();
+	List<Notice> noticeSearch(String search , String keyword);
 	
 	//공지 정보 상세보기
 	Notice noticedetail(int no);
@@ -22,4 +23,6 @@ public interface NoticeDao {
 	//공지 삭제
 	boolean noticedelete(int no, String adminpw);
 
+	Notice readPlus(Notice notice);
+	
 }	

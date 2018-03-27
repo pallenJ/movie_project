@@ -1,5 +1,7 @@
 package mp.member.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -69,7 +71,6 @@ public class MemberController {
 		String  grade	 =memDao.myinfo(id).getGrade();
 		
 		session.setAttribute("loginId", id);
-		session.setAttribute("grade", grade);
 		request.setAttribute("loginId", id);
 		session.setAttribute("loginGrade", memberservice.myinfo(id).getGrade());
 		session.setAttribute("myInfo", memberservice.myinfo(id));
@@ -94,7 +95,7 @@ public class MemberController {
 		  return "/home";
 		}else {
 			model.addAttribute("re_reg_reg", "no");	
-		return "/register";
+		return "member/register";
 		}
 	}
 //-----------------------------------------------------------------------------------------	
@@ -160,5 +161,13 @@ public class MemberController {
 		}
 		return "member/login";
 	}
+	@RequestMapping({"/idCheck","/idcheck","/id_check"})
+	public String idCheck(String id,Model model) {
+		log.debug("id={}",id);
+		request.setAttribute("re_idCheck", memDao.idCheck(id));
+		model.addAttribute("re_idCheck", memDao.idCheck(id));
+		
+		return "member/register";
+		}
 	//--------------------------------------------------------
 }

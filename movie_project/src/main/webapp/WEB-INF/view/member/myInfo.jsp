@@ -42,7 +42,9 @@
     <c:if test="${re_login_success}">
     	<script> alert('환영합니다'); </script>
     </c:if>
-    
+    <c:if test="${re_reg_reg eq 'no'}">
+    	<script> history.back(); </script>
+    </c:if>
     <div align="center"> <h1> 내정보</h1> </div><hr>
   </head>
   <body>

@@ -43,4 +43,6 @@ public interface MemberDao {
 	
 	//회원삭제
 	boolean admindelete(String adminpw, String memberid);
+
+	int idCheck(String id);
 }

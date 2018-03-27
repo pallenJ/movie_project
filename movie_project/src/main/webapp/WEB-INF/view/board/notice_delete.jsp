@@ -21,9 +21,9 @@
 </head>
 <body>
 <div align="center" style="position: relative;top: 30%;">
-	<form action="<c:url value='/qnadelete'></c:url>" method="post" class="form-inline form-group">
+	<form action="<c:url value='/noticedelete'></c:url>" method="post" class="form-inline form-group">
   
-      	<input type="hidden" id="no" name="no" value="${requestScope.no}">
+      	<input type="hidden" name="no" value="${requestScope.no}">
         <span class="input-group-btn">
     	<label class="sr-only" for="pw">pw</label>
     	<input type="password" class="form-control" id="pw" name="pw" placeholder="Password" required>

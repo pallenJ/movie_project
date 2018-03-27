@@ -25,7 +25,7 @@ import mp.member.model.MemberDao;
 @Controller
 public class QnaController {
 	
-	private Logger log = LoggerFactory.getLogger(MemberController.class);
+	private Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private HttpSession session;
 	
@@ -188,7 +188,7 @@ public class QnaController {
 	public String qnaDelete(String no,Model model) {
 		int bno = Integer.parseInt(no);
 		Qna qna = qnaDao.qnadetail(bno);
-		String grade = (String) session.getAttribute("grade");
+		String grade = (String) session.getAttribute("loginGrade");
 		model.addAttribute("re_qna", true);
 		
 		if(!session.getAttribute("loginId").equals(qna.getWriterId())&&!grade.equals("admin")

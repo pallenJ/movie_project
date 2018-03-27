@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import mp.board.bean.Notice;
 import mp.board.model.NoticeDao;
+import mp.member.model.MemberDao;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService{
 	
 	@Autowired
 	NoticeDao noticeDao;
+	
+	@Autowired
+	MemberDao memDao;
 	
 	@Override
 	public List<Notice> noticePaging(int page,int cnum) {
@@ -46,6 +50,20 @@ public class NoticeServiceImpl implements NoticeService{
 		int pagingNum=pnum*((page-1)/pnum);
 		int pageLast = last-pagingNum>=pnum?pnum:last%pnum;
 		return new int[]{pagingNum,pageLast,last,page};
+	}
+
+	@Override
+	public void noticeWrite(String id, String head, String title,  String content) {
+		 String writer = 	memDao.myinfo(id).getNo();
+		 
+		 Notice notice = new Notice();
+		 
+		 notice.setHead(head);
+		 notice.setTitle(title);
+		 notice.setContent(content);
+		 notice.setWriter(writer);
+		 
+		 noticeDao.register(notice);
 	}
 
 	

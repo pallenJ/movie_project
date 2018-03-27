@@ -51,9 +51,8 @@
 				<tr>
 					<th width="10%">번호</th>
 					<th width="50%">제목</th>
-					<th width="10%">작성자</th>
 					<th width="20%">작성일</th>
-					<th width="10%">조회</th>
+					<th width="20%">조회</th>
 				</tr>
 
 			</thead>
@@ -66,9 +65,8 @@
 				<c:forEach var="noticeitem" items="${noticelist}">
 					<tr>
 						<td>${noticeitem.no}</td>
-						<td><font color="gray" size="2">${noticeitem.head}</font> <a
+						<td><font color="gray" size="2">[${noticeitem.head}]</font> <a
 							href="<c:url value='/noticeShow'></c:url>?no=${noticeitem.no}">${noticeitem.title}</a></td>
-						<td>${noticeitem.writer}</td>
 						<td>${noticeitem.reg}</td>
 						<td>${noticeitem.read}</td>
 					</tr>
