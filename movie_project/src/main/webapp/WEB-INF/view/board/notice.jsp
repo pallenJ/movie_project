@@ -29,11 +29,15 @@
 
 </head>
 <body>
-	 <form action="<c:url value='/noticewrite'></c:url>">	
-		<div align="center">
-			<button type="submit" class="btn btn-default" style= "position: relative; left: 360px;">글쓰기</button>
+	<c:if test="${sessionScope.grade eq 'admin' or sessionScope.grade eq '관리자'}">
+		<form action="<c:url value='/noticewrite'></c:url>">
+			<div align="center">
+				<button type="submit" class="btn btn-default"
+					style="position: relative; left: 360px;">글쓰기</button>
 			</div>
-			  </form>
+		</form>
+	</c:if>
+
 	<!--전체를 감는 div-->
 	 
 	<div align="center">

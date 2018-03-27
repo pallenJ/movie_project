@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import mp.board.model.NoticeDao;
 import mp.board.service.NoticeService;
 import mp.member.controller.MemberController;
+import mp.member.model.MemberDao;
 
 @Controller
 public class NoticeController {
@@ -28,10 +29,15 @@ public class NoticeController {
 	//HttpServletResponse response,
 	
 	@Autowired
+	HttpSession session;
+	@Autowired
 	private NoticeService noticeService;  
 	
 	@Autowired
 	private NoticeDao noticeDao;  
+	
+	@Autowired
+	private MemberDao memDao;  
 	
 	@RequestMapping("/notice")
 	public String notice(HttpServletRequest request,Model model) {
@@ -80,11 +86,17 @@ public class NoticeController {
 	
 	@RequestMapping(value= {"/noticeWrite","/noticewrite","/notice_write"})
 	public String noticeWrite(HttpServletRequest request) {
-		boolean flag = request.getParameter("loginId")!=null;
+		String id = (String) session.getAttribute("loginId");
+		String grade = (String) session.getAttribute("grade");
+		boolean flag = id!=null;
 		if(!flag) {
 			log.debug("먼저 로그인 해주세요");
-			return "redirect:/Notice";
+			return "redirect:/notice";
+		}else if(!grade.equals("admin")&&!grade.equals("관리자")) {
+			log.debug("권한이 부족합니다.");
+			return "redirect:/notice";
 		}
+		  
 		return "/board/notice_write";
 	}
 }

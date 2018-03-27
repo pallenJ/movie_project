@@ -74,9 +74,8 @@
 						<div class="btn-group btn-group-justified" role="group"
 							aria-label="Justified button group">
 
-							<c:choose>
 
-								<c:when test="${(sessionScope.loginId eq contents.writerId)
+								<c:if test="${(sessionScope.loginId eq contents.writerId)
 								or sessionScope.grade eq 'admin' or sessionScope.grade eq '관리자'
 								}">
 									<form action="<c:url value='/qnaedit'></c:url>" class="btn-group" role="group">
@@ -88,9 +87,9 @@
 										<input type="hidden" name="no" value="${contents.no}">
 										<button type="submit" class="btn btn-default">삭제</button>
 									</form>
-								</c:when>
+								</c:if>
 
-								<c:when test="${contents.gno<1}">
+								<c:if test="${contents.gno<1 and (sessionScope.loginId ne contents.writerId)}">
 									<form class="btn-group"
 										action="<c:url value='/qnawrite'></c:url>" role="group">
 										<input type="hidden" name="parent" value="${contents.no}">
@@ -98,8 +97,8 @@
 										<button type="submit" class="btn btn-default">답글쓰기</button>
 									</form>
 
-								</c:when>
-							</c:choose>
+								</c:if>
+
 
 
 

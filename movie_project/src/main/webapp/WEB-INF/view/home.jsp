@@ -5,14 +5,28 @@
 <html>
 <head>
 <title>Insert title here</title>
+
 </head>
 <body>
+	<c:if test="${re_login_home}">
+		<script type="text/javascript">
+			alert('로그인 성공');
+		</script>
+	</c:if>
 	<h1>환영합니다</h1>
 	<div align="right">
-	 <a href="<c:url value='/login'/>">로그인</a>/
-	 <a href="<c:url value='/register'/>">회원가입</a>/
-	 <br>
-	 <a href="<c:url value='/logout'/>">로그아웃</a>/
+	
+	<c:choose>
+	
+		<c:when test="${loginId eq null||loginId eq ''}">
+			<a href="<c:url value='/login'/>">로그인</a>/
+	 		<a href="<c:url value='/register'/>">회원가입</a>/
+		</c:when>
+		<c:otherwise> <a href="<c:url value='/logout'/>">로그아웃</a>/</c:otherwise>
+	</c:choose>
+	 
+	 
+	
 	 <a href="<c:url value='/myinfo'/>">내정보</a>/
 	</div>
 	

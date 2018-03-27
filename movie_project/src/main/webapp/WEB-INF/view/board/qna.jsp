@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <html>
 <head>
 <meta charset="utf-8">
@@ -23,20 +25,71 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <div align="center">
 	<h1>게시판</h1>
+
 </div>
 <hr>
 <br>
 
 </head>
 <body>
-	 <form action="<c:url value='/qnawrite'></c:url>">	
+	<c:if test="${re_edit_qna}">
+		<script type="text/javascript">
+			alert('수정이 완료되었습니다.');
+		</script>
+	</c:if>
+	
+	<c:if test="${re_qna_none}">
+		<script type="text/javascript">
+			alert('없는 글입니다.');
+		</script>
+	</c:if>
+	<c:if test="${re_qna_secret}">
+		<script type="text/javascript">
+			alert('비밀 글입니다.');
+			history.back();
+		</script>
+	</c:if>
+	
+	<c:if test="${re_qna_dfail eq 0}">
+		<script type="text/javascript">
+			alert('관리자 혹은 본인만 삭제 가능합니다.');
+		</script>
+	</c:if>
+	
+	<c:if test="${re_qna_dfail eq 2}">
+		<script type="text/javascript">
+			alert('삭제를 실패했습니다.');
+		</script>
+	</c:if>
+	
+	<c:if test="${re_qna_delete eq 1}">
+		<script type="text/javascript">
+			alert('삭제가 완료 되었습니다.');
+		</script>
+	</c:if>
+
+	<c:if test="${re_qna}">
+		<script type="text/javascript">
+			location.href = 'qna';
+		</script>
+	</c:if>
+
+
+
+
+
+
 		<div align="center">
-			<button type="submit" class="btn btn-default" style= "position: relative; left: 360px;">글쓰기</button>
-			</div>
-			  </form>
+		
+	<form action="<c:url value='/qnawrite'></c:url>" style="position: relative; left: 350px;">
+			<button type="submit" class="btn btn-default btn-group"
+				>글쓰기</button>
+	</form>
+		</div>
 	<!--전체를 감는 div-->
-	 
+
 	<div align="center">
+
 		<!-- ==================================================== -->
 		<!--   게시판 글 목록-->
 		<table class="table table-striped table-bordered table-hover"
@@ -57,23 +110,17 @@
 			<!-- 샘플로 넣은 데이터-->
 
 
-
 			<tbody>
 				<c:forEach var="qnaitem" items="${qnalist}">
 					<tr>
 						<td>${qnaitem.no}</td>
-						<td>
-						<c:if test="${qnaitem.gno>0}">
+						<td><c:if test="${qnaitem.gno>0}">
 						&nbsp; └
-						</c:if>
-						
-						<font color="gray" size="2">[${qnaitem.head}]</font> <a
+						</c:if> <font color="gray" size="2">[${qnaitem.head}]</font> <a
 							href="<c:url value='/qnaShow'></c:url>?no=${qnaitem.no}">${qnaitem.title}</a>
 							<c:if test="${qnaitem.secret == 's'}">
-							<font color="red" size="2">[비밀글]</font>
-							</c:if>
-							
-							</td>
+								<font color="red" size="2">[비밀글]</font>
+							</c:if></td>
 						<td>${qnaitem.writerId}</td>
 						<td>${qnaitem.reg}</td>
 						<td>${qnaitem.read}</td>
@@ -90,13 +137,13 @@
 		<!-- ==================================================== -->
 		<!-- 검색 기능 -->
 		<form action="<c:url value='/qna'></c:url>">
-		<div class=".col-lg-6" align="center" style="width: 500px">
-			<div class="input-group">
+			<div class=".col-lg-6" align="center" style="width: 500px">
+				<div class="input-group">
 
-				<!--       검색 옵션 선택(드롭다운)-->
-				<div class="input-group-btn">
+					<!--       검색 옵션 선택(드롭다운)-->
+					<div class="input-group-btn">
 
-					<div class="dropdown" style="width:90px;">
+						<div class="dropdown" style="width: 90px;">
 							<select class="form-control btn btn-default" name="search">
 								<option value="title">제목</option>
 								<option value="content">내용</option>
@@ -104,18 +151,19 @@
 							</select>
 						</div>
 
+					</div>
+					<!-- 검색할 단어 입력-->
+					<input type="text" class="form-control" name="keyword"
+						placeholder="Search for..."> <span class="input-group-btn">
+						<!-- 검색버튼-->
+						<button class="btn btn-default" type="submit">검색</button>
+					</span>
+
 				</div>
-				<!-- 검색할 단어 입력-->
-				<input type="text" class="form-control" name="keyword" placeholder="Search for...">
-
-				<span class="input-group-btn"> <!-- 검색버튼-->
-					<button class="btn btn-default" type="submit">검색</button>
-				</span>
-
+				<!-- /input-group -->
 			</div>
-			<!-- /input-group -->
-		</div>
-		
+			
+
 		</form>
 		<!-- /.col-lg-6 -->
 		<br>
@@ -156,9 +204,22 @@
 						</c:if></li>
 				</ul>
 			</nav>
+			<div class="btn-group" style="position: relative; left: 250px;">
+			<c:if
+				test="${requestScope.keyword ne null||requestScope.keyword ne ''}">
+				<button onclick="location.href='qna';" role="group"
+					class="btn btn-primary btn-group"
+					>게시판홈으로</button>
+			</c:if>
+			
+			<a href="home" class="btn-group" role="group"
+				style="width:100px"><h4>홈으로</h4></a>
+				</div>	
 		</div>
-		<!-- ==================================================== -->
 	</div>
+		<!-- ==================================================== -->
+
+
 	<!--/bs-example -->
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->

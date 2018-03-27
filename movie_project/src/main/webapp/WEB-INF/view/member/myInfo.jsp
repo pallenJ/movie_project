@@ -34,12 +34,22 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <c:if test="${re_login_myInfo}">
+    	<script> alert('이미 로그인 하신 상태입니다'); </script>
+    </c:if>
+    
+    <c:if test="${re_login_success}">
+    	<script> alert('환영합니다'); </script>
+    </c:if>
+    
     <div align="center"> <h1> 내정보</h1> </div><hr>
   </head>
   <body>
        
     <div align="center">
       <form action="edit" id="forEdit">
+      	
       <!-- Table -->
       <table class="table table-bordered" align="center"  style="position: relative; width: 400px; top:30px">
         
@@ -93,7 +103,7 @@
     
     <button type="submit" class="btn btn-primary" style="width: 100px">내정보 수정</button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" onClick="history.back();" class="btn btn-warning"  style="width: 100px">취소</button>
+    <button type="button" onClick="location.href='home'" class="btn btn-warning"  style="width: 100px">홈으로</button>
    </form>
     <form action="logout" id="forLogout">
      <button type="submit" class="btn btn-default" style="width: 200px" >로그아웃</button>

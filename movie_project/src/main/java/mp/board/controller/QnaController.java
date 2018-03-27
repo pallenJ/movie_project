@@ -3,7 +3,9 @@ package mp.board.controller;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -26,8 +28,12 @@ public class QnaController {
 	private Logger log = LoggerFactory.getLogger(MemberController.class);
 	@Autowired
 	private HttpSession session;
-	//HttpServletResponse response,
 	
+	@Autowired
+	private HttpServletResponse response;
+	
+	@Autowired
+	private HttpServletRequest request;
 	
 	
 	@Autowired
@@ -40,7 +46,7 @@ public class QnaController {
 	private QnaDao qnaDao;  
 	
 	@RequestMapping("/qna")
-	public String qna(HttpServletRequest request,Model model) {
+	public String qna(Model model) {
 		//[1]한 페이지에 나와야 할 글의 개수, 몇개씩 페이징 할지 지정
 		int cnum=10;
 		int pnum=10;
@@ -102,23 +108,18 @@ public class QnaController {
 		return "board/qna";
 	}
 	@RequestMapping(value={"/qnashow","/qnaShow","/qna_show"})
-	public String qnaShow(HttpServletRequest request,Model model) {
+	public String qnaShow(Model model) {
 		//비로그인 상태일시 로그인 후 글을 볼 수 있음
 		String loginId = (String) session.getAttribute("loginId");
 		if(loginId==null) {
 			log.debug("먼저 로그인 하세요");
-			return "redirect:/login";
+			model.addAttribute("re_login_myInfo", true);
+			return "member/login";
 		}
 		
 		//글번호 정보가 없을때 예외처리.(글목록으로 보냄)
-		int no;
+		int no=Integer.parseInt(request.getParameter("no"));;
 		
-		try {
-			no=Integer.parseInt(request.getParameter("no"));
-		} catch (Exception e) {
-			return "redirect:/qna";
-		}
-			
 		//자신 이외의 사람이 글을 읽을경우 조회수 증가
 		    Qna qna = qnaDao.qnadetail(no);
 		    if(!loginId.equals(qna.getWriterId())) {
@@ -126,7 +127,8 @@ public class QnaController {
 		    	String grade = memDao.myinfo(loginId).getGrade();
 		    	if(qna.getSecret().equals("s")&&!grade.equals("admin")&&!grade.equals("관리자")) {
 		    	 log.debug("비밀글입니다");	
-				 return "redirect:/qna";
+		    	 model.addAttribute("re_qna_secret", true);
+				 return "board/qna";
 		    	}
 		    	qna = qnaDao.readPlus(qna);
 		    }
@@ -138,7 +140,7 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value= {"/qnaWrite","/qnawrite","/qna_write"})
-	public String qnaWrite(HttpServletRequest request,String parent,String gno) {
+	public String qnaWrite(String parent,String gno,Model model) {
 		
 		log.debug("parent={}",parent);
 		log.debug("gno={}",gno);
@@ -148,7 +150,8 @@ public class QnaController {
 		boolean flag = id!=null;
 		if(!flag) {
 			log.debug("먼저 로그인 해주세요");
-			return "redirect:/login";
+			model.addAttribute("re_login_myInfo", true);
+			return "/login";
 		}
 		if(parent!=null&&gno!=null) {
 			request.setAttribute("parent", parent);
@@ -159,7 +162,7 @@ public class QnaController {
 	
 	@RequestMapping(value= {"/qnaWrite","/qnawrite","/qna_write"},method=RequestMethod.POST)
 	public String qnaWrite(String head,String title,String secret,String content,
-						   String parent,String gno) {
+						   String parent,String gno,Model model) {
 		
 		log.debug("parent={}",parent);
 		log.debug("gno={}",gno);
@@ -170,7 +173,8 @@ public class QnaController {
 		log.debug("qna id={}",id);
 		if(id.equals("")||id==null) {
 			log.debug("먼저 로그인 해주세요");
-			return "redirect:/login";
+			model.addAttribute("re_login_myInfo", true);
+			return "/login";
 		}
 		if(gno!=null) {
 			qnaService.qnaWrite(id, head, title, secret, content, parent);
@@ -181,33 +185,42 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value= {"/qnaDelete","/qnadelete","/qna_delete"})
-	public String qnaDelete(HttpServletRequest request,String no) {
+	public String qnaDelete(String no,Model model) {
 		int bno = Integer.parseInt(no);
 		Qna qna = qnaDao.qnadetail(bno);
 		String grade = (String) session.getAttribute("grade");
+		model.addAttribute("re_qna", true);
 		
 		if(!session.getAttribute("loginId").equals(qna.getWriterId())&&!grade.equals("admin")
 				&&!grade.equals("관리자")) {
-		return "redirect:/qna";
+		model.addAttribute("re_qna_delete", 0);	
+		return "/qna";
 		}else if(grade.equals("admin")||grade.equals("관리자")) {
-			if(qnaDao.qnadelete(bno)) 
-				return "redirect:/qna";
+			if(qnaDao.qnadelete(bno)) {
+				model.addAttribute("re_qna_delete", 1);
+				return "/qna";
+				}else {
+					model.addAttribute("re_qna_delete", 2);
+				return "/qna";
+				}
 		}
+		model.addAttribute("re_qna_delete", 1);
 		request.setAttribute("no", bno);
 		return "board/qna_delete";
 	}
 	@RequestMapping(value= {"/qnaDelete","/qnadelete","/qna_delete"},method=RequestMethod.POST)
-	public String qnaDelete(String no,String pw) {
+	public String qnaDelete(String no,String pw,Model model) {
 		int bno = Integer.parseInt(no);
 		boolean flag=qnaDao.qnadelete(bno, pw);
 		
 		log.debug("삭제"+(flag?"성공":"삭제"));
-		
-		return "redirect:/qna";
+		model.addAttribute("re_qna_delete", flag?1:2);
+		model.addAttribute("re_qna", true);
+		return "/qna";
 	}
 	
 	@RequestMapping(value= {"/qnaEdit","/qnaedit","/qna_edit"})
-	public String qnaEdit(HttpServletRequest request,String no,Model model) {
+	public String qnaEdit(String no,Model model) {
 		int bno = Integer.parseInt(no);
 		request.setAttribute("no", bno);
 		
@@ -216,9 +229,11 @@ public class QnaController {
 		return "board/qna_edit";
 	}
 	@RequestMapping(value= {"/qnaEdit","/qnaedit","/qna_edit"},method=RequestMethod.POST)
-	public String qnaEdit(String no,String head,String title,String content, String secret) {
+	public String qnaEdit(String no,String head,String title,String content, String secret,Model model) {
 		qnaService.qnaEdit(no, head, title, content, secret);
-		return "redirect:/qna";
+		model.addAttribute("re_edit_qna", true);
+		model.addAttribute("re_qna", true);
+		return "board/qna";
 	}
 	
 	

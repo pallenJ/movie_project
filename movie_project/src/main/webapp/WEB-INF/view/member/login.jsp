@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
+
 <head>
 	<title>로그인</title>
 
@@ -19,16 +20,38 @@
 
 </head>
 <body>
+<c:if test="${re_login_fail}">
+	<script type="text/javascript">
+		alert('로그인에 실패했습니다.');
+		location.href='login';
+	</script>
+</c:if>
 
+<c:if test="${re_login_login}">
+	<script type="text/javascript">
+		alert('이미 로그인한 상태입니다.');
+		history.back(-2);
+	</script>
+</c:if>
+
+<c:if test="${re_login_myInfo}">
+	<script type="text/javascript">
+		alert('먼저 로그인 해주세요');
+		location.href='login';
+	</script>
+</c:if>
 <div align="center">
-	<br><br><br><br><br>
-	<h1>Sign in</h1><br>
+	<br><br>
+	<a href="home"><h3>홈으로</h3></a>
+	<hr style="width: 40%; color: blue;">
+	<br>
+	<h1>로그인</h1><br>
 	<form class="form-inline" action="login" method="post">
   
   	<div class="form-group">
-    	
+    
     	<label class="sr-only" for="id">id</label>
-    	<input type="text" class="form-control" name="id" placeholder="Enter Id" required>
+    	<input type="text" class="form-control" name="id" placeholder="Id" required>
     	
   	</div>
   
@@ -41,17 +64,17 @@
  
   
   	<br><br>
-  	<button type="submit" class="btn btn-default" style="width:15%; height:50px;">Sign in</button>
+  	<button type="submit" class="btn btn-default" style="width:15%; height:50px;">로그인</button>
   	<br>
    <!--  <label>
       <input type="checkbox"> Remember me
     </label> -->
     <br>
 	</form>
-	
     <form action="register">
-    <hr style="width: 30%">
-    <button type="submit" class="btn btn-primary btn-lg" style="width:22%; height: 70px;">Sign up now!</button>
+    <hr style="width: 40%">
+	<br>
+    <button type="submit" class="btn btn-primary btn-lg" style="width:22%; height: 70px;">회원가입</button>
     </form>
 
 </div>
