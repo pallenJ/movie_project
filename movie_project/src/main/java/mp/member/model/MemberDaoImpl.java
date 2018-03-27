@@ -69,17 +69,20 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public String findid(String name, String birth, String phone) {
+	public String findid(String birth, String phone) {
 		// TODO Auto-generated method stub
-		String sql = "select id from member where name=? and birth=? and phone=?";
-		Object []args= {name,birth,phone};
+		String sql = "select * from member where birth=? and phone=?";
+		Object []args= {birth,phone};
 		Member member=jdbcTemplate.query(sql, extractor,args);
 		return member.getId();
 	}
 
 	@Override
-	public void findpw(String id, String email, String phone) {
-		// TODO Auto-generated method stub
+	public String findpw(String id, String birth) {
+		String sql = "select * from member where id=? and birth=?";
+		Object []args= {id,birth};
+		Member member=jdbcTemplate.query(sql, extractor,args);
+		return member.getPw();
 	}
 	
 	private RowMapper<Member> mapper = (rs,idx)->{

@@ -26,10 +26,10 @@ public interface MemberDao {
 	boolean delete(String id, String pw);
 	
 	//아이디 찾기
-	String findid(String name, String birth, String phone);
+	String findid(String birth, String phone);
 	
 	//비밀번호 찾기
-	void findpw(String id, String email, String phone);
+	String findpw(String id, String birth);
 	
 //------ 관리자 ------
 	//회원목록

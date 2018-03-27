@@ -64,9 +64,10 @@
 						<div class="btn-group btn-group-justified" role="group"
 							aria-label="Justified button group">
 							<c:if test="${sessionScope.loginGrade eq '관리자' or sessionScope.loginGrade eq 'admin'}">
-								<form action="" class="btn-group"
+								<form action="<c:url value='/noticeEdit'></c:url>" class="btn-group"
 									role="group">
-									<button type="button" class="btn btn-default">수정</button>
+									<input type="hidden" name="no" value="${contents.no}">
+									<button type="submit" class="btn btn-default">수정</button>
 								</form>
 								<form action="<c:url value='/noticeDelete'></c:url>" class="btn-group"
 									role="group">
@@ -77,7 +78,7 @@
 
 							<form action="<c:url value='/notice'></c:url>" class="btn-group"
 								role="group">
-								<button type="button" class="btn btn-default">글목록</button>
+								<button type="submit" class="btn btn-default">글목록</button>
 							</form>
 
 						</div>

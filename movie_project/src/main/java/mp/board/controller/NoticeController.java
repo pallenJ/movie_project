@@ -137,6 +137,20 @@ public class NoticeController {
 		return "redirect:/notice";
 	}
 	
+	@RequestMapping(value= {"/noticeEdit","/noticeedit","/notice_edit"})
+	public String noticeEdit(String no,Model model) {
+		String grade = (String) session.getAttribute("loginGrade");
+		
+		if(!grade.equals("admin")&&!grade.equals("관리자")) {
+			log.debug("권한이 부족합니다.");
+			return "redirect:/notice";
+		}
+		int bno = Integer.parseInt(no);
+		Notice notice = noticeDao.noticedetail(bno);
+		model.addAttribute("before",notice);
+		return "board/notice_edit";
+	}
+	
 	@RequestMapping(value={})
 	public String noticeEdit() {
 //		String grade = session.get
