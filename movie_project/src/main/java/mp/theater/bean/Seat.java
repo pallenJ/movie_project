@@ -11,6 +11,9 @@ public class Seat {
 	private int seatdiscount;
 	
 	public Seat() {}
+	public Seat(String reallocation) {
+		this.setReallocation(reallocation);
+	}
 	public Seat(ResultSet rs) throws SQLException {
 		setId(rs.getString("id"));
 		setScreenid(rs.getString("screenid"));
@@ -57,5 +60,28 @@ public class Seat {
 	
 	public void setSeatdiscount(int seatdiscount) {
 		this.seatdiscount = seatdiscount;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((reallocation == null) ? 0 : reallocation.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Seat other = (Seat) obj;
+		if (reallocation == null) {
+			if (other.reallocation != null)
+				return false;
+		} else if (!reallocation.equals(other.reallocation))
+			return false;
+		return true;
 	}
 }

@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>jQuery 배우기</title>
+
     <style>
         .empty-row{
             height: 20px;
@@ -72,82 +70,44 @@
             });
         }
         
-        function selectScreen(){
-            //셀렉트 옵션 가져오기
-            var screenselect = document.getElementById("screenselect");
-                $.ajax({
-                	type: 'POST',
-                    url: "http://localhost:8080/movie_project/seat/list",
-                    data:{ 
-                    	screenid:screenselect.options[screenselect.selectedIndex].value,
-                    },
-                    dataType:"text",
-                    success: function(value){
-//                     	alert(value);
-//                     	alert(screenselect.options[screenselect.selectedIndex].value);
-//                     	$("#screenno").text(screenselect.options[screenselect.selectedIndex].text + "관");
-						$(".area").html(value);
-                    }, 
-                    error: function(){
-                    	alert("실패");
-                    }
-                });
-        }
-        
         $(document).ready(function(){
         	var chk=0;
             for(var i="a".charCodeAt(0); i<="l".charCodeAt(0); i++){
                 for(var j=1; j<=23; j++){
                     var id = String.fromCharCode(i)+j;
-                    if(id=='${seat.get('+chk+').reallocation}'){ //seat객체 안넘어옴
+                    console.log("i :"+i);
+                    console.log("j :"+j);
+                    console.log(<%=request.getAttribute("seat.get().reallocation") %>);
+                	console.log('${seat.get('+chk+').reallocation}');
+                    if(id=='${seat.get(chk).reallocation}'){
+                    	alert(id);
 	                    createSeat(id, i - "a".charCodeAt(0), j, true);
 	                    chk++;
+	                    console.log("chk :"+chk);
+	                	console.log("get(1) :"+'${seat.get(1).reallocation}');
+	                	console.log("get(2) :"+'${seat.get(2).reallocation}');
                     } else {
                     	createSeat(id, i - "a".charCodeAt(0), j, false);
                     }
+                    
                 }
             }
             
         });
         
         function send(){
-       		//var str = "";  
             $("input[type=checkbox]:checked").each(function (index) {
             	var i = $("<input/>").attr("type", "hidden").attr("name", "seat").attr("value", $(this).val());
             	$("#content").append(i);
-                //str += $(this).val() + ",";  
             });  
-        	//$("#str").attr("value", str);
         };
         
     </script>
-</head>
-<body>
-    <h1>좌석 목록 페이지</h1>
-    <h2 id="screenno"></h2>
-    <h3 id="real"></h3>
-   <div class="area">
-       <div class="screen">screen</div>
-       <div class="empty-row"></div>
-       <div class="seats"></div>
-   </div>
-   <div class="empty-row"></div>
-   <div class="empty-row"></div>
-  <div id="content" style="text-align: center">
-   	상영관 : 
-   	<select id="screenselect" name="screen" onchange="selectScreen()">
-   		<c:forEach var="screen" items="${screen}">
-    		<option value="${screen.id }">${screen.no }</option>
-   		</c:forEach>
-   	</select>
-	<br>
-	<!-- 
-   	실제위치 : <input type="text" name="reallocation"/><br>
-   	서비스위치 : <input type="text" name="servicelocation"/><br>
-   	좌석할인 : <input type="text" name="seatdiscount"/><br>
-   	 -->
-  	</div>
-<h2><a href="<c:url value='/seat/register'/>">좌석 등록</a></h2>
-</body>
-</html>
-
+     <div class="screen">screen</div>
+     <div class="empty-row"></div>
+     <div class="seats"></div>
+   <!-- 
+    <c:forEach var="seat" items="${seat }">
+    	${seat.reallocation }
+    </c:forEach>
+ -->
