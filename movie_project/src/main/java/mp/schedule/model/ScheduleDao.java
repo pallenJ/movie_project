@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import mp.schedule.bean.Schedule;
+import mp.schedule.bean.ScheduleJoin;
 
 //상영시간표관리 DAO
 @Repository 
@@ -17,10 +18,10 @@ public interface ScheduleDao {
 		List<Schedule> schedulelist(String theater, String day);
 		
 		//업로더별 상영시간표 목록 조회
-		List<Schedule> schedulelist(String uploader);
+		List<ScheduleJoin> schedulelist(String uploader);
 		
 		//상영시간표 상세보기
-		Schedule scheduleinfo(String scheduleid);		
+		ScheduleJoin scheduleinfo(String scheduleid);		
 		
 		//상영시간표 수정
 		void scheduleedit(Schedule schedule);

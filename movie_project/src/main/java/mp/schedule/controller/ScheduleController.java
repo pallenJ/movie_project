@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import mp.movie.bean.Movie;
 import mp.movie.service.MovieService;
 import mp.schedule.bean.Schedule;
+import mp.schedule.bean.ScheduleJoin;
 import mp.schedule.service.ScheduleService;
 import mp.theater.bean.Screen;
 import mp.theater.service.ScreenService;
@@ -50,42 +52,38 @@ public class ScheduleController {
 		//상영시간표 등록시 영화제목, 관, 좌석수 추가해주는 메소드
 		Screen screen = screenService.detail(schedule.getScreen());
 		Movie movie = movieService.getInfo(schedule.getMovie());
-		schedule.setMovietitle(movie.getTitle());
-		schedule.setScreenno(screen.getNo());
-		schedule.setSeats(screen.getSeats());	
-		
 		
 		log.debug("scheduleController register : {}",schedule.getMovie());
 		log.debug("scheduleController register : {}",schedule.getDay());
-		log.debug("scheduleController register : {}",schedule.getScreenno());
-		log.debug("scheduleController register : {}",schedule.getSeats());
 		scheduleService.register(schedule);
 		log.debug("scheduleController register 등록 직후");
 			
 	}	
 	
 	@RequestMapping("/schedule/list")
-	public String list(Model model) {
-		List<Schedule> schedulelist = scheduleService.getlist("m0000000002");	//세션값으로 변경해야함. 현재 id값으로 되어있다.
+	public String list(HttpSession session, Model model) {
+		String loginid = (String)session.getAttribute("loginId");	
+		List<ScheduleJoin> schedulelist = scheduleService.getlist(loginid);		//세션값으로 변경해야함. 현재 id값으로 되어있다.
 		model.addAttribute("schedulelist",schedulelist);
-		log.debug("scheduleController getlist uploader list내용물 하나 : {}",schedulelist.get(0).getMovietitle());		//-------지울것
+		log.debug("scheduleController getlist return 직전");
 		return "/schedule/list";
 	}
 	
 	@RequestMapping("/schedule/info")
 	public String info(String scheduleid, Model model) {
 		log.debug("Controller info test");
-		Schedule schedule = scheduleService.getinfo(scheduleid);
-		log.debug("ScheduleController info return직전 : {}", schedule.getMovietitle());
-		model.addAttribute(schedule);
+		ScheduleJoin schedule = scheduleService.getinfo(scheduleid);
+		log.debug("ScheduleController info return직전 schedule : {}",schedule);
+		log.debug("ScheduleController info return직전 schedule : {}",schedule.getMovietitle());
+		model.addAttribute("schedule", schedule);
 		return "/schedule/info";
 	}
 	
 	
 	@RequestMapping("/schedule/edit")
 	public String edit(String scheduleid, Model model) {
-		Schedule schedule = scheduleService.getinfo(scheduleid);
-		model.addAttribute(schedule);
+		ScheduleJoin schedule = scheduleService.getinfo(scheduleid);
+		model.addAttribute("schedule",schedule);
 		return "/schedule/edit";	
 	}	
 	
@@ -116,9 +114,10 @@ public class ScheduleController {
 	
 	//수정해야하마.
 	@RequestMapping(value="/schedule/delete",method=RequestMethod.POST)
-	public String deletepost(String scheduleid, String password) throws Exception {
+	public String deletepost(String scheduleid, String password, HttpSession session) throws Exception {
+		String loginid = (String)session.getAttribute("loginId");
 		log.debug("Controller deletepost test scheduleid : {} password : {}",scheduleid, password);
-		scheduleService.delete(scheduleid,"m0000000002",password); //세션변경
+		scheduleService.delete(scheduleid,loginid,password);                                //세션변경
 		log.debug("ScheduleController deletepost return직전");
 		return "redirect:/schedule/list";
 	}

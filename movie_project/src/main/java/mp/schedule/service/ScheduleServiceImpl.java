@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mp.schedule.bean.Schedule;
+import mp.schedule.bean.ScheduleJoin;
 import mp.schedule.model.ScheduleDao;
 
 @Service("scheduleService")
@@ -33,15 +34,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<Schedule> getlist(String uploader) {
+	public List<ScheduleJoin> getlist(String uploader) {
 		log.debug("scheduleservieimle getlist uploader : {}",uploader);
-		List<Schedule> list = scheduleDao.schedulelist(uploader);
+		List<ScheduleJoin> list = scheduleDao.schedulelist(uploader);
 		return list;
 	}
 
 	@Override
-	public Schedule getinfo(String scheduleid) {
-		Schedule schedule = scheduleDao.scheduleinfo(scheduleid);
+	public ScheduleJoin getinfo(String scheduleid) {
+		ScheduleJoin schedule = scheduleDao.scheduleinfo(scheduleid);
 		return schedule;
 	}
 
@@ -60,8 +61,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public void delete(String scheduleid, String string, String password) throws Exception {
-		Boolean result = scheduleDao.scheduledelete(scheduleid, "m0000000002", password);    //세션 변경
+	public void delete(String scheduleid, String id, String password) throws Exception {
+		Boolean result = scheduleDao.scheduledelete(scheduleid, id, password);    
 		if(!result) {
 			throw new Exception();
 		}

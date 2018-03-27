@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import mp.schedule.bean.Schedule;
+import mp.schedule.bean.ScheduleJoin;
 
 //상영시간표 DAO IMPL
 
@@ -27,8 +28,8 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	public void register(Schedule schedule) {
 		String sql = "select 'd'||LPAD(schedule_seq.nextval,'10','0') from dual";
 		String id = jdbcTemplate.queryForObject(sql, String.class);
-		sql = "insert into schedule values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		Object[] args = {id,schedule.getMovie(),schedule.getMovietitle(),schedule.getTheater(),schedule.getScreen(),schedule.getScreenno(),schedule.getSeats(),schedule.getDay(),schedule.getStarttime(),
+		sql = "insert into schedule values(?,?,?,?,?,?,?,?,?,?)";
+		Object[] args = {id,schedule.getMovie(),schedule.getTheater(),schedule.getScreen(),schedule.getDay(),schedule.getStarttime(),
 						schedule.getEndtime(),schedule.getMorning(),schedule.getNight(),schedule.getUploader()};
 		log.debug("scheduledaoimpl register 디비접근 직전 : {}",schedule.getDay());
 		log.debug("scheduledaoimpl register 디비접근 직전 : {}",schedule.getStarttime());
@@ -49,12 +50,12 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		String sql = "update "
 						+"schedule "
 					+"set "
-						+"movie=?, theater=?, screen=?, day=?, starttime=?, endtime=?, morning=?, night=?, movietitle=?,screenno=?,seats=? "
+						+"movie=?, theater=?, screen=?, day=?, starttime=?, endtime=?, morning=?, night=? "
 					+"where "+
 						"id = ?";
 		Object[] args = {schedule.getMovie(),schedule.getTheater(),schedule.getScreen(),schedule.getDay(),
 						schedule.getStarttime(),schedule.getEndtime(),schedule.getMorning(),schedule.getNight(),
-						schedule.getMovietitle(),schedule.getScreenno(),schedule.getSeats(),schedule.getId()};
+						schedule.getId()};
 		jdbcTemplate.update(sql,args);
 	}
 
@@ -70,6 +71,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		return new Schedule(rs);
 	};
 	
+	private RowMapper<ScheduleJoin> mapperjoin = (rs,index)->{
+		return new ScheduleJoin(rs);
+	};
+	
 	
 	private ResultSetExtractor<Schedule> extractor = rs->{
 		if(rs.next()) {
@@ -78,7 +83,13 @@ public class ScheduleDaoImpl implements ScheduleDao {
 			return null;
 		}
 	};
-
+	private ResultSetExtractor<ScheduleJoin> extractorjoin = rs->{
+		if(rs.next()) {
+			return new ScheduleJoin(rs);
+		}else {
+			return null;
+		}
+	};
 	
 	@Override
 	public boolean check(Schedule schedule, String type) {
@@ -133,20 +144,70 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 
 	@Override
-	public List<Schedule> schedulelist(String uploader) {
-		String sql = "select * from schedule where uploader=?";
+	public List<ScheduleJoin> schedulelist(String uploader) {
+		String sql ="select "
+						+ "schedule.id as id, "
+						+ "movie.title as movietitle, "
+						+ "theater.id as theater, "
+						+ "movie.id as movie, "
+						+ "screen.id as screen, "
+						+ "screen.no as screenno, "
+						+ "screen.seats as seats, "
+						+ "schedule.day as day, "
+						+ "schedule.starttime as starttime, "
+						+ "schedule.endtime as endtime, "
+						+ "schedule.morning as morning, "
+						+ "schedule.night as night, "
+						+ "schedule.uploader "
+					+ "from "
+						+ "schedule "
+					+ "join "
+						+ "movie on movie.id = schedule.movie "
+					+ "join "
+						+ "theater on theater.id = schedule.theater "
+					+ "join "
+						+ "screen on screen.id = schedule.screen "
+					+ "where "
+						+ "schedule.uploader= "
+						+ "(select no from member where id=?)";
+				
 		Object[] args = {uploader};
 		log.debug("ScheduleDaoImple schedulelist 작동 중 업로더 : {}",uploader);
-		return jdbcTemplate.query(sql, mapper,args);
+		return jdbcTemplate.query(sql, mapperjoin, args);
 	}
 
 
 	@Override
-	public Schedule scheduleinfo(String scheduleid) {
-		String sql = "select * from schedule where id=?";
+	public ScheduleJoin scheduleinfo(String scheduleid) {
+		String sql = "select "
+				+ "schedule.id as id, "
+				+ "movie.title as movietitle, "
+				+ "theater.id as theater, "
+				+ "movie.id as movie, "
+				+ "screen.id as screen, "
+				+ "screen.no as screenno, "
+				+ "screen.seats as seats, "
+				+ "schedule.day as day, "
+				+ "schedule.starttime as starttime, "
+				+ "schedule.endtime as endtime, "
+				+ "schedule.morning as morning, "
+				+ "schedule.night as night, "
+				+ "schedule.uploader "
+			+ "from "
+				+ "schedule "
+			+ "join "
+				+ "movie on movie.id = schedule.movie "
+			+ "join "
+				+ "theater on theater.id = schedule.theater "
+			+ "join "
+				+ "screen on screen.id = schedule.screen "
+			+ "where "
+				+ "schedule.id=?";
+		
+		
 		Object[] args = {scheduleid};
 		log.debug("ScheduleDaoImple scheduleinfo 작동 중 scheduleid: {}",scheduleid);
-		return jdbcTemplate.query(sql,extractor,args);
+		return jdbcTemplate.query(sql,extractorjoin,args);
 	}
 	
 

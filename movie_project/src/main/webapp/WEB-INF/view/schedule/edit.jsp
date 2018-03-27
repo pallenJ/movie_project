@@ -10,11 +10,8 @@
 	<form action='<c:url value="/schedule/edit"/>' method="post">
 		<input name="id" type="hidden" value="${schedule.id}">
 		<input type="text" name= movie value="${schedule.movie}">
-		<input type="text" name= movietitle value="${schedule.movietitle}">
 		<input type="text" name= theater value="${schedule.theater}">
 		<input type="text" name= screen value="${schedule.screen}">
-		<input type="text" name= screenno value="${schedule.screenno}">
-		<input type="text" name= seats value="${schedule.seats}">
 		<input type="text" name= day value="${fn:substring(schedule.day, 0, 10)}">
 		<input type="text" name= starttime value="${schedule.starttime}">
 		<input type="text" name= endtime value="${schedule.endtime}">

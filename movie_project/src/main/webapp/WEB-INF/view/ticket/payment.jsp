@@ -60,29 +60,13 @@
             					location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
             					//console.log(c);
             				},
-           		        	error : function(xhr, status, error) {
+         		       		error : function(xhr, status, error) {
          		                alert("이미 구매된 좌석이 포함되어 있어 결제를 취소합니다.");
-           		       	    }
+	       		       	    }
             			});
-
-            	        
-            	        
-            	        
-            	        
-
             	    } else {
             	        var msg = '결제에 실패하였습니다.';
             	        msg += '에러내용 : ' + rsp.error_msg;
-          
-            	        
-            	        
-          
-            	        
-            	        
-            	        
-            	        
-            	        
-            	        
             	        
 	            	    }            	        
             		});

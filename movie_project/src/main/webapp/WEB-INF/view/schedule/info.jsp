@@ -6,7 +6,9 @@
 
 <h1>상영시간표 상세 조회 화면</h1>
 <div>
+	<h1>ㄹㅇ : ${schedule}</h1>
 	<h2>영화id : ${schedule.movie}</h2>
+	<h2>영화제목 : ${schedule.movietitle}</h2>
 	<h2>theaterid : ${schedule.theater}</h2>
 	<h2>screenid : ${schedule.screen}</h2>
 	<h2>day : ${schedule.day}</h2>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import mp.member.bean.Member;
 import mp.movie.bean.Movie;
 import mp.payment.bean.Payment;
+import mp.theater.bean.Seat;
 
 @Service
 public interface PaymentService {
@@ -14,9 +15,10 @@ public interface PaymentService {
 	
 	//영화 정보가져오는 메소드
 	Movie getMovieInfo(String movieid);
+	
 
 	//결제 가격정보, 예매날짜정보 입력 메소드  (멤버정보는 별도 처리)
-	Payment setPaymentInfo(Payment payment, int adult, int child, int senior);
+	Payment setPaymentInfo(Payment payment, int movieprice, int adult, int child, int senior);
 
 	//결제(예매)정보 데이터베이스에 등록
 	boolean register(Payment payment);

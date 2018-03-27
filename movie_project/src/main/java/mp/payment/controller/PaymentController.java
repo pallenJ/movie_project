@@ -1,5 +1,7 @@
 package mp.payment.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +47,13 @@ public class PaymentController {
 	public String paymentinfo(Payment payment, 
 								@RequestParam(defaultValue="0") int adult, 
 								@RequestParam(defaultValue="0") int child, 
-								@RequestParam(defaultValue="0") int senior, 
+								@RequestParam(defaultValue="0") int senior,
+								HttpSession session,
 								Model model) {
-		Payment paymentupdate = paymentService.setPaymentInfo(payment,adult,child,senior);
+		String loginid = (String)session.getAttribute("loginId");
 		Movie movie = paymentService.getMovieInfo(payment.getMovieid());
-		Member member = paymentService.getMemberInfo("test");	//나중에 세션에서 가져와야한다.	
+		Member member = paymentService.getMemberInfo(loginid);					//나중에 세션에서 가져와야한다.	
+		Payment paymentupdate = paymentService.setPaymentInfo(payment,movie.getPrice(),adult,child,senior);	//금액 계산하는 메소드
 		model.addAttribute(paymentupdate);
 		model.addAttribute(member);
 		model.addAttribute(movie);
