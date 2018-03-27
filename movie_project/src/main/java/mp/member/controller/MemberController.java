@@ -1,5 +1,8 @@
 package mp.member.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,15 +24,11 @@ public class MemberController {
 	private Logger log = LoggerFactory.getLogger(MemberController.class);
 	@Autowired
 	private HttpSession session;
-	
 	@Autowired
 	private HttpServletRequest request;
-	
-	/*@Autowired
+	@Autowired
 	private HttpServletResponse response;
-	*/
-	
-	
+
 	
 	@Autowired
 	private MemberDao memDao;
@@ -37,7 +36,8 @@ public class MemberController {
 	private MemberService memberservice;
 	
 	@RequestMapping("/login")
-	public String login() {
+	public String login(Model model) throws IOException {
+		
 		boolean nowLogin=false;
 		try {
 			nowLogin = (boolean)session.getAttribute("loginCondition");
@@ -46,32 +46,39 @@ public class MemberController {
 			// TODO: handle exception
 		}
 		if(nowLogin) {
-			String id = (String) session.getAttribute("loginId");	
+			String id = (String) session.getAttribute("loginId");
+			model.addAttribute("re_login_login", true);
 			log.debug("{}님이 이미 로그인 한 상태 입니다. 먼저 로그아웃 해주세요",id);	
-			return 	"redirect:/myInfo";
+			return "member/login";
 			}
 		return "member/login";
+		
 	}
 
 	@RequestMapping(value = "/login",method=RequestMethod.POST)
-	public String login(String id, String pw) {
+	public String login(String id, String pw,Model model) {
 		
 		
 		boolean loginflag=memberservice.login(id, pw);
 		session.setAttribute("loginCondition", loginflag);
-		if(!loginflag) return "redirect:/login";
-		
+		if(!loginflag) { 
+			
+            model.addAttribute("re_login_fail", true);
+			return "member/login";
+		}
 		String  grade	 =memDao.myinfo(id).getGrade();
 		
 		session.setAttribute("loginId", id);
 		session.setAttribute("grade", grade);
-//		request.setAttribute("loginId", id);
+		request.setAttribute("loginId", id);
 		session.setAttribute("loginGrade", memberservice.myinfo(id).getGrade());
 		session.setAttribute("myInfo", memberservice.myinfo(id));
 		
-		log.debug("로그인"+(loginflag?"성공":"실패!"));
-		id = (String) request.getParameter("loginId");
+		String msg="로그인"+(loginflag?"성공":"실패!");
+		log.debug(msg);
 		log.debug("id={}",id);
+		model.addAttribute("re_login_home", loginflag);
+		
 		return "/home";
 	}
 //--------------------------------------------------------------------------
@@ -80,13 +87,19 @@ public class MemberController {
 		return "member/register";
 	}
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String register(String id, String pw, String birth, String phone, String email) {
+	public String register(String id, String pw, String birth, String phone, String email,Model model) {
 		boolean flag = memberservice.register(id, pw, birth, phone, email);
-		return flag?"/home":"redirect:/register";
+		if(flag) {
+		  model.addAttribute("re_reg_reg", "ok");	
+		  return "/home";
+		}else {
+			model.addAttribute("re_reg_reg", "no");	
+		return "/register";
+		}
 	}
 //-----------------------------------------------------------------------------------------	
 	@RequestMapping(value = {"/myInfo","/myinfo"})//다중매핑(둘중 어느걸로 들어가도 상관 없음)
-	public String myinfo() {
+	public String myinfo(Model model) {
 		boolean nowLogin =false;
 		try {
 			nowLogin = (boolean)session.getAttribute("loginCondition");
@@ -95,13 +108,14 @@ public class MemberController {
 		}
 		if(!nowLogin) {
 			log.debug("먼저 로그인 해주세요");
-			return "redirect:/login";
+			model.addAttribute("re_login_myInfo", true);
+			return "member/login";
 			}
 		
 		return "member/myInfo";
 	}
 	@RequestMapping("/edit")
-	public String edit() {
+	public String edit(Model model) {
 		boolean nowLogin =false;
 		try {
 			nowLogin = (boolean)session.getAttribute("loginCondition");
@@ -110,7 +124,8 @@ public class MemberController {
 		}
 		if(!nowLogin) {
 			log.debug("먼저 로그인 해주세요");
-			return "redirect:/login";
+			model.addAttribute("re_login_myInfo", true);
+			return "member/login";
 			}
 		return "member/edit";
 	}
@@ -125,7 +140,7 @@ public class MemberController {
 	//-----------------------------------------------
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/logout")
-	public String logout() {
+	public String logout(Model model) {
 		boolean flag = false;
 		try {
 			flag = (boolean) session.getAttribute("loginCondition");
@@ -137,12 +152,13 @@ public class MemberController {
 			session.removeValue("loginGrade");
 			session.removeValue("loginCondition");
 			session.removeValue("myInfo");
-			
+			memberservice.message(response, "정상적으로 로그아웃 되었습니다");
 			log.debug("로그아웃 완료");
 		} catch (Exception e) {
+			memberservice.message(response, "로그아웃에 실패했습니다");
 		    log.debug("로그아웃 실패");	
 		}
-		return "redirect:/login";
+		return "member/login";
 	}
 	//--------------------------------------------------------
 }
