@@ -118,11 +118,12 @@ parent number not null,
 gno number not null);
 
 create sequence schedule_seq nocache;
+create sequence schedule_seq nocache;
 create table schedule 
 (id varchar2(11) primary key, 
 movie constraint fk_schedule_movie references movie(id) on delete cascade, 
 theater constraint fk_schedule_theater references theater(id) on delete cascade, 
-screen constraint fk_schedule_screen references screen(id) on delete cascade, 
+screen constraint fk_schedule_screen references screen(id) on delete cascade,  
 day date not null, 
 starttime varchar2(5) not null, 
 endtime varchar2(5) not null, 
@@ -133,14 +134,14 @@ uploader constraint fk_schedule_uploader references member(no) on delete set nul
 create sequence payment_seq nocache;
 create table payment 
 (id varchar2(11) primary key, 
-memberid varchar2(12) not null, 
-movieid varchar2(11) not null, 
-theaterid varchar2(11) not null, 
-screenid varchar2(11) not null, 
-seatid varchar2(150) not null,
-scheduleid varchar2(11) not null, 
-paydate varchar2(10) not null, 
-paytotal number not null);
+member varchar2(12) not null, 
+movie varchar2(100) not null, 
+day date not null, 
+starttime varchar2(5) not null, 
+endtime varchar2(5) not null, 
+theater varchar2(50) not null, 
+screen number not null, 
+price number not null);
 
 
 --샘플데이터
@@ -205,6 +206,7 @@ insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 4, 't000000
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 5, 't0000000001', 0, 'm0000000002');
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 6, 't0000000001', 0, 'm0000000002');
 
+
 -- 상영시간표 등록
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-17','13:30','15:30',3000,3000,'m0000000001');
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-17','15:30','17:30',3000,3000,'m0000000001');
@@ -217,6 +219,134 @@ insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v00000000
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-19','21:30','23:30',3000,3000,'m0000000001');
 
 -- 결제 등록
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','놀부전','2018-03-11','11:30','20:00','구로점',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','심청이','2018-03-18','11:30','20:00','구로점',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','흥부전','2018-03-10','11:30','20:00','구로점',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test1','임꺽정','2018-03-19','11:30','20:00','구로점',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','홍길동','2018-03-18','11:30','20:00','구로점',3,3000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','괴물2','2018-03-13','11:30','20:00','구로점',3,3000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','쓰리빌보드','2018-03-12','11:30','20:00','구로점',3,3000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test2','쓰리빌보드','2018-03-10','11:30','20:00','구로점',3,3000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','놀부전','2018-03-18','11:30','20:00','구로점',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','쓰리빌보드','2018-03-11','11:30','20:00','구로점',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','쓰리빌보드','2018-03-13','11:30','20:00','구로점',3,2000);
+insert into payment values ('p'||LPAD(payment_seq.nextval,'10','0'),'test3','놀부전','2018-03-14','11:30','20:00','구로점',3,2000);
+
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a2','a1',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a3','a2',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a4','a3',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a6','a4',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a7','a5',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a8','a6',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a9','a7',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a10','a8',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a12','a9',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a14','a10',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a15','a11',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a16','a12',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a17','a13',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a18','a14',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a19','a15',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a20','a16',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a21','a17',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a22','a18',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','a23','a19',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b1','b1',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b2','b2',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b3','b4',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b7','b5',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b8','b6',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b9','b7',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b10','b8',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b12','b9',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b14','b10',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b15','b11',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b16','b12',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b17','b13',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b18','b14',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b19','b15',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b20','b16',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b21','b17',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b22','b18',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000001','b23','b19',3000);
+
+
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a2','a1',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a3','a2',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a4','a3',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a6','a4',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a7','a5',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a8','a6',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a9','a7',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a10','a8',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a12','a9',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a14','a10',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a15','a11',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a16','a12',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a17','a13',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a18','a14',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a19','a15',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a20','a16',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a21','a17',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a22','a18',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','a23','a19',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b1','b1',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b2','b2',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b3','b4',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b7','b5',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b8','b6',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b9','b7',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b10','b8',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b12','b9',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b14','b10',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b15','b11',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b16','b12',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b17','b13',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b18','b14',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b19','b15',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b20','b16',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b21','b17',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b22','b18',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000002','b23','b19',3000);
+
+
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a2','a1',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a3','a2',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a4','a3',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a6','a4',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a7','a5',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a8','a6',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a9','a7',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a10','a8',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a12','a9',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a14','a10',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a15','a11',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a16','a12',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a17','a13',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a18','a14',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a19','a15',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a20','a16',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a21','a17',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a22','a18',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','a23','a19',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b1','b1',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b2','b2',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b3','b4',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b7','b5',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b8','b6',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b9','b7',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b10','b8',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b12','b9',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b14','b10',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b15','b11',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b16','b12',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b17','b13',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b18','b14',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b19','b15',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b20','b16',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b21','b17',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b22','b18',3000);
+insert into seat values ('s'||LPAD(payment_seq.nextval,'10','0'),'c0000000003','b23','b19',3000);
 
 commit;
 
