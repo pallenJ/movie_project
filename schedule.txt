@@ -1,0 +1,4 @@
+select schedule.id, movie.title, theater.id, movie.id, screen.id, screen.no, screen.seats, schedule.day, schedule.starttime, schedule.endtime, schedule.morning, schedule.night, schedule.uploader from schedule 
+join movie on movie.id = schedule.movie 
+join theater on theater.id = schedule.theater 
+join screen on screen.id = schedule.screen;
