@@ -158,6 +158,7 @@
 							<select class="form-control btn btn-default" name="search">
 								<option value="title">제목</option>
 								<option value="content">내용</option>
+								<option value="head">말머리</option>
 								<option value="writerId">작성자</option>
 							</select>
 						</div>

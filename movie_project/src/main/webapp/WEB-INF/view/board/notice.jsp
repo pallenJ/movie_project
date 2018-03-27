@@ -29,6 +29,32 @@
 
 </head>
 <body>
+	<c:if test="${re_no}">
+		<script type="text/javascript">
+		location.href = 'notice';
+		</script>
+	</c:if>
+	
+	<c:if test="${re_no_edit}">
+		<script type="text/javascript">
+		alert('수정이 완료되었습니다');
+		location.href = 'notice';
+		</script>
+	</c:if>
+	
+	<c:if test="${re_no_delete}">
+		<script type="text/javascript">
+		alert('삭제가 완료되었습니다');
+		location.href = 'notice';
+		</script>
+	</c:if>
+	
+	<c:if test="${re_no_no}">
+		<script type="text/javascript">
+			alert('권한이 부족합니다.');
+			history.back();
+		</script>
+	</c:if>
 	<c:if test="${sessionScope.grade eq 'admin' or sessionScope.grade eq '관리자'}">
 		<form action="<c:url value='/noticewrite'></c:url>">
 			<div align="center">
@@ -82,33 +108,28 @@
 		<!-- ==================================================== -->
 		<!-- 검색 기능 -->
 		<div class=".col-lg-6" align="center" style="width: 500px">
-			<div class="input-group">
+			<form action="<c:url value='/notice'></c:url>" class="input-group">
 
 				<!--       검색 옵션 선택(드롭다운)-->
-				<div class="input-group-btn">
+					<div class="input-group-btn">
 
-					<button type="button" class="btn btn-default dropdown-toggle"
-						data-toggle="dropdown" aria-expanded="false">
-						Action <span class="caret"></span>
-					</button>
+						<div class="dropdown" style="width: 90px;">
+							<select class="form-control btn btn-default" name="search">
+								<option value="title">제목</option>
+								<option value="content">내용</option>
+								<option value="head">말머리</option>
+							</select>
+						</div>
 
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-					</ul>
-
-				</div>
+					</div>
 				<!-- 검색할 단어 입력-->
-				<input type="text" class="form-control" placeholder="Search for...">
+				<input type="text" class="form-control"name="keyword" placeholder="Search for...">
 
 				<span class="input-group-btn"> <!-- 검색버튼-->
-					<button class="btn btn-default" type="button">Go!</button>
+					<button class="btn btn-default" type="submit">Go!</button>
 				</span>
 
-			</div>
+			</form>
 			<!-- /input-group -->
 		</div>
 		<!-- /.col-lg-6 -->

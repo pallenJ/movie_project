@@ -30,6 +30,34 @@
 
 </head>
 <body>
+	<script type="text/javascript">
+		$(document).keydown(function(e) {
+		    key = (e) ? e.keyCode : event.keyCode;
+		     
+		    var t = document.activeElement;
+		     
+		    if (key == 8 || key == 116 || key == 17 || key == 82) {
+		        if (key == 8) {
+		            if (t.tagName != "INPUT") {
+		                if (e) {
+		                    e.preventDefault();
+		                } else {
+		                    event.keyCode = 0;
+		                    event.returnValue = false;
+		                }
+		            }
+		        } else {
+		            if (e) {
+		                e.preventDefault();
+		            } else {
+		                event.keyCode = 0;
+		                event.returnValue = false;
+		            }
+		        }
+		        
+		    }});
+		
+	</script>
 	<table class="table table-bordered  table-hover" align="center"
 		style="position: relative; width: 70%; top: 30px">
 
@@ -39,11 +67,11 @@
 			</tr>
 			<tr>
 				<th><h4>
-						<font color="gray">${contents.head}</font>
-					</h4></th>
-
-				<th colspan="30%"><h4>제목</h4></th>
+						<font color="gray">[${contents.head}]</font>
+					제목</h4></th>
 				<td colspan="50%">${contents.title}</td>
+				<td>조회수</td>
+				<td>${contents.read}</td>
 			</tr>
 		</thead>
 		<tbody>

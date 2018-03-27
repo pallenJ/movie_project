@@ -55,11 +55,11 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public void noticeedit(Notice notice) {
+	public void noticeEdit(Notice notice) {
 		// TODO Auto-generated method stub
-		String sql="update notice set head = ? title = ? content = ? "
+		String sql="update notice set head = ?, title = ?, content = ? "
 				+ "where no = ?";
-		Object [] args = {notice.getHead(),notice.getTitle(),notice.getContent()};
+		Object [] args = {notice.getHead(),notice.getTitle(),notice.getContent(),notice.getNo()};
 		jdbcTemplate.update(sql,args);
 	}
 
@@ -89,7 +89,7 @@ public class NoticeDaoImpl implements NoticeDao{
 	@Override
 	public Notice readPlus(Notice notice) {
 		notice.setRead(notice.getRead() + 1);
-		String sql = "update qna set read=? where no=?";
+		String sql = "update notice set read=? where no=?";
 		jdbcTemplate.update(sql, notice.getRead(), notice.getNo());
 		return notice;
 	}

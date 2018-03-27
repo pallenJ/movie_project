@@ -18,7 +18,7 @@ public interface NoticeDao {
 	Notice noticedetail(int no);
 	
 	//공지 수정
-	void noticeedit(Notice notice);
+	void noticeEdit(Notice notice);
 	
 	//공지 삭제
 	boolean noticedelete(int no, String adminpw);

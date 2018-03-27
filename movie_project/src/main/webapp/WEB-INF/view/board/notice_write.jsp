@@ -38,7 +38,7 @@
 
 						<div class="dropdown">
 							<select class="form-control" name="head">
-								<option>공지사항</option>
+								<option>공지</option>
 								<option>이벤트</option>
 								<option>기타</option>
 							</select>

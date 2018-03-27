@@ -68,6 +68,7 @@
 							<div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
 
 								<div class="btn-group" role="group">
+									<input type="hidden" name="no" value="${before.no}">
 									<button type="submit" class="btn btn-default">수정완료</button>
 								</div>
 

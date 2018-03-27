@@ -54,8 +54,10 @@
 		                event.returnValue = false;
 		            }
 		        }
+		        
 		    }
-	
+		    });
+		
 	</script>
 	<table class="table table-bordered  table-hover" align="center"
 		style="position: relative; width: 70%; top: 30px">

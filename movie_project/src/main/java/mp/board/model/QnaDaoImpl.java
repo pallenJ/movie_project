@@ -109,7 +109,7 @@ public class QnaDaoImpl implements QnaDao {
 
 	@Override
 	public List<Qna> qnaSearch(String search, String keyword) {
-		String sql = "select * from qna where " + search + " like '%'||?||'%' order by no desc";
+		String sql = "select * from qna where " + search + " like '%'||?||'%' order by parent desc, gno asc, no asc";
 		List<Qna> list = jdbcTemplate.query(sql, mapper, keyword);
 		return list;
 	}

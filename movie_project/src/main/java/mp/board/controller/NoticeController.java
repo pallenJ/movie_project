@@ -1,13 +1,12 @@
 package mp.board.controller;
 
-import java.util.Collection;
-import java.util.Map;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import mp.board.bean.Notice;
-import mp.board.bean.Qna;
 import mp.board.model.NoticeDao;
 import mp.board.service.NoticeService;
-import mp.member.controller.MemberController;
+import mp.member.bean.Member;
 import mp.member.model.MemberDao;
 
 @Controller
@@ -51,12 +49,20 @@ public class NoticeController {
 		int cnum=10;
 		int pnum=10;
 		
+		
+		String search=request.getParameter("search");
+		String keyword=request.getParameter("keyword");
+		boolean searchFlag=search!=null&&keyword!=null;//검색인지 아닌지 판별
+		List<Notice> list;
+		
 		int page=1;
 		try {
 			page = Integer.parseInt(request.getParameter("pg"));
 		} catch (Exception e) {
 			page=1;
 		}
+		
+		
 		int []addValue = noticeService.noticePaging(cnum, pnum, page);
 		
 		int pagingNum= addValue[0];
@@ -64,7 +70,17 @@ public class NoticeController {
 		int last     = addValue[2];
 			page     = addValue[3];
 		log.debug("={}",noticeDao.noticelist().size());	
-		model.addAttribute("noticelist", noticeService.noticePaging(page, cnum));
+		
+		if(searchFlag) {//검색한 상태일때
+			list=noticeService.noticePaging(page, cnum, search, keyword);
+			addValue = noticeService.noticePaging(cnum, pnum, page, search, keyword);
+		}
+		else {//검색이 아닐때
+			list=noticeService.noticePaging(page, cnum);
+			addValue = noticeService.noticePaging(cnum, pnum, page);
+		}
+		
+		model.addAttribute("noticelist",list);
 		model.addAttribute("pagingNum", pagingNum);
 		model.addAttribute("pageLast",  pageLast);
 		model.addAttribute("lastPage",last);
@@ -74,44 +90,59 @@ public class NoticeController {
 		log.debug("pageLast={}",pageLast);
 		log.debug("last={}",last);
 		
+		
 		return "board/notice";
 	}
 	@RequestMapping(value={"/noticeshow","/noticeShow","/notice_show"})
 	public String noticeShow(Model model) {
 		
 		int no;
-		
+		String id = (String) session.getAttribute("loginId");
+		if(id==null||id=="") {
+			model.addAttribute("re_login_myInfo", true);
+			return "member/login";
+		}
 		try {
 			no=Integer.parseInt(request.getParameter("no"));
 		} catch (Exception e) {
-			return "board/notice";
+			return "redirect:/notice";
 		}
-		model.addAttribute("contents",noticeDao.noticedetail(no));
-		log.debug(noticeDao.noticedetail(no).toString());
+		String grade = (String)session.getAttribute("loginGrade");
+		Notice notice = noticeDao.noticedetail(no);
+		
+		if(!grade.equals("관리자")&&!grade.equals("admin")){	
+		notice=noticeDao.readPlus(notice);
+		}
+		model.addAttribute("contents",notice);
+//		log.debug(noticeDao.noticedetail(no).toString());
 		return "board/notice_show";
 	}
 	
 	@RequestMapping(value= {"/noticeWrite","/noticewrite","/notice_write"})
-	public String noticeWrite() {
+	public String noticeWrite(Model model) {
 		String id = (String) session.getAttribute("loginId");
 		String grade = (String) session.getAttribute("loginGrade");
 		boolean flag = id!=null;
 		if(!flag) {
 			log.debug("먼저 로그인 해주세요");
-			return "redirect:/notice";
+			model.addAttribute("re_login_myInfo", true);
+			return "member/login";
 		}else if(!grade.equals("admin")&&!grade.equals("관리자")) {
 			log.debug("권한이 부족합니다.");
-			return "redirect:/notice";
+			model.addAttribute("re_no_no", true);
+			return "board/notice";
 		}
 		  
-		return "/board/notice_write";
+		return "board/notice";
 	}
 
 	@RequestMapping(value= {"/noticeWrite","/noticewrite","/notice_write"}, method = RequestMethod.POST)
-	public String noticeWrite(String head, String title,String content) {
+	public String noticeWrite(String head, String title,String content,Model model) {
 		String id = (String) session.getAttribute("loginId");
 		noticeService.noticeWrite(id, head, title, content);
-		return "redirect:/notice";
+		model.addAttribute("re_no", true);
+		
+		return "board/notice";
 	}
 	
 	@RequestMapping(value= {"/noticeDelete","/noticedelete","/notice_delete"})
@@ -120,7 +151,8 @@ public class NoticeController {
 		
 		if(!grade.equals("admin")&&!grade.equals("관리자")) {
 			log.debug("권한이 부족합니다.");
-			return "redirect:/notice";
+			model.addAttribute("re_no_no", true);
+			return "board/notice";
 		}
 		request.setAttribute("no", Integer.parseInt(no));
 		return "board/notice_delete";
@@ -134,7 +166,8 @@ public class NoticeController {
 		log.debug("no={}",bno);
 		log.debug("pw={}",pw);
 		log.debug("삭제"+(flag?"성공":"실패"));
-		return "redirect:/notice";
+		model.addAttribute("re_no_delete", true);
+		return "board/notice";
 	}
 	
 	@RequestMapping(value= {"/noticeEdit","/noticeedit","/notice_edit"})
@@ -143,7 +176,8 @@ public class NoticeController {
 		
 		if(!grade.equals("admin")&&!grade.equals("관리자")) {
 			log.debug("권한이 부족합니다.");
-			return "redirect:/notice";
+			model.addAttribute("re_no_no", true);
+			return "board/notice";
 		}
 		int bno = Integer.parseInt(no);
 		Notice notice = noticeDao.noticedetail(bno);
@@ -151,11 +185,11 @@ public class NoticeController {
 		return "board/notice_edit";
 	}
 	
-	@RequestMapping(value={})
-	public String noticeEdit() {
-//		String grade = session.get
-		
-		return "board/notice_edit";
+	@RequestMapping(value={"/noticeEdit","/noticeedit","/notice_edit"},method = RequestMethod.POST)
+	public String noticeEdit(String no,String head,String title,String content,Model model) {
+		noticeService.noticeEdit(no, head, title, content);
+		model.addAttribute("re_no_edit", true);
+		return "board/notice";
 	}
 	
 }
