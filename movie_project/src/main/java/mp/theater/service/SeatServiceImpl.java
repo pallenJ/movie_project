@@ -21,7 +21,7 @@ public class SeatServiceImpl implements SeatService {
 		String[] reallocation = seat.split(",");
 		String[] servicelocation = new String[reallocation.length];
 		int n = 0; 
-		for(char i='A'; i<'L'; i++){
+		for(char i='a'; i<'l'; i++){
 			//A~L
 			if(n>=reallocation.length) break;
 			for(int j=1; j<=reallocation.length; j++){

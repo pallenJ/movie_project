@@ -50,6 +50,8 @@ public class SeatDaoImpl implements SeatDao {
 				return list.size();
 			}
 		});
+		sql = "update screen set seats = (select count(*) from seat where screenid=?) where id = ?";
+		jdbcTemplate.update(sql, list.get(0).getScreenid(), list.get(0).getScreenid());
 		log.debug("좌석 등록이 완료되었습니다");
 	}
 
