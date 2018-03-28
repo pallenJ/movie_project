@@ -8,19 +8,14 @@
         .empty-row{
             height: 20px;
         }
-        .area{
-            border: 1px dotted black;
-            width: 600px;
-            height: 400px;
-            margin: auto;
-        }
         .screen{
+        	margin: auto;
             background-color: dimgray;
             border: 1px solid dimgray;
             color: white;
             text-align: center;
             font-size: 20px;
-            width: 600px;
+            width: 750px;
             height: 35px;
         }
         .seats{
@@ -40,103 +35,76 @@
             text-align: center;
             font-size: 10pt;
         }
+        .seat-wrap{
+	        border: 1px dotted black;
+            width: 750px;
+            height: 350px;
+            margin: auto;
+	    }
+	    .seat{
+	        border:1px solid black;
+	        display:inline-block;
+	        width:25px;
+	        height:25px;
+	    }
     </style>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script>
-        function createSeat(id, row, col, state){
-            var c = $("<input/>").attr("type", "checkbox").attr("id", id).attr("value", id).css("display", "none");
-            var l = $("<label/>").attr("for", id).css("width", row).css("height", col);
-            var d = $("<div/>").addClass("block")
-                                .css("margin-top", row * 20).css("margin-left", col * 20);
-            d.text(col);
-            
-            $(".seats").append(c);
-            $(".seats").append(l);
-            l.append(d);
-            
-          	//등록된 좌석인지 아닌지
-            if(state){
-                c.attr("checked", "checked");
-                d.css("background-color", "red").css("color", "white");
-            } else {
-                d.css("background-color", "white").css("color", "black");
-            }
-            
-            d.on("click", function(){
-                if(c.is(":checked")){
-                    $(this).css("background-color", "white").css("color", "black");
-                } else {
-                    $(this).css("background-color", "red").css("color", "white");
-                    
-                }
-            });
-        }
-        
-        function selectScreen(){
-            //셀렉트 옵션 가져오기
-            var screenselect = document.getElementById('screenselect');
-                $.ajax({
-                	type: 'POST',
-                    url: "http://localhost:8080/movie_project/seat/list",
-                    data:{ 
-                    	screenid: screenselect.options[screenselect.selectedIndex].value
-                    },
-                    dataType:"text",
-                    success: function(value){
-//                     	alert(value);
-                     	//alert(screenselect.options[screenselect.selectedIndex].value);
-                     	$("#screenno").text(screenselect.options[screenselect.selectedIndex].text + "관");
-                    }, 
-                    error: function(){
-                    	alert("셀렉트옵션 실패");
-                    }
-                });
+        function seatlist(screenid){
+        	$.ajax({
+        		type: 'POST',
+	       		url: "http://localhost:8080/movie_project/seat/list",
+        		data: {screenid:screenselect.options[screenselect.selectedIndex].value},
+        		dataType: "json", 
+        		success: function(data){
+        			for(var r=0; r<=11; r++){
+        				for(var c=1; c<=23; c++){
+        					var id = "#" + String.fromCharCode(r+97) + c;
+        					$(id).css("background-color", "white").css("color", "black");
+      							
+        				}
+        			}
+        			//data에 들어있는 정보를 검사하여
+                    //해당하는 id를 가진 자리를 표시
+                    $.each(data, function(i, d){
+                        var id = "#" + d.reallocation;
+                        $(id).css("background-color", "red").css("color", "white");
+                    });
+        		}
+        	});
         }
         
         $(document).ready(function(){
-        	var chk=0;
-            for(var i="a".charCodeAt(0); i<="l".charCodeAt(0); i++){
-                for(var j=1; j<=23; j++){
-                    var id = String.fromCharCode(i)+j;
-                    console.log(id);
-                    console.log('${seat.get(chk).reallocation}');//......
-                    if(id=="A1"){ 
-	                    createSeat(id, i - "a".charCodeAt(0), j, true);
-	                    chk++;
-                    } else {
-                    	createSeat(id, i - "a".charCodeAt(0), j, false);
-                    }
-                }
-            }
-            
+        	seatlist(screenselect.options[screenselect.selectedIndex].value);
+        	
+        	$("#screenselect").on("input", function(event){
+                seatlist($(this).val())
+            });
         });
         
-        function send(){
-       		//var str = "";  
-            $("input[type=checkbox]:checked").each(function (index) {
-            	var i = $("<input/>").attr("type", "hidden").attr("name", "seat").attr("value", $(this).val());
-            	$("#content").append(i);
-                //str += $(this).val() + ",";  
-            });  
-        	//$("#str").attr("value", str);
-        };
         
     </script>
 </head>
 <body>
     <h1>좌석 목록 페이지</h1>
     <h2 id="screenno"></h2>
-    <h3 id="real"></h3>
-   <div class="area">
-       <div class="screen">screen</div>
-       <div class="empty-row"></div>
-       <div class="seats"></div>
-   </div>
+    <div class="screen">screen</div>
+    <div class="empty-row"></div>
+	<div class="seat-wrap">
+		<c:forEach var="r" begin="0" end="11">
+		    <c:forEach var="c" begin="1" end="23">
+		        <div class="seat" id="&#${r+97};${c}">
+		            &#${r+97};${c}
+		        </div>
+		    </c:forEach>
+		    <br>
+		</c:forEach>
+	</div>
    <div class="empty-row"></div>
    <div class="empty-row"></div>
   <div id="content" style="text-align: center">
    	상영관 : 
-   	<select id="screenselect" name="screen" onchange="selectScreen()">
+   	<select id="screenselect" name="screen">
    		<c:forEach var="screen" items="${screen}">
     		<option value="${screen.id }">${screen.no }</option>
    		</c:forEach>

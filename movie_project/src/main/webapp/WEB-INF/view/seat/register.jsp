@@ -66,10 +66,10 @@
         }
         
         $(document).ready(function(){
-            for(var i="A".charCodeAt(0); i<="L".charCodeAt(0); i++){
+            for(var i="a".charCodeAt(0); i<="l".charCodeAt(0); i++){
                 for(var j=1; j<=23; j++){
                     var id = String.fromCharCode(i)+j;
-                    createSeat(id, i - "A".charCodeAt(0), j, true);
+                    createSeat(id, i - "a".charCodeAt(0), j, true);
                 }
             }
              

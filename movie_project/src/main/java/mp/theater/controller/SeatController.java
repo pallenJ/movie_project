@@ -44,21 +44,21 @@ public class SeatController {
 		return "redirect:/seat/list?screenid="+screen;
 	}
 	
-	@RequestMapping(value= {"/seat"})
+	@RequestMapping(value= {"/seat", "/seat/list"})
 	public String list(HttpSession session, Model model){
 		session.setAttribute("id", "test");
 		List<Screen> screen = screenService.list(session.getAttribute("id").toString());
-		List<Seat> seat = seatService.list(screen.get(0).getId().toString());
 		model.addAttribute("screen", screen);
 		model.addAttribute("screenid", screen.get(0).getId());
-		model.addAttribute("seat", seat);
 		return "/seat/list";
 	}
 	@RequestMapping(value="/seat/list", method=RequestMethod.POST)
 	@ResponseBody
-	public List<Seat> list(String screenid, HttpServletResponse response, HttpSession session) throws IOException {
+	public List<Seat> list(String screenid){
+		log.debug("seatlist 컨트롤러");
 		List<Seat> seat = seatService.list(screenid);
-		return seat;//view
+		log.debug("seatlist 서비스반환");
+		return seat;
 	}
 	
 	
