@@ -1,11 +1,12 @@
 package mp.payment.service;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.stereotype.Service;
 
 import mp.member.bean.Member;
 import mp.movie.bean.Movie;
 import mp.payment.bean.Payment;
-import mp.theater.bean.Seat;
 
 @Service
 public interface PaymentService {
@@ -22,4 +23,7 @@ public interface PaymentService {
 
 	//결제(예매)정보 데이터베이스에 등록
 	boolean register(Payment payment);
+
+	//결제 등록 전 중복여부 확인
+	boolean check(Payment payment, String loginid);
 }	

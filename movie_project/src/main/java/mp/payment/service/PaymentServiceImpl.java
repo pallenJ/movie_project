@@ -1,7 +1,11 @@
 package mp.payment.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +18,6 @@ import mp.movie.bean.Movie;
 import mp.movie.model.MovieDao;
 import mp.payment.bean.Payment;
 import mp.payment.model.PaymentDao;
-import mp.theater.bean.Seat;
 import mp.theater.model.SeatDao;
 
 @Service("paymentService")
@@ -33,6 +36,10 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	SeatDao seatDao;
+	
+	@Autowired
+	ServletContext application;
+	
 	
 
 	@Override
@@ -112,13 +119,13 @@ public class PaymentServiceImpl implements PaymentService {
 		boolean check = true;
 		
 		//기존 예매 좌석인지 확인
-		for(String seatid: seatidArray) {
-			payment.setSeatid(seatid);
-			check =  paymentDao.checkRegister(payment.getScheduleid(),seatid);
-			if(!check) {
-				return false;	//중복 등록시 false반환
-			}
-		}
+//		for(String seatid: seatidArray) {
+//			payment.setSeatid(seatid);
+//			check =  paymentDao.checkRegister(payment.getScheduleid(),seatid);
+//			if(!check) {
+//				return false;	//중복 등록시 false반환
+//			}
+//		}
 		
 		//중복값 없을 시
 		//결제 정보 등록 seatid별로 반복처리
@@ -131,7 +138,63 @@ public class PaymentServiceImpl implements PaymentService {
 		return check;
 	}
 
-	
-	
+
+	@Override
+	public boolean check(Payment payment, String loginid) {
+		//좌석이 s00000001,s00000002 String형태로 넘어온 상태기에 split를 이용해서 배열로 추가
+		String seatidbundle = payment.getSeatid();
+		String[] seatidArray = seatidbundle.split(",");
+		boolean check = true;
+		
+		List<String> list=null;
+		
+		//데이터베이스에 등록된 예매 좌석인지 확인
+		for(String seatid: seatidArray) {
+			payment.setSeatid(seatid);
+			log.debug("seatid :{}",seatid);
+			check =  paymentDao.checkRegister(payment.getScheduleid(),seatid);		//중복되면 false
+			log.debug("데이터베이스 중복여부 check : {}",check);
+			if(!check) {
+				return false;	//중복 등록시 false반환
+			}
+			
+			//어플리케이션 영역에 저장된 좌석인지 확인
+			//어플리케이션 영역에 아무것도 없으면 리스트 생성해서 넣는다. 이름은 세션값 
+			if(application.getAttribute(loginid)==null) {
+				list = new ArrayList<>();
+				log.debug("어플리케이션 {}  : 널이다.",loginid);
+				application.setAttribute(loginid,list);
+				log.debug("어플리케이션  : {}",application.getAttribute(loginid));
+			}else {	
+				
+			//어플리케이션에 값이 있다면
+				log.debug("어플리케이션 {} : 널아니다.",loginid);
+				list = (List<String>) application.getAttribute(loginid);
+				//리스트에서 스트링분해해서 비교한다.
+				for(String s: list) { 
+					String schedule = s.substring(0, 11);
+					String seat = s.substring(11);
+					log.debug("매개 scheduleid : {}, 매개 seatid : {}, 어플리케이션 scheduleid : {}, seatid : {}",payment.getScheduleid(),seatid,schedule,seat);
+					if(payment.getScheduleid().equals(schedule)&&seatid.equals(seat)) {
+						log.debug("어플리케이션영역에서 중복");
+						return false;	//중복 등록시 false반환
+					}
+				}
+			}	
+		}
+
+		//이 사용자가 선택한 스케줄, 좌석정보를 어플리케이션영역에 넣는다.
+		for(String seatid : seatidArray) {
+			String temp = payment.getScheduleid()+seatid;
+			log.debug("어플리케이션영역에 {} 추가",temp);
+			list.add(temp);
+		}
+		application.setAttribute(loginid, list);
+		log.debug("application 등록 후 : {}",application.getAttribute(loginid));
+		
+		
+
+		return true;
+	}
 
 }

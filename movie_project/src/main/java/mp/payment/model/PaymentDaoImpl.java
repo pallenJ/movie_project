@@ -65,9 +65,10 @@ public class PaymentDaoImpl implements PaymentDao {
 
 	@Override
 	public boolean checkRegister(String scheduleid, String seatid) {
-		String sql = "select * from payment where scheduleid=? and seatid=?";
+		log.debug("dao scheduleid :{}, seatid :{}",scheduleid,seatid);
+		String sql = "select * from payment where scheduleid=? and seatid=?";//이런 항목 없다.
 		Object[] args = {scheduleid,seatid};
-		boolean result = jdbcTemplate.query(sql, extractor, args)==null;
+		boolean result = jdbcTemplate.query(sql, extractor, args)==null;	//중복된게 없다.
 		log.debug("PaymentDaoImpl checkRegister 결과 : {}",result);
 		return result;
 	}

@@ -7,8 +7,8 @@
     <title></title>
 </head>
 <script type="text/javascript">
-	alert("결제 실패");
-	//location.href = 'http://localhost:8080/movie_project/ticket/payment';	//자바스크립트 페이지 강제이동	
+	alert("중복된 예약이 있거나, 결제대기 중인 좌석이 포함되어 있습니다.");
+	location.href = 'http://localhost:8080/movie_project/ticket';	//자바스크립트 페이지 강제이동	
 </script>
 
 <body>

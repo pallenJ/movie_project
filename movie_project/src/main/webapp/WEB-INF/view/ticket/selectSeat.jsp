@@ -21,7 +21,6 @@
                 input = input.attr("type", "text").attr("name", "seatid").attr("value","s0000000001");
                 $("#target").append(input);
             });
-
             $("input[type=checkbox]").eq(1).on("click",function(){
                 var input = $("<input/>");
                 input = input.attr("type", "text").attr("name", "seatid").attr("value","s0000000002");
@@ -49,6 +48,7 @@
 </head>
 <body>
     <div>
+    	
         <h1>좌석선택하기</h1>
             <h1>movie : ${movieid}</h1>
             <h1>theater : ${theaterid}</h1>
