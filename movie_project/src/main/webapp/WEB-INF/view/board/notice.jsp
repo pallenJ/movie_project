@@ -55,7 +55,7 @@
 			history.back();
 		</script>
 	</c:if>
-	<c:if test="${sessionScope.grade eq 'admin' or sessionScope.grade eq '관리자'}">
+	<c:if test="${sessionScope.loginGrade eq 'admin' or sessionScope.loginGrade eq '관리자'}">
 		<form action="<c:url value='/noticewrite'></c:url>">
 			<div align="center">
 				<button type="submit" class="btn btn-default"

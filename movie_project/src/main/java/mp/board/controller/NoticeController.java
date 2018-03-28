@@ -97,22 +97,27 @@ public class NoticeController {
 	public String noticeShow(Model model) {
 		
 		int no;
-		String id = (String) session.getAttribute("loginId");
-		
 		try {
 			no=Integer.parseInt(request.getParameter("no"));
 		} catch (Exception e) {
 			return "redirect:/notice";
 		}
+		
 		String grade = (String)session.getAttribute("loginGrade");
+		boolean adminFlag = false;
+		try {
+			adminFlag=grade.equals("관리자")||grade.equals("admin");
+		} catch (Exception e) {
+			
+		}
 		Notice notice = noticeDao.noticedetail(no);
 		
-		if(id==null||id=="") {
+		/*if(id==null||id=="") {
 			model.addAttribute("contents",notice);
 //			log.debug(noticeDao.noticedetail(no).toString());
 			return "board/notice_show";
-		}
-		if(!grade.equals("관리자")&&!grade.equals("admin")){	
+		}*/
+		if(!adminFlag) {	
 		notice=noticeDao.readPlus(notice);
 		}
 		model.addAttribute("contents",notice);
@@ -135,7 +140,7 @@ public class NoticeController {
 			return "board/notice";
 		}
 		  
-		return "board/notice";
+		return "board/notice_write";
 	}
 
 	@RequestMapping(value= {"/noticeWrite","/noticewrite","/notice_write"}, method = RequestMethod.POST)
@@ -149,15 +154,18 @@ public class NoticeController {
 	
 	@RequestMapping(value= {"/noticeDelete","/noticedelete","/notice_delete"})
 	public String noticeDelete(String no,Model model) {
+		try {
+			
 		String grade = (String) session.getAttribute("loginGrade");
 		
-		if(!grade.equals("admin")&&!grade.equals("관리자")) {
+		if(!grade.equals("admin")&&!grade.equals("관리자")) throw new Exception();
+		request.setAttribute("no", Integer.parseInt(no));
+		return "board/notice_delete";
+		} catch (Exception e) {
 			log.debug("권한이 부족합니다.");
 			model.addAttribute("re_no_no", true);
 			return "board/notice";
 		}
-		request.setAttribute("no", Integer.parseInt(no));
-		return "board/notice_delete";
 	}
 	
 	@RequestMapping(value= {"/noticeDelete","/noticedelete","/notice_delete"}, method = RequestMethod.POST)
@@ -174,17 +182,20 @@ public class NoticeController {
 	
 	@RequestMapping(value= {"/noticeEdit","/noticeedit","/notice_edit"})
 	public String noticeEdit(String no,Model model) {
+		try {
 		String grade = (String) session.getAttribute("loginGrade");
 		
-		if(!grade.equals("admin")&&!grade.equals("관리자")) {
-			log.debug("권한이 부족합니다.");
-			model.addAttribute("re_no_no", true);
-			return "board/notice";
-		}
+		if(!grade.equals("admin")&&!grade.equals("관리자")) throw new Exception();
 		int bno = Integer.parseInt(no);
 		Notice notice = noticeDao.noticedetail(bno);
 		model.addAttribute("before",notice);
 		return "board/notice_edit";
+		}catch (Exception e) {
+			log.debug("권한이 부족합니다.");
+			model.addAttribute("re_no_no", true);
+			return "board/notice";
+		}
+		
 	}
 	
 	@RequestMapping(value={"/noticeEdit","/noticeedit","/notice_edit"},method = RequestMethod.POST)
