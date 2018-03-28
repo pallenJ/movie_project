@@ -5,11 +5,23 @@
 	<title></title>
 
 
+<!--  -->
+<!-- <link rel="stylesheet" href="https://bootswatch.com/4/minty/_bootswatch.scss">
+<link rel="stylesheet" href="https://bootswatch.com/4/minty/_variables.scss"> -->
 <!--반드시 있어야 할 것(jsp페이지에 이것만 추가후 디자인 시작)-->
-<link rel="stylesheet" href="https://bootswatch.com/4/minty/_bootswatch.scss">
-<link rel="stylesheet" href="https://bootswatch.com/4/minty/_variables.scss">
 <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
 <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+
+<!-- 필요에 따라 추가할 기본 부트 스트랩 -->
+<!-- 부가적인 테마 -->
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<!-- 부가적인 테마 -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>	
+">
+ -->
 
 </head>
 <body>
@@ -47,5 +59,6 @@
    <a href="https://bootswatch.com/minty/">부트스트랩 테마링크(민트)</a>
   </h1>
 <!--예제+링크끝-->    
+
 </body>
 </html>

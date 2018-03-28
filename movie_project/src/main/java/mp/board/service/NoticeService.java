@@ -2,6 +2,8 @@ package mp.board.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import mp.board.bean.Notice;
 import mp.board.bean.Qna;
 

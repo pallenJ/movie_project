@@ -2,8 +2,13 @@ package mp.board.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import mp.board.bean.Notice;
 import mp.board.bean.Qna;
@@ -18,7 +23,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
 	MemberDao memDao;
-
+	
+	private Logger log = LoggerFactory.getLogger(getClass());
 	@Override
 	public List<Notice> noticePaging(int page, int cnum) {
 		/*
@@ -105,5 +111,5 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		noticeDao.noticeEdit(notice);
 	}
-
+	
 }
