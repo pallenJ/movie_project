@@ -77,10 +77,7 @@
                     var id = String.fromCharCode(i)+j;
                     console.log("i :"+i);
                     console.log("j :"+j);
-                    console.log(<%=request.getAttribute("seat.get().reallocation") %>);
-                	console.log('${seat.get('+chk+').reallocation}');
                     if(id=='${seat.get(chk).reallocation}'){
-                    	alert(id);
 	                    createSeat(id, i - "a".charCodeAt(0), j, true);
 	                    chk++;
 	                    console.log("chk :"+chk);
@@ -103,6 +100,7 @@
         };
         
     </script>
+    
      <div class="screen">screen</div>
      <div class="empty-row"></div>
      <div class="seats"></div>
