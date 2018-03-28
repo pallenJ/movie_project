@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import mp.theater.bean.Screen;
 import mp.theater.bean.Seat;
@@ -43,21 +44,21 @@ public class SeatController {
 		return "redirect:/seat/list?screenid="+screen;
 	}
 	
-	@RequestMapping(value= {"/seat", "/seat/list"})
+	@RequestMapping(value= {"/seat"})
 	public String list(HttpSession session, Model model){
 		session.setAttribute("id", "test");
 		List<Screen> screen = screenService.list(session.getAttribute("id").toString());
+		List<Seat> seat = seatService.list(screen.get(0).getId().toString());
 		model.addAttribute("screen", screen);
+		model.addAttribute("screenid", screen.get(0).getId());
+		model.addAttribute("seat", seat);
 		return "/seat/list";
 	}
 	@RequestMapping(value="/seat/list", method=RequestMethod.POST)
-//	@ResponseBody//view resolver의 기본 설정을 무시하고 지금 현재 반환 내용을 응답 데이터로 설정
-	public String list(String screenid, HttpServletResponse response, HttpSession session, Model model) throws IOException {
-		List<Screen> screen = screenService.list(session.getAttribute("id").toString());
+	@ResponseBody
+	public List<Seat> list(String screenid, HttpServletResponse response, HttpSession session) throws IOException {
 		List<Seat> seat = seatService.list(screenid);
-		//model.addAttribute("screen", screen);//상영관
-		model.addAttribute("seat", seat);//좌석
-		return "/seat/view";//view
+		return seat;//view
 	}
 	
 	

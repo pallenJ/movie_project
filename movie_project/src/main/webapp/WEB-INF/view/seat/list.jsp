@@ -74,22 +74,21 @@
         
         function selectScreen(){
             //셀렉트 옵션 가져오기
-            var screenselect = document.getElementById("screenselect");
+            var screenselect = document.getElementById('screenselect');
                 $.ajax({
                 	type: 'POST',
                     url: "http://localhost:8080/movie_project/seat/list",
                     data:{ 
-                    	screenid:screenselect.options[screenselect.selectedIndex].value,
+                    	screenid: screenselect.options[screenselect.selectedIndex].value
                     },
                     dataType:"text",
                     success: function(value){
 //                     	alert(value);
-//                     	alert(screenselect.options[screenselect.selectedIndex].value);
-//                     	$("#screenno").text(screenselect.options[screenselect.selectedIndex].text + "관");
-						$(".area").html(value);
+                     	//alert(screenselect.options[screenselect.selectedIndex].value);
+                     	$("#screenno").text(screenselect.options[screenselect.selectedIndex].text + "관");
                     }, 
                     error: function(){
-                    	alert("실패");
+                    	alert("셀렉트옵션 실패");
                     }
                 });
         }
@@ -99,7 +98,9 @@
             for(var i="a".charCodeAt(0); i<="l".charCodeAt(0); i++){
                 for(var j=1; j<=23; j++){
                     var id = String.fromCharCode(i)+j;
-                    if(id=='${seat.get('+chk+').reallocation}'){ //seat객체 안넘어옴
+                    console.log(id);
+                    console.log('${seat.get(chk).reallocation}');//......
+                    if(id=="A1"){ 
 	                    createSeat(id, i - "a".charCodeAt(0), j, true);
 	                    chk++;
                     } else {
@@ -141,6 +142,7 @@
    		</c:forEach>
    	</select>
 	<br>
+	<div id="content"></div>
 	<!-- 
    	실제위치 : <input type="text" name="reallocation"/><br>
    	서비스위치 : <input type="text" name="servicelocation"/><br>
