@@ -52,7 +52,7 @@ public class MovieServiceImpl implements MovieService {
 		m.setRate(rate); m.setTime(Integer.parseInt(time));
 		m.setNation(nation); m.setDistributor(distributor);
 		m.setProductor(productor); m.setStory(story);
-		m.setPosterpath(posterpath); m.setPoster(poster.getOriginalFilename());
+		m.setPosterpath(posterpath); m.setPoster(savename);
 		m.setUploader(uploader); m.setPrice(Integer.parseInt(price));
 		String movieid = movieDao.register(m);
 		log.debug("영화 등록 완료");

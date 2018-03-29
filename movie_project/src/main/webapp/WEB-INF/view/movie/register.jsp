@@ -1,23 +1,88 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<h1>영화 등록 화면</h1>
-<form action="register" method="post" enctype="multipart/form-data">
-	<div>
-		<input type="text" name="title" placeholder="영화제목"><br>
-		<input type="date" name="open" placeholder="개봉일"><br>
-		<input type="date" name="close" placeholder="상영일"><br>
-		<input type="text" name="director" placeholder="감독"><br>
-		<input type="text" name="actor" placeholder="배우"><br>
-		<input type="text" name="genre" placeholder="장르"><br>
-		<input type="text" name="rate" placeholder="이용가"><br>
-		<input type="text" name="time" placeholder="상영시간"><br>
-		<input type="text" name="nation" placeholder="국가"><br>
-		<input type="text" name="distributor" placeholder="배급사"><br>
-		<input type="text" name="productor" placeholder="영화사"><br>
-		<textarea cols="25" rows="5" placeholder="줄거리" maxlength="400" name="story"></textarea><br>
-		 포스터 : <input type="file" name="poster"><br>
-		<input type="text" name="uploader" placeholder="올린사람"><br>
-		<input type="text" name="price" placeholder="가격"><br>
-		<input type="submit" value="등록">
-	</div>
-</form>
+<html>
+    <head>
+        <title>영화 등록</title>
+        <style>
+            .empty-row{
+                height: 50px;
+            }
+            .area{
+                margin: auto;
+                text-align: center;
+                width: 80%;
+                border: 1px dotted;
+            }
+            .content{
+                margin: auto;
+                text-align: left;
+                width: 60%;
+                border: 1px dotted;
+            }
+        </style>
+        <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
+        <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="empty-row"></div>
+        <div class="area">
+            <div class="empty-row"></div>
+            <h2 class="text-center">영화 등록</h2><br>
+            <form action="register" method="post" enctype="multipart/form-data">
+                <div class="content">
+                    <div class="empty-row"></div>
+                    <div>
+                        영화제목 <input type="text" name="title" style="width: 80%;"><br><br>
+                    </div>
+                    <div>
+                        개봉일 <input type="date" name="open">
+                        상영마감일 <input type="date" name="close"><br><br>
+                    </div>
+                    <div>
+                        감독 <input type="text" name="director"><br><br>
+                    </div>
+                    <div>
+                        출연배우 <input type="text" name="actor" style="width: 81%;"><br><br>
+                    </div>
+                    <div>
+                        장르 <input type="text" name="genre" style="width: 85%;"><br><br>
+                    </div>
+                    <div>
+                        등급 <select name="rate">
+                            <option value="전체관람가">전체관람가</option>
+                            <option value="12세관람가">12세관람가</option>
+                            <option value="15세관람가">15세관람가</option>
+                            <option value="18세관람가">18세관람가</option>
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        상영시간 <input type="text" name="time"><br><br>
+                    </div>
+                    <div>
+                        국가 <input type="text" name="nation" style="width: 85%;"><br><br>
+                    </div>
+                    <div>
+                        배급사 <input type="text" name="distributor" style="width: 83%;"><br><br>
+                    </div>
+                    <div>
+                        영화사 <input type="text" name="productor" style="width: 83%;"><br><br>
+                    </div>
+                    <div>
+                        줄거리<br>
+                        <textarea cols="95" rows="5" maxlength="400" name="story"></textarea><br><br>
+                    </div>
+                    <div>
+                        포스터 <input type="file" name="poster"><br><br>
+                    </div>
+                    <div>
+                        티켓 기본가 <input type="text" name="price" placeholder="예) 10000"><br><br>
+                    </div>
+                    <div style="text-align: center;">
+                        <input type="submit" value="등록" class="btn btn-primary">
+                    </div>
+                    <div class="empty-row"></div>
+                </div>
+            </form>
+            <div class="empty-row"></div>
+        </div>
+        <div class="empty-row"></div>
+    </body>
+</html>

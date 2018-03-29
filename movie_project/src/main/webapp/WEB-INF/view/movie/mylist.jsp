@@ -28,12 +28,9 @@
         <div class="empty-row"></div>
         <div class="area">
             <div class="empty-row"></div>
-            <form action="list" method="post">
-                <div>
-                    <input type="text" name="uploaderid" placeholder="영화사 ID">
-                    <input type="submit" value="검색" class="btn btn-primary btn-sm">
-                </div>
-            </form>
+            <div>
+                <h2>${sessionScope.loginId}님의 영화 리스트</h2><br>
+            </div>
             <div class="empty-row"></div>
             <div>
                 <c:forEach var="list" items="${list }">

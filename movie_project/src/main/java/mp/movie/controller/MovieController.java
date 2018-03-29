@@ -30,10 +30,11 @@ public class MovieController {
 	public String register(String title, String open, String close, 
 			String director, String actor, String genre, String rate, String time,
 			String nation, String distributor, String productor, String story, 
-			MultipartFile poster, String uploader, String price, HttpSession session) throws Exception {
+			MultipartFile poster, String price, HttpSession session) throws Exception {
 		//파일 업로드시에 pom.xml에 commons-io, commons-fileupload 추가
 		//mvc-config.xml에 multipartResolver추가
 		String posterpath = session.getServletContext().getRealPath("upload");
+		String uploader = (String)session.getAttribute("loginId");
 		log.debug(posterpath);
 		String movieid = movieService.register(title, open, close, director, actor, genre, 
 				rate, time, nation, distributor, productor, story, posterpath, poster,
@@ -42,7 +43,14 @@ public class MovieController {
 		return "redirect:/movie/info?movieid="+movieid;
 	}
 	
-	//나의 영화 조회 (영화사 입장)
+	//나의 영화 조회(영화사 입장)
+	@RequestMapping("/movie/mylist")
+	public String my(HttpSession session, Model model) {
+		model.addAttribute("list", movieService.getlist((String)session.getAttribute("loginId")));
+		return "/movie/mylist";
+	}
+	
+	//영화사별 영화 조회 (관리자 입장)
 	@RequestMapping("/movie/list")
 	public String list() {
 		return "/movie/list";
