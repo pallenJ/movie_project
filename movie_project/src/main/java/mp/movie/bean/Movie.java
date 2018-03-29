@@ -5,12 +5,12 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 public class Movie {
 	private String id, title, open, close, director, actor, genre, rate; 
 	private int time;
-	private String nation, distributor, productor, story, posterpath, 
-	poster, uploader;
+	private String nation, distributor, productor, story, posterpath, poster, uploader;
 	private int price;
 	
 	public Movie() {}

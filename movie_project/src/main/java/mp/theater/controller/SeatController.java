@@ -41,9 +41,10 @@ public class SeatController {
 	public String register(String seat, String screen) {
 		log.debug(seat, screen);
 		seatService.register(seat, screen);
-		return "redirect:/seat/list?screenid="+screen;
+		return "redirect:/seat/list";
 	}
 	
+	//좌석 조회(리스트)
 	@RequestMapping(value= {"/seat", "/seat/list"})
 	public String list(HttpSession session, Model model){
 		session.setAttribute("id", "test");
@@ -61,7 +62,6 @@ public class SeatController {
 		return seat;
 	}
 	
-	
 	@RequestMapping("/seat/edit")
 	public String edit() {
 		return "/seat/edit";
@@ -72,10 +72,4 @@ public class SeatController {
 		return "/seat/delete";
 	}
 	
-	//ajax 위한 매핑
-	@RequestMapping("/seat/getscreen")
-	public String getscreen() {
-		
-		return "";
-	}
 }
