@@ -124,7 +124,7 @@
 						</span>
 						<p id="checkMsg"></p>
 					</div>
-				</div>
+				</div> 
 				<!--비밀번호 입력-->
 				<div class="form-group">
 					<label for="pw">비밀번호</label> <input type="password"

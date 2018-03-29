@@ -53,7 +53,7 @@
     	<label class="sr-only" for="pw">pw</label>
     	<input type="password" class="form-control" name="pw" placeholder="Password" required>
   	</div>
- 
+  
   
   	<br><br>
   	<button type="submit" class="btn btn-primary btn-lg" style="width:15%; height:50px;">로그인</button>
