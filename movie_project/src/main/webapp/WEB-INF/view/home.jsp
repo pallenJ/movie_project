@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>Insert title here</title>
-
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 </head>
 <body>
 	<c:if test="${re_login_home}">
@@ -16,18 +16,10 @@
 	<h1>환영합니다</h1>
 	<div align="right">
 	
-	<c:choose>
 	
-		<c:when test="${loginId eq null||loginId eq ''}">
-			<a href="<c:url value='/login'/>">로그인</a>/
-	 		<a href="<c:url value='/register'/>">회원가입</a>/
-		</c:when>
-		<c:otherwise> <a href="<c:url value='/logout'/>">로그아웃</a>/</c:otherwise>
-	</c:choose>
-	 
 	 
 	
-	 <a href="<c:url value='/myinfo'/>">내정보</a>/
+	 
 	</div>
 	
 	<h1><a href="<c:url value='/qna'/>">Q&A 게시판 이동</a></h1>
