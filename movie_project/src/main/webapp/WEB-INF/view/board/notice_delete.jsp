@@ -3,24 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-	<title>로그인</title>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 
-	<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<div align="center" style="position: relative;top: 20%;">
-<h1> 비밀번호 입력 </h1>
-</div>
+<!-- font awesome -->
+<link rel="stylesheet" href="css/font-awesome.min.css" media="screen"
+	title="no title" charset="utf-8">
+<!-- Custom style -->
+<link rel="stylesheet" href="css/style.css" media="screen"
+	title="no title" charset="utf-8">
 
 </head>
 <body>
-<div align="center" style="position: relative;top: 30%;">
+<br><br><br><br>
+<h3 align="center">관리자 본인 확인을 위해 한번더 비밀 번호를 입력해 주세요</h3>
+<div align="center" class="col-lg-6"  style="float: none; margin: 0 auto; position: relative; top: 10%; left:15%">
+
 	<form action="<c:url value='/noticedelete'></c:url>" method="post" class="form-inline form-group">
   
       	<input type="hidden" name="no" value="${requestScope.no}">

@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 	<title>글쓰기</title>
 	 <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">

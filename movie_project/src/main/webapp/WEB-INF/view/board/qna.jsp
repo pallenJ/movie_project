@@ -11,19 +11,7 @@
 <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
 <title>Qna게시판</title>
 
-<!-- 부트스트랩 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 
 
 <div align="center">
@@ -92,8 +80,8 @@
 
 		<div align="center">
 		
-	<form action="<c:url value='/qnawrite'></c:url>" style="position: relative; left: 350px;">
-			<button type="submit" class="btn btn-default btn-group"
+	<form action="<c:url value='/qnawrite'></c:url>" style="position: relative; left: 360px;">
+			<button type="submit" class="btn btn-secondary"
 				>글쓰기</button>
 	</form>
 		</div>
@@ -155,7 +143,7 @@
 					<div class="input-group-btn">
 
 						<div class="dropdown" style="width: 90px;">
-							<select class="form-control btn btn-default" name="search">
+							<select class="form-control" name="search">
 								<option value="title">제목</option>
 								<option value="content">내용</option>
 								<option value="head">말머리</option>
@@ -168,7 +156,7 @@
 					<input type="text" class="form-control" name="keyword"
 						placeholder="Search for..."> <span class="input-group-btn">
 						<!-- 검색버튼-->
-						<button class="btn btn-default" type="submit">검색</button>
+						<button class="btn btn-success" type="submit">검색</button>
 					</span>
 
 				</div>
@@ -182,11 +170,11 @@
 		<!-- ==================================================== -->
 
 		<!-- 페이징 기능 -->
-		<div class="bs-example" data-example-id="simple-pagination">
+		<div class="col-lg-6" data-example-id="simple-pagination">
 			<nav>
-				<ul class="pagination">
+				<ul class="pagination pagination-sm">
 					<c:if test="${pagingNum>0}">
-						<li><a href='<c:url value='/qna'></c:url>?pg=${pagingNum}'
+						<li class="page-item"><a href='<c:url value='/qna'></c:url>?pg=${pagingNum}'
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 					</c:if>
@@ -196,37 +184,37 @@
 						<c:choose>
 							<c:when test="${pageidx == param.pg}">
 
-								<li><a style="background-color: #98DFFF;"
+								<li class="page-item active"><a class="page-link"
 									href='<c:url value='/qna'></c:url>?pg=${pageidx}'>${pageidx}</a>
 								</li>
 							</c:when>
 
 							<c:otherwise>
-								<li><a href='<c:url value='/qna'></c:url>?pg=${pageidx}'>${pageidx}</a>
+								<li class="page-item"><a class="page-link" href='<c:url value='/qna'></c:url>?pg=${pageidx}'>${pageidx}</a>
 								</li>
 							</c:otherwise>
 
 						</c:choose>
 					</c:forEach>
 
-					<li><c:if test="${lastPage-pagingNum>10}">
-							<a href='<c:url value='/qna'></c:url>?pg=${pagingNum+11}'
+					<c:if test="${lastPage-pagingNum>10}">
+							<li class="page-item"><a class="page-link" href='<c:url value='/qna'></c:url>?pg=${pagingNum+11}'
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a>
-						</c:if></li>
+							</a></li>
+						</c:if>
+						
+						
 				</ul>
+				
+				
+				
+				
+	
+				
+				
+				
 			</nav>
-			<div class="btn-group" style="position: relative; left: 250px;">
-			<c:if
-				test="${requestScope.keyword ne null||requestScope.keyword ne ''}">
-				<button onclick="location.href='qna';" role="group"
-					class="btn btn-primary btn-group"
-					>게시판홈으로</button>
-			</c:if>
 			
-			<a href="home" class="btn-group" role="group"
-				style="width:100px"><h4>홈으로</h4></a>
-				</div>	
 		</div>
 	</div>
 		<!-- ==================================================== -->
@@ -235,9 +223,6 @@
 	<!--/bs-example -->
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-	<script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

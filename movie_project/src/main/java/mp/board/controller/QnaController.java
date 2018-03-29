@@ -194,14 +194,14 @@ public class QnaController {
 		if(!session.getAttribute("loginId").equals(qna.getWriterId())&&!grade.equals("admin")
 				&&!grade.equals("관리자")) {
 		model.addAttribute("re_qna_delete", 0);	
-		return "/qna";
+		return "board/qna";
 		}else if(grade.equals("admin")||grade.equals("관리자")) {
 			if(qnaDao.qnadelete(bno)) {
 				model.addAttribute("re_qna_delete", 1);
-				return "/qna";
+				return "board/qna";
 				}else {
 					model.addAttribute("re_qna_delete", 2);
-				return "/qna";
+				return "board/qna";
 				}
 		}
 		model.addAttribute("re_qna_delete", 1);

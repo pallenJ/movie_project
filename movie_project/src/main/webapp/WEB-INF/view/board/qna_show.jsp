@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <title>글보기</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -123,7 +124,7 @@
 
 							<c:if
 								test="${contents.gno<1 and (sessionScope.loginId ne contents.writerId) 
-								and (sessionScope.grade eq '관리자' or sessionScope.grade eq 'admin')}">
+								or (sessionScope.grade eq '관리자' or sessionScope.grade eq 'admin')}">
 								<form class="btn-group"
 									action="<c:url value='/qnawrite'></c:url>" role="group">
 									<input type="hidden" name="parent" value="${contents.no}">

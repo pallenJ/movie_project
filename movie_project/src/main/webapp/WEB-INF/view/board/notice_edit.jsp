@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <html>
 <head>
+	<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 	<title>글수정</title>
 	<!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">

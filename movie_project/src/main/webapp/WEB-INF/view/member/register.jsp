@@ -12,14 +12,6 @@
 
 <jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!-- font awesome -->
 <link rel="stylesheet" href="css/font-awesome.min.css" media="screen"
@@ -103,12 +95,12 @@
 	</script>
 
 	<article class="container">
-
+		<br><br>
 		<div class="page-header" align="center">
 			<h1>회원가입</h1>
 		</div>
-
-		<div class="col-md-6 col-md-offset-3">
+		<br>
+		<div class="col-md-6"  style="float: none; margin: 0 auto;">
 			<form role="form" action='register' method="post"
 				onsubmit="return checkPw()">
 				<!-- 아이디 입력 및 중복확인 기능-->

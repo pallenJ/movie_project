@@ -10,17 +10,7 @@
 <title>notice게시판</title>
 
 <!-- 부트스트랩 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <div align="center">
 	<h1>게시판</h1>
 </div>
@@ -58,7 +48,7 @@
 	<c:if test="${sessionScope.loginGrade eq 'admin' or sessionScope.loginGrade eq '관리자'}">
 		<form action="<c:url value='/noticewrite'></c:url>">
 			<div align="center">
-				<button type="submit" class="btn btn-default"
+				<button type="submit" class="btn btn-warning"
 					style="position: relative; left: 360px;">글쓰기</button>
 			</div>
 		</form>
@@ -114,7 +104,7 @@
 					<div class="input-group-btn">
 
 						<div class="dropdown" style="width: 90px;">
-							<select class="form-control btn btn-default" name="search">
+							<select class="form-control" name="search">
 								<option value="title">제목</option>
 								<option value="content">내용</option>
 								<option value="head">말머리</option>
@@ -126,7 +116,7 @@
 				<input type="text" class="form-control"name="keyword" placeholder="Search for...">
 
 				<span class="input-group-btn"> <!-- 검색버튼-->
-					<button class="btn btn-default" type="submit">Go!</button>
+					<button class="btn btn-Info" type="submit">검색</button>
 				</span>
 
 			</form>
@@ -137,11 +127,11 @@
 		<!-- ==================================================== -->
 
 		<!-- 페이징 기능 -->
-		<div class="bs-example" data-example-id="simple-pagination">
+		<div class="col-lg-6" data-example-id="simple-pagination">
 			<nav>
-				<ul class="pagination">
+				<ul class="pagination pagination-sm">
 					<c:if test="${pagingNum>0}">
-						<li><a href='<c:url value='/notice'></c:url>?pg=${pagingNum}'
+						<li class="page-item"><a class="page-link" href='<c:url value='/notice'></c:url>?pg=${pagingNum}'
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 					</c:if>
@@ -151,24 +141,26 @@
 						<c:choose>
 							<c:when test="${pageidx == param.pg}">
 
-								<li><a style="background-color: lightyellow;"
+								<li class="page-item active"><a class="page-link"
 									href='<c:url value='/notice'></c:url>?pg=${pageidx}'>${pageidx}</a>
 								</li>
 							</c:when>
 
 							<c:otherwise>
-								<li><a href='<c:url value='/notice'></c:url>?pg=${pageidx}'>${pageidx}</a>
+								<li class="page-item"><a class="page-link" href='<c:url value='/notice'></c:url>?pg=${pageidx}'>${pageidx}</a>
 								</li>
 							</c:otherwise>
 
 						</c:choose>
 					</c:forEach>
 
-					<li><c:if test="${lastPage-pagingNum>10}">
-							<a href='<c:url value='/notice'></c:url>?pg=${pagingNum+11}'
+					<c:if test="${lastPage-pagingNum>10}">
+					<li class="page-item">
+							<a class="page-link" href='<c:url value='/notice'></c:url>?pg=${pagingNum+11}'
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 							</a>
-						</c:if></li>
+						</li>
+						</c:if>
 				</ul>
 			</nav>
 		</div>
@@ -177,9 +169,6 @@
 	<!--/bs-example -->
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-	<script src="js/bootstrap.min.js"></script>
+	
 </body>
 </html>
