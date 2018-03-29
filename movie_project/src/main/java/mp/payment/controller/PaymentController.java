@@ -20,8 +20,11 @@ import mp.movie.service.MovieService;
 import mp.payment.bean.Payment;
 import mp.payment.service.PaymentService;
 import mp.schedule.bean.Schedule;
+import mp.schedule.bean.ScheduleJoin;
 import mp.schedule.service.ScheduleService;
+import mp.theater.bean.Seat;
 import mp.theater.bean.Theater;
+import mp.theater.service.SeatService;
 import mp.theater.service.TheaterService;
 
 @Controller
@@ -42,6 +45,9 @@ public class PaymentController {
 	
 	@Autowired
 	ServletContext application;
+	
+	@Autowired
+	SeatService seatService;
 	
 	@RequestMapping("/home")
 	public String home() {
@@ -80,6 +86,10 @@ public class PaymentController {
 		model.addAttribute("theaterid", theaterid);
 		model.addAttribute("movieid", movieid);
 		model.addAttribute("scheduleid", scheduleid);
+		//좌석 뿌려주기 전 필요 자료
+		ScheduleJoin schedule = scheduleService.getinfo(scheduleid);
+		List<Seat> seatlist = seatService.list(schedule.getScreen());
+		model.addAttribute("seatlist",seatlist);
 		return "/ticket/selectSeat";
 	}	
 	
