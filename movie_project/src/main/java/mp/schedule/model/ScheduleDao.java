@@ -14,8 +14,8 @@ public interface ScheduleDao {
 		//상영시간표 등록
 		void register(Schedule schedule);
 		
-		//영화관, 해당 날짜 상영시간표 목록 조회
-		List<Schedule> schedulelist(String theater, String day);
+		//선택한 영화, 영화관, 날짜의  상영시간표 목록 조회
+		List<Schedule> schedulelist(String theater, String movie, String day);
 		
 		//업로더별 상영시간표 목록 조회
 		List<ScheduleJoin> schedulelist(String uploader);

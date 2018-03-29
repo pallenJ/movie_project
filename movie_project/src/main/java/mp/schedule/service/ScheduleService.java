@@ -24,4 +24,8 @@ public interface ScheduleService {
 
 	//상영시간표 삭제
 	void delete(String scheduleid, String id, String password) throws Exception;
+	
+	//선택한 영화, 영화관, 날짜의  상영시간표 목록 조회
+	List<Schedule> schedulelist(String theater, String movie, String day);
+	
 }

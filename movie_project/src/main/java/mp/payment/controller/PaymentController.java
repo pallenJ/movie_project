@@ -1,5 +1,7 @@
 package mp.payment.controller;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -14,8 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import mp.member.bean.Member;
 import mp.movie.bean.Movie;
+import mp.movie.service.MovieService;
 import mp.payment.bean.Payment;
 import mp.payment.service.PaymentService;
+import mp.schedule.bean.Schedule;
+import mp.schedule.service.ScheduleService;
+import mp.theater.bean.Theater;
+import mp.theater.service.TheaterService;
 
 @Controller
 public class PaymentController {
@@ -23,6 +30,15 @@ public class PaymentController {
 	
 	@Autowired
 	PaymentService paymentService;	
+	
+	@Autowired
+	TheaterService theaterService;
+	
+	@Autowired
+	ScheduleService scheduleService;
+	
+	@Autowired
+	MovieService movieService;
 	
 	@Autowired
 	ServletContext application;
@@ -35,11 +51,29 @@ public class PaymentController {
 
 //	 
 	@RequestMapping("/ticket")
-	public String ticket(HttpSession session) {
+	public String ticket(HttpSession session, Model model) {
 		String loginid = (String)session.getAttribute("loginId");
 		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
+		List<Theater> theaterlist = theaterService.list();
+		List<Movie> movielist = movieService.getNow();
+		String[] datelist = {"2018-03-29","2018-03-30","2018-03-31"};
+		model.addAttribute("theaterlist",theaterlist);
+		model.addAttribute("movielist",movielist);
+		model.addAttribute("datelist",datelist);	//오늘부터 상영스케줄 등록일까지만 출력, 일단 오늘기준 6일로 설정
 		return "/ticket/ticket";
 	}
+	
+	//ajax로 ticket schedule가져온다.
+	@RequestMapping("/ticket/schedule")
+	@ResponseBody
+	public List<Schedule> getschedule(
+			String theaterid,
+			String movieid,
+			String date) {
+		List<Schedule> schedulelist = scheduleService.schedulelist(theaterid, movieid, date);
+		return schedulelist;
+	}
+	
 	
 	@RequestMapping("/selectseat")
 	public String selectseat(String theaterid, String movieid,String scheduleid, Model model) {

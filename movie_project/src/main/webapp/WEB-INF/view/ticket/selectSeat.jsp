@@ -11,39 +11,18 @@
             border:1px solid black;
         }
     </style>
-    <script src = "https://code.jquery.com/jquery-latest.js"></script>
-<!--    js파일 불러오는 것이다. 10000줄 정도 코드.-->
-    <script>   
+	<script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script>
         $(document).ready(function(){
-            //체크박스 클릭시 input태그 추가
-            $("input[type=checkbox]").eq(0).on("click",function(){
-                var input = $("<input/>");
-                input = input.attr("type", "text").attr("name", "seatid").attr("value","s0000000001");
-                $("#target").append(input);
-            });
-            $("input[type=checkbox]").eq(1).on("click",function(){
-                var input = $("<input/>");
-                input = input.attr("type", "text").attr("name", "seatid").attr("value","s0000000002");
-                $("#target").append(input);
-            });
-            $("input[type=checkbox]").eq(2).on("click",function(){
-                var input = $("<input/>");
-                input = input.attr("type", "text").attr("name", "seatid").attr("value","s0000000003");
-                $("#target").append(input);
-            });
-            $("input[type=checkbox]").eq(3).on("click",function(){
-                var input = $("<input/>");
-                input = input.attr("type", "text").attr("name", "seatid").attr("value","s0000000004");
-                $("#target").append(input);
-            });  
-            $("input[type=checkbox]").eq(4).on("click",function(){
-                var input = $("<input/>");
-                input = input.attr("type", "text").attr("name", "seatid").attr("value","s0000000005");
-                $("#target").append(input);
-            });  
-            
-          });              
-    </script>
+        	//버튼 클릭시 결제창 출력
+            $("#schedulebutton").on("click", function(){
+             	var adult = document.getElementById("adult");	//select에서 선택한 값 가져오기
+              	alert(adult);
+				
+            });	//button
+        	
+       });	//ready
+	</script> 
 
 </head>
 <body>

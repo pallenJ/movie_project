@@ -31,17 +31,25 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		sql = "insert into schedule values(?,?,?,?,?,?,?,?,?,?)";
 		Object[] args = {id,schedule.getMovie(),schedule.getTheater(),schedule.getScreen(),schedule.getDay(),schedule.getStarttime(),
 						schedule.getEndtime(),schedule.getMorning(),schedule.getNight(),schedule.getUploader()};
-		log.debug("scheduledaoimpl register 디비접근 직전 : {}",schedule.getDay());
-		log.debug("scheduledaoimpl register 디비접근 직전 : {}",schedule.getStarttime());
-		log.debug("scheduledaoimpl register 디비접근 직전 : {}",schedule.getEndtime());
+
+		log.debug("scheduledaoimpl register 디비접근 직전 id : {}",id);
+		log.debug("scheduledaoimpl register 디비접근 직전 uploader : {}",schedule.getUploader());
+		log.debug("scheduledaoimpl register 디비접근 직전 Theater : {}",schedule.getTheater());
+		log.debug("scheduledaoimpl register 디비접근 직전 starttime: {}",schedule.getStarttime());
+		log.debug("scheduledaoimpl register 디비접근 직전 screen : {}",schedule.getScreen());
+		log.debug("scheduledaoimpl register 디비접근 직전 night : {}",schedule.getNight());
+		log.debug("scheduledaoimpl register 디비접근 직전 movie : {}",schedule.getMovie());
+		log.debug("scheduledaoimpl register 디비접근 직전 morning : {}",schedule.getMorning());
+		log.debug("scheduledaoimpl register 디비접근 직전 endtime : {}",schedule.getEndtime());
+		log.debug("scheduledaoimpl register 디비접근 직전 day : {}",schedule.getDay());
 		jdbcTemplate.update(sql,args);
 	}
 	
 	
 	@Override
-	public List<Schedule> schedulelist(String theater, String day) {
-		String sql = "select * from schedule where theater=? and day =?";
-		Object[] args = {theater,day};
+	public List<Schedule> schedulelist(String theater,String movie, String day) {
+		String sql = "select * from schedule where theater=? and day =? and movie=?";
+		Object[] args = {theater,day,movie};
 		return jdbcTemplate.query(sql, mapper,args);
 	}
 

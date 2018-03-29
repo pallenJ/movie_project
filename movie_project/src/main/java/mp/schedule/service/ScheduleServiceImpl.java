@@ -68,4 +68,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 	}
 
+	@Override
+	public List<Schedule> schedulelist(String theater, String movie, String day) {
+		List<Schedule> list = scheduleDao.schedulelist(theater, movie, day);
+		return list;
+	}
+
 }
