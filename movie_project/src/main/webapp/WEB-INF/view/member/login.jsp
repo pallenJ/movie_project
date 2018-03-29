@@ -6,16 +6,8 @@
 
 <head>
 	<title>로그인</title>
-
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 	<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
 </head>
@@ -41,14 +33,14 @@
 	</script>
 </c:if>
 <div align="center">
-	<br><br>
-	<a href="home"><h3>홈으로</h3></a>
-	<hr style="width: 40%; color: blue;">
+	<br>
 	<br>
 	<h1>로그인</h1><br>
-	<form class="form-inline" action="login" method="post">
+	<br>
+	<br>
+	<form action="login" method="post">
   
-  	<div class="form-group">
+  	<div class="col-lg-3">
     
     	<label class="sr-only" for="id">id</label>
     	<input type="text" class="form-control" name="id" placeholder="Id" required>
@@ -57,14 +49,14 @@
   
   	<br>
   
-  	<div class="form-group">
+  	<div class="col-lg-3">
     	<label class="sr-only" for="pw">pw</label>
     	<input type="password" class="form-control" name="pw" placeholder="Password" required>
   	</div>
  
   
   	<br><br>
-  	<button type="submit" class="btn btn-default" style="width:15%; height:50px;">로그인</button>
+  	<button type="submit" class="btn btn-primary btn-lg" style="width:15%; height:50px;">로그인</button>
   	<br>
    <!--  <label>
       <input type="checkbox"> Remember me
@@ -74,7 +66,7 @@
     <form action="register">
     <hr style="width: 40%">
 	<br>
-    <button type="submit" class="btn btn-primary btn-lg" style="width:22%; height: 70px;">회원가입</button>
+    <button type="submit" class="btn btn-success btn-lg" style="width:22%; height: 70px;">회원가입</button>
     </form>
 
 </div>

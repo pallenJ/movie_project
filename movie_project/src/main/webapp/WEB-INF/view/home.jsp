@@ -11,6 +11,7 @@
 	<c:if test="${re_login_home}">
 		<script type="text/javascript">
 			alert('로그인 성공');
+			location.href='home';
 		</script>
 	</c:if>
 	<h1>환영합니다</h1>
