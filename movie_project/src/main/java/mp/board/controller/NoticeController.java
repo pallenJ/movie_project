@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import mp.board.bean.Notice;
 import mp.board.model.NoticeDao;
@@ -118,6 +119,8 @@ public class NoticeController {
 		notice=noticeDao.readPlus(notice);
 		}
 		model.addAttribute("contents",notice);
+		
+		
 //		log.debug(noticeDao.noticedetail(no).toString());
 		return "board/notice_show";
 	}
@@ -141,9 +144,24 @@ public class NoticeController {
 	}
 
 	@RequestMapping(value= {"/noticeWrite","/noticewrite","/notice_write"}, method = RequestMethod.POST)
-	public String noticeWrite(String head, String title,String content,Model model) {
+	public String noticeWrite(String head, String title,String content,MultipartFile upload, Model model) {
+		String uploadPath = session.getServletContext().getRealPath("upload");
 		String id = (String) session.getAttribute("loginId");
-		noticeService.noticeWrite(id, head, title, content);
+		
+		log.debug("upload = {}",upload.toString());
+		
+		if(upload!=null) {
+		String result;
+		try {
+			result=noticeService.noticeWrite(id, head, title, content,uploadPath,upload);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result="fail";
+		}
+		log.debug("rs={}",result);
+		}/*else {
+			noticeService.noticeWrite(id, head, title, content);
+		}*/
 		model.addAttribute("re_no", true);
 		
 		return "board/notice";

@@ -126,10 +126,7 @@
 					</tr>
 				</c:forEach>
 
-
-
 			</tbody>
-
 
 		</table>
 
@@ -157,7 +154,7 @@
 					<input type="text" class="form-control" name="keyword"
 						placeholder="Search for..."> <span class="input-group-btn">
 						<!-- 검색버튼-->
-						<button class="btn btn-success" type="submit">검색</button>
+						<button class="btn btn-info" type="submit">검색</button>
 					</span>
 
 				</div>

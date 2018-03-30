@@ -8,6 +8,8 @@ public class Notice {
 	private String head;
 	private String title;
 	private String content;
+	private String uploadPath;
+	private String upload;
 	private String reg; 
 	private int read;
 	private String writer;
@@ -17,6 +19,8 @@ public class Notice {
 		setHead(rs.getString("head"));
 		setTitle(rs.getString("title"));
 		setContent(rs.getString("content"));
+		setUpload(rs.getString("upload"));
+		setUploadPath(rs.getString("uploadpath"));
 		setReg(rs.getString("reg"));
 		setRead(rs.getInt("read"));
 		setWriter(rs.getString("writer"));
@@ -80,6 +84,22 @@ public class Notice {
 
 	public void setWriter(String writer) {
 		this.writer = writer;
+	}
+
+	public String getUploadPath() {
+		return uploadPath;
+	}
+
+	public void setUploadPath(String uploadPath) {
+		this.uploadPath = uploadPath;
+	}
+
+	public String getUpload() {
+		return upload;
+	}
+
+	public void setUpload(String upload) {
+		this.upload = upload;
 	}
 	
 		

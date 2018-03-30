@@ -56,7 +56,7 @@
   
   
   	<br><br>
-  	<button type="submit" class="btn btn-primary btn-lg" style="width:15%; height:50px;">로그인</button>
+  	<button type="submit" class="btn btn-info btn-lg" style="width:18%; height:50px;">로그인</button>
   	<br>
    <!--  <label>
       <input type="checkbox"> Remember me
@@ -64,9 +64,9 @@
     <br>
 	</form>
     <form action="register">
-    <hr style="width: 40%">
+    <hr style="width: 20%">
 	<br>
-    <button type="submit" class="btn btn-success btn-lg" style="width:22%; height: 70px;">회원가입</button>
+    <button type="submit" class="btn btn-secondary btn-lg" style="width:18%; height: 50px;">회원가입</button>
     </form>
 
 </div>

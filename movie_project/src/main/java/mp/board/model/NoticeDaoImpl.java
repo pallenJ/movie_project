@@ -28,8 +28,9 @@ public class NoticeDaoImpl implements NoticeDao{
 		// TODO Auto-generated method stub
 		String sql = "select notice_seq.nextval from dual";
 		int no = jdbcTemplate.queryForObject(sql, Integer.class);
-		sql = "insert into notice values(?,?,?,?,sysdate,0,?)";
-		Object[] args= {no,notice.getHead(),notice.getTitle(),notice.getContent(),notice.getWriter()};
+		sql = "insert into notice values(?,?,?,?,?,?,sysdate,0,?)";
+		Object[] args= {no,notice.getHead(),notice.getTitle(),notice.getContent(),
+				notice.getUploadPath(),notice.getUpload(),notice.getWriter()};
 		jdbcTemplate.update(sql, args);
 	}
 	private RowMapper<Notice>mapper = (rs,idx)->{

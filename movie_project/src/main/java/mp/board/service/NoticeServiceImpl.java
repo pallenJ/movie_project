@@ -1,17 +1,17 @@
 package mp.board.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import mp.board.bean.Notice;
-import mp.board.bean.Qna;
 import mp.board.model.NoticeDao;
 import mp.member.model.MemberDao;
 
@@ -88,16 +88,57 @@ public class NoticeServiceImpl implements NoticeService {
 
 	
 	@Override
-	public void noticeWrite(String id, String head, String title, String content) {
+	public String noticeWrite(String id, String head, String title, String content,String uploadPath,MultipartFile upload) throws Exception{
 		String writer = memDao.myinfo(id).getNo();
-
+		String name = upload.getOriginalFilename();
+		if(name == null || name.equals("")) {
+			noticeWrite(id, head, title, content);
+			return "사진 없음";
+		}
+		if(
+				!name.endsWith(".jpg")&&
+				!name.endsWith(".png")&&
+				!name.endsWith(".gif")
+				) {
+			log.debug("업로드가 불가능한 파일입니다");
+			return "업로드가 불가능한 파일입니다";
+		}
+		
+		String savename = UUID.randomUUID().toString();
+		
+		File dir = new File(uploadPath);
+		if(!dir.exists()) dir.mkdirs();
+		
+		File target = new File(dir, savename);
+		upload.transferTo(target);
+		
 		Notice notice = new Notice();
-
+		
 		notice.setHead(head);
 		notice.setTitle(title);
 		notice.setContent(content);
+		notice.setUpload(savename);
+		notice.setUploadPath(uploadPath);
 		notice.setWriter(writer);
 
+		noticeDao.register(notice);
+		return "";
+	}
+	
+	@Override
+	public void noticeWrite(String id, String head, String title, String content){
+		String writer = memDao.myinfo(id).getNo();
+		
+		
+		Notice notice = new Notice();
+		
+		notice.setHead(head);
+		notice.setTitle(title);
+		notice.setContent(content);
+		notice.setUpload("");
+		notice.setUploadPath("");
+		notice.setWriter(writer);
+		
 		noticeDao.register(notice);
 	}
 

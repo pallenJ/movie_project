@@ -22,7 +22,8 @@
 
 </head>
 <body>
-	<form action="<c:url value='/noticewrite'></c:url>" method="post">
+	<form action="<c:url value='/noticewrite'></c:url>" method="post" enctype="multipart/form-data">
+
 		<table class="table table-bordered  table-hover table-primary"
 			align="center" style="position: relative; width: 80%; top: 30px">
 
@@ -50,8 +51,9 @@
 				<tr>
 					<th colspan="100%">
 						<div class="form-group">
+							<label for="file" class="user-input area-30"></label>
 							<input type="file" class="form-control-file "
-								id="file" name="file" multiple="multiple">
+								id="upload" name="upload" multiple="multiple">
 						</div>
 
 					</th>

@@ -78,6 +78,10 @@
 		<tbody>
 			<tr>
 				<td colspan="100%" style="height: 80%;">
+					<c:if test="${contents.uploadPath ne null and contents.uploadPath ne ''}">
+					<div align="center"><img src="${pageContext.request.contextPath}/image/${contents.upload}" style="max-height:100%; height:450px; width:auto;"></div>
+					</c:if>
+					
 					<div align="center">${contents.content}</div>
 				</td>
 			</tr>
