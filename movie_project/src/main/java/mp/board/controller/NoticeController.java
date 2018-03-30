@@ -40,9 +40,7 @@ public class NoticeController {
 	
 	@Autowired
 	private NoticeDao noticeDao;  
-	
-	@Autowired
-	private MemberDao memDao;  
+  
 	
 	@RequestMapping("/notice")
 	public String notice(Model model) {
@@ -63,14 +61,7 @@ public class NoticeController {
 		}
 		
 		
-		int []addValue = noticeService.noticePaging(cnum, pnum, page);
-		
-		int pagingNum= addValue[0];
-		int pageLast = addValue[1];
-		int last     = addValue[2];
-			page     = addValue[3];
-		log.debug("={}",noticeDao.noticelist().size());	
-		
+		int []addValue;;
 		if(searchFlag) {//검색한 상태일때
 			list=noticeService.noticePaging(page, cnum, search, keyword);
 			addValue = noticeService.noticePaging(cnum, pnum, page, search, keyword);
@@ -79,6 +70,12 @@ public class NoticeController {
 			list=noticeService.noticePaging(page, cnum);
 			addValue = noticeService.noticePaging(cnum, pnum, page);
 		}
+		
+		int pagingNum= addValue[0];
+		int pageLast = addValue[1];
+		int last     = addValue[2];
+			page     = addValue[3];
+		
 		
 		model.addAttribute("noticelist",list);
 		model.addAttribute("pagingNum", pagingNum);

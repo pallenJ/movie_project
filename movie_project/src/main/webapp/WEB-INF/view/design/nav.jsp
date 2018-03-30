@@ -20,14 +20,14 @@ li {
 	width: 280px;
 }
 </style>
-<!--예제-->
+<br>
 <div align="right">
 	<c:choose>
 
 		<c:when
 			test="${sessionScope.loginId eq null||sessionScope.loginId eq ''}">
 			<a href="<c:url value='/login'/>">로그인</a>/
-	 		<a href="<c:url value='/register'/>">회원가입</a>/
+	 		<a href="<c:url value='/register'/>">회원가입</a>
 		</c:when>
 		<c:otherwise>
 			<a href="<c:url value='/logout'/>">로그아웃</a>/

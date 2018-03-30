@@ -12,6 +12,7 @@
 <!-- 부트스트랩 -->
 <jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <div align="center">
+<br><br>
 	<h1>게시판</h1>
 </div>
 <hr>
@@ -98,7 +99,7 @@
 		<!-- ==================================================== -->
 		<!-- 검색 기능 -->
 		<div class=".col-lg-6" align="center" style="width: 500px">
-			<form action="<c:url value='/notice'></c:url>" class="input-group">
+			<form action="<c:url value='/notice'></c:url>" class="form-inline input-group" style="position: relative;">
 
 				<!--       검색 옵션 선택(드롭다운)-->
 					<div class="input-group-btn">

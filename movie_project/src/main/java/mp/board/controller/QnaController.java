@@ -151,13 +151,13 @@ public class QnaController {
 		if(!flag) {
 			log.debug("먼저 로그인 해주세요");
 			model.addAttribute("re_login_myInfo", true);
-			return "/login";
+			return "member/login";
 		}
 		if(parent!=null&&gno!=null) {
 			request.setAttribute("parent", parent);
 			request.setAttribute("gno", gno);
 		}
-		return "/board/qna_write";
+		return "board/qna_write";
 	}
 	
 	@RequestMapping(value= {"/qnaWrite","/qnawrite","/qna_write"},method=RequestMethod.POST)
@@ -174,7 +174,7 @@ public class QnaController {
 		if(id.equals("")||id==null) {
 			log.debug("먼저 로그인 해주세요");
 			model.addAttribute("re_login_myInfo", true);
-			return "/login";
+			return "member/login";
 		}
 		if(gno!=null) {
 			qnaService.qnaWrite(id, head, title, secret, content, parent);
@@ -216,7 +216,7 @@ public class QnaController {
 		log.debug("삭제"+(flag?"성공":"삭제"));
 		model.addAttribute("re_qna_delete", flag?1:2);
 		model.addAttribute("re_qna", true);
-		return "/qna";
+		return "board/qna";
 	}
 	
 	@RequestMapping(value= {"/qnaEdit","/qnaedit","/qna_edit"})

@@ -135,7 +135,8 @@
 
 		<!-- ==================================================== -->
 		<!-- 검색 기능 -->
-		<form action="<c:url value='/qna'></c:url>">
+		<div class=".col-lg-6" align="center" style="width: 500px">
+		<form action="<c:url value='/qna'></c:url>" class="form-inline input-group" style="position: relative;">
 			<div class=".col-lg-6" align="center" style="width: 500px">
 				<div class="input-group">
 
@@ -166,6 +167,7 @@
 
 		</form>
 		<!-- /.col-lg-6 -->
+		</div>
 		<br>
 		<!-- ==================================================== -->
 

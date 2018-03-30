@@ -30,12 +30,6 @@
 <body>
 	<c:choose>
 
-		<c:when test="${re_reg_reg eq 'ok'}">
-			<script type="text/javascript">
-				alert('회원가입에 성공했습니다');
-			</script>
-		</c:when>
-
 		<c:when test="${re_reg_reg eq 'no'}">
 			<script type="text/javascript">
 				alert('회원가입에 실패했습니다');
@@ -84,7 +78,7 @@
 
 		function checkPw() {
 
-			document.getElementById("pw").value;
+			var pw   = document.getElementById("pw").value;
 			var pwck = document.getElementById("pwCheck").value;
 			if (pw != pwck) {
 
