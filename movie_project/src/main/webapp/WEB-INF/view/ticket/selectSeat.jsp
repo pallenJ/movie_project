@@ -11,7 +11,7 @@
   		<!-- 좌석 디자인 -->
         .empty-row{
             height: 20px;
-        }
+        } 
         .screen{
         	margin: auto;
             background-color: dimgray;
