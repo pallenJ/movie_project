@@ -46,12 +46,12 @@ public class MovieDaoImpl implements MovieDao {
 	public String register(Movie movie) {
 		String sql = "select 'v'||LPAD(movie_seq.nextval, '10', '0') from dual";
 		String id = jdbcTemplate.queryForObject(sql, String.class);
-		sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		sql="insert into movie values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Object[] args = {id, movie.getTitle(), movie.getOpen(), movie.getClose(), 
 				movie.getDirector(), movie.getActor(), movie.getGenre(), movie.getRate(), 
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
 				movie.getProductor(), movie.getStory(), movie.getPosterpath(), 
-				movie.getPoster(), movie.getUploader(), movie.getPrice()};
+				movie.getPoster(), movie.getPostername(), movie.getUploader(), movie.getPrice()};
 		jdbcTemplate.update(sql, args);
 		log.debug("영화 등록 완료");
 		return id;
@@ -70,12 +70,12 @@ public class MovieDaoImpl implements MovieDao {
 	public void edit(Movie movie) {
 		String sql = "update movie set title=?, open=?, close=?, director=?, actor=?, "
 				+ "genre=?, rate=?, time=?, nation=?, distributor=?, productor=?, "
-				+ "story=?, posterpath=?, poster=?, price = ? where id = ?";
+				+ "story=?, posterpath=?, poster=?, postername=?, price = ? where id = ?";
 		Object[] args = {movie.getTitle(), movie.getOpen(), movie.getClose(), 
 				movie.getDirector(), movie.getActor(), movie.getGenre(), movie.getRate(),
 				movie.getTime(), movie.getNation(), movie.getDistributor(), 
 				movie.getProductor(), movie.getStory(), movie.getPosterpath(),
-				movie.getPoster(), movie.getPrice(), movie.getId()};
+				movie.getPoster(), movie.getPostername(), movie.getPrice(), movie.getId()};
 		int result = jdbcTemplate.update(sql, args);
 		log.debug("영화 수정 완료");
 	}
