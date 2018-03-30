@@ -88,8 +88,17 @@ public class PaymentController {
 		model.addAttribute("scheduleid", scheduleid);
 		//좌석 뿌려주기 전 필요 자료
 		ScheduleJoin schedule = scheduleService.getinfo(scheduleid);
-		List<Seat> seatlist = seatService.list(schedule.getScreen());
+		String screenid = schedule.getScreen();
+		List<Seat> seatlist = seatService.list(screenid);
+		model.addAttribute("screenid",screenid);
 		model.addAttribute("seatlist",seatlist);
+		
+		//예매된 좌석 정보
+		//결제테이블에서 scheduleid로 조회해서 seatid들을 불러온다.
+		//seatid로 seat객체를 만든다. 그것을 동일하게 뿌려준다. ajax가는 페이지에서 처리해야될 것 같은데.
+		
+		//어플리케이션 영역에 저장된 좌석 정보
+		
 		return "/ticket/selectSeat";
 	}	
 	
@@ -105,19 +114,19 @@ public class PaymentController {
 		Movie movie = paymentService.getMovieInfo(payment.getMovieid());
 		Member member = paymentService.getMemberInfo(loginid);					//나중에 세션에서 가져와야한다.	
 		Payment paymentupdate = paymentService.setPaymentInfo(payment,movie.getPrice(),adult,child,senior);	//금액 계산하는 메소드
-		model.addAttribute(paymentupdate);
-		model.addAttribute(member);
-		model.addAttribute(movie);
-		log.debug("/payment controller paymentupdate.getPaytotal : {}",paymentupdate.getPaytotal());
-		log.debug("/payment controller paymentupdate : {}",member);
-		log.debug("/payment controller paymentupdate : {}",movie);
-		
+		log.debug("좌석 확인 payment : {}",payment.getSeatid());
+		log.debug("좌석 확인 paymentupdate : {}",paymentupdate.getSeatid());
+		String seat = paymentupdate.getSeatid();						//좌석id정보 변수에 저장(아래 check메소드에서 seatid 하나씩 분리)
 		boolean check = paymentService.check(paymentupdate,loginid);	//중복 여부 반납	false면 중복
 		log.debug("중복확인 : {}",check);
 		//중복이 아니면
 		if(!check) {
 			return "redirect:/ticket/fail";
 		}
+		paymentupdate.setSeatid(seat);			//좌석id정보 다시 추가
+		model.addAttribute("paymentupdate",paymentupdate);
+		model.addAttribute("member",member);
+		model.addAttribute("movie",movie);
 		return "/ticket/payment";
 	}	
 	

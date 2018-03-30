@@ -61,7 +61,6 @@
         				for(var c=1; c<=23; c++){
         					var id = "#" + String.fromCharCode(r+97) + c;
         					$(id).css("background-color", "white").css("color", "black");
-      							
         				}
         			}
         			//data에 들어있는 정보를 검사하여
