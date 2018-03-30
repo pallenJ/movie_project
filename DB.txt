@@ -62,6 +62,7 @@ productor varchar2(60) not null,
 story varchar2(400) not null, 
 posterpath varchar2(256), 
 poster varchar2(256), 
+postername varchar2(256), 
 uploader constraint fk_movie_uploader references member(no) on delete set null, 
 price number not null);
 
@@ -105,8 +106,9 @@ create table notice
 head varchar2(30) not null, 
 title varchar2(90) not null, 
 content varchar2(4000) not null, 
-uploadpath varcahr2(256), 
+uploadpath varchar2(256), 
 upload varchar2(256), 
+uploadname varchar2(256), 
 reg date not null, 
 read number not null, 
 writer constraint fk_notice_writer references member(no) on delete cascade);
