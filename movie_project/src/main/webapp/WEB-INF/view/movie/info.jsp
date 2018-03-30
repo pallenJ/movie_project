@@ -11,8 +11,8 @@
 	<h2>영화 개봉일 : ${fn:substring(movie.open, 0, 10) }</h2>
 	<h2>영화 줄거리 : ${movie.story }</h2>
 	<div>
-		<img src='${movie.posterpath }&#92;${movie.poster}&#46;jpg'>
-	</div>
+        <img src="${pageContext.request.contextPath}/image/${movie.poster}" style="margin: 20px; width: 200px; height:280px;"><br>
+    </div>
 </div>
 <h3><a href='<c:url value="/movie/edit?movieid=${movie.id }"/>'>영화 수정</a></h3>
 <h3><a href='<c:url value="/movie/delete?movieid=${movie.id }"/>'>영화 삭제</a></h3>

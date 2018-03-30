@@ -82,8 +82,11 @@
                 }
                 
             });	//button
-
             
+            $.each('${seatlist}', function(i, d){
+                var id = "#" + d.reallocation;
+                $(id).css("background-color", "red").css("color", "white");
+            });
 
             
             

@@ -39,7 +39,7 @@
             <div class="content">
                 <c:forEach var="list" items="${list }">
                     <div style="width: 30%; overflow: hidden; display: inline-block;">
-                        <img src="#" style="margin: 20px; width: 200px; height:280px;"><br>
+                        <img src="${pageContext.request.contextPath}/image/${list.poster}" style="margin: 20px; width: 200px; height:280px;"><br>
                         <a class="btn btn-secondary" href='<c:url value="/movie/info?movieid=${list.id }"/>' style="margin: 20px;">${list.title }</a>
                     </div>
                 </c:forEach>
