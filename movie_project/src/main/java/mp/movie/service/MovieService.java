@@ -1,5 +1,6 @@
 package mp.movie.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public interface MovieService {
 	String register(String title, String open, String close, String director, 
 			String actor, String genre, String rate, String time,
 			String nation, String distributor, String productor, String story, 
-			String posterpath, MultipartFile poster, String uploader, String price) throws Exception;
+			String posterpath, MultipartFile poster, String postername, String uploader, String price) throws Exception;
 	
 	//영화 조회 (영화사 입장)
 	List<Movie> getlist(String uploaderid);
@@ -22,8 +23,8 @@ public interface MovieService {
 	void edit(String id, String title, String open, String close, String director, 
 			String actor, String genre, String rate, String time,
 			String nation, String distributor, String productor, String story, 
-			String posterpath, String poster, String uploader, String price);
-	
+			String posterpath, MultipartFile poster, String postername, String uploader, String price) throws IllegalStateException, IOException, Exception;
+
 	//영화 삭제 (영화사 입장)
 	void delete(String movieid, String sessionid, String uploaderpw);
 	

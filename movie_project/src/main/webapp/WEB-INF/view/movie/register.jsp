@@ -32,48 +32,48 @@
                 <div class="content">
                     <div class="empty-row"></div>
                     <div>
-                        영화제목 <input type="text" name="title" style="width: 80%;"><br><br>
+                        	영화제목 <input type="text" name="title" style="width: 80%;" required><br><br>
                     </div>
                     <div>
-                        개봉일 <input type="date" name="open">
-                        상영마감일 <input type="date" name="close"><br><br>
+                        	개봉일 <input type="date" name="open" required>
+                   		     상영마감일 <input type="date" name="close" required><br><br>
                     </div>
                     <div>
-                        감독 <input type="text" name="director"><br><br>
+                    	    감독 <input type="text" name="director" required><br><br>
                     </div>
                     <div>
-                        출연배우 <input type="text" name="actor" style="width: 81%;"><br><br>
+                    	    출연배우 <input type="text" name="actor" style="width: 81%;" required><br><br>
                     </div>
                     <div>
-                        장르 <input type="text" name="genre" style="width: 85%;"><br><br>
+                     	   장르 <input type="text" name="genre" style="width: 85%;" required><br><br>
                     </div>
                     <div>
-                        등급 <select name="rate">
+                      	  등급 <select name="rate" required>
                             <option value="전체관람가">전체관람가</option>
                             <option value="12세관람가">12세관람가</option>
                             <option value="15세관람가">15세관람가</option>
                             <option value="18세관람가">18세관람가</option>
                         </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        상영시간 <input type="text" name="time"><br><br>
+                  	      상영시간 <input type="text" name="time" required><br><br>
                     </div>
                     <div>
-                        국가 <input type="text" name="nation" style="width: 85%;"><br><br>
+             		           국가 <input type="text" name="nation" style="width: 85%;" required><br><br>
                     </div>
                     <div>
-                        배급사 <input type="text" name="distributor" style="width: 83%;"><br><br>
+               		         배급사 <input type="text" name="distributor" style="width: 83%;" required><br><br>
                     </div>
                     <div>
-                        영화사 <input type="text" name="productor" style="width: 83%;"><br><br>
+                  		영화사 <input type="text" name="productor" style="width: 83%;" required><br><br>
                     </div>
                     <div>
-                        줄거리<br>
-                        <textarea cols="95" rows="5" maxlength="400" name="story"></textarea><br><br>
+           			        줄거리<br>
+                        <textarea cols="95" rows="5" maxlength="400" name="story" required></textarea><br><br>
                     </div>
                     <div>
-                        포스터 <input type="file" name="poster"><br><br>
+                 	       포스터 <input type="file" name="poster"><br><br>
                     </div>
                     <div>
-                        티켓 기본가 <input type="text" name="price" placeholder="예) 10000"><br><br>
+                  	      티켓 기본가 <input type="text" name="price" placeholder="예) 10000" required><br><br>
                     </div>
                     <div style="text-align: center;">
                         <input type="submit" value="등록" class="btn btn-primary">

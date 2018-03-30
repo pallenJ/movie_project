@@ -3,14 +3,10 @@ package mp.movie.bean;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
-
 public class Movie {
 	private String id, title, open, close, director, actor, genre, rate; 
 	private int time;
-	private String nation, distributor, productor, story, posterpath, poster, uploader;
+	private String nation, distributor, productor, story, posterpath, poster, postername, uploader;
 	private int price;
 	
 	public Movie() {}
@@ -30,6 +26,7 @@ public class Movie {
 		setStory(rs.getString("story"));
 		setPosterpath(rs.getString("posterpath"));
 		setPoster(rs.getString("poster"));
+		setPostername(rs.getString("postername"));
 		setUploader(rs.getString("uploader"));
 		setPrice(rs.getInt("price"));
 	}
@@ -154,6 +151,14 @@ public class Movie {
 		this.poster = poster;
 	}
 	
+	public String getPostername() {
+		return postername;
+	}
+	
+	public void setPostername(String postername) {
+		this.postername = postername;
+	}
+	
 	public String getUploader() {
 		return uploader;
 	}
@@ -169,5 +174,4 @@ public class Movie {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
 }

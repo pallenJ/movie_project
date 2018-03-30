@@ -28,7 +28,7 @@
         <div class="text-right" style="margin-right: 20px;">
             <a class="btn btn-outline-primary" href='<c:url value="/movie/register"/>'>영화 등록</a>
             <a class="btn btn-outline-secondary" href='<c:url value="/movie/mylist"/>'>나의 영화 리스트</a>
-            <a class="btn btn-outline-primary" href='<c:url value="/movie/list"/>'>영화사별 검색(관리자용)</a>
+            <a class="btn btn-outline-info" href='<c:url value="/movie/list"/>'>영화사별 검색(관리자용)</a>
         </div>
         <div class="empty-row"></div>
         <div class="area">
