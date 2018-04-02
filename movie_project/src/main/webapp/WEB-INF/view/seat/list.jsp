@@ -13,14 +13,12 @@
             margin: auto;
             text-align: center;
             width: 80%;
-            border: 1px dotted;
         }
         .content{
             margin: auto;
             text-align: left;
             padding: 50px;
             width: 90%;
-            border: 1px dotted;
         }
         .screen{
         	margin: auto;
@@ -47,7 +45,7 @@
             position: absolute;
             overflow: hidden;
             text-align: center;
-            font-size: 10pt;
+            font-size: 8pt;
         }
         .seat-wrap{
 	        border: 1px dotted black;
@@ -58,8 +56,8 @@
 	    .seat{
 	        border:1px solid black;
 	        display:inline-block;
-	        width:25px;
-	        height:25px;
+	        width:28px;
+	        height:28px;
 	    }
         </style>
         <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
@@ -120,25 +118,18 @@
                     <br>
                 </c:forEach>
             </div>
-        
+            <div class="empty-row"></div>
+            <div style="text-align: center;">
+                상영관 
+                <select id="screenselect" name="screen">
+                    <c:forEach var="screen" items="${screen}">
+                        <option value="${screen.id }">${screen.no }</option>
+                    </c:forEach>
+                </select>
+            </div>
         </div>
+        <div class="empty-row"></div>
     </div>
    <div class="empty-row"></div>
-  <div id="content" style="text-align: center">
-   	상영관 
-   	<select id="screenselect" name="screen">
-   		<c:forEach var="screen" items="${screen}">
-    		<option value="${screen.id }">${screen.no }</option>
-   		</c:forEach>
-   	</select>
-	<br>
-	<div id="content"></div>
-	<!-- 
-   	실제위치 : <input type="text" name="reallocation"/><br>
-   	서비스위치 : <input type="text" name="servicelocation"/><br>
-   	좌석할인 : <input type="text" name="seatdiscount"/><br>
-   	 -->
-  	</div>
 </body>
 </html>
-

@@ -99,7 +99,7 @@ public class SeatDaoImpl implements SeatDao {
 	//좌석 조회 (좌석 아이디로 검색)
 	@Override
 	public Seat info(String seatid) {
-		String sql = "select * from where id = ?";
+		String sql = "select * from seat where id = ?";
 		return jdbcTemplate.query(sql, extractor, seatid);
 	}
 
