@@ -1,12 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<h1>스크린 등록 화면</h1>
-<div>
-	<form action="register" method="post">
-		<input type="text" name="no" placeholder="상영관번호"><br>
-		<input type="text" name="theater" placeholder="지점명"><br>
-		<input type="text" name="seats" placeholder="좌석수"><br>
-		<input type="text" name="uploader" value="${sessionScope.id }" readonly="readonly"><br>
-		<input type="submit" value="등록">
-	</form>
-</div>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
+<html>
+    <head>
+        <title>상영관 등록</title>
+        <style>
+            .empty-row{
+                height: 50px;
+            }
+            .area{
+                margin: auto;
+                text-align: center;
+                width: 80%;
+            }
+            .content{
+                margin: auto;
+                text-align: center;
+                padding: 50px;
+                width: 60%;
+            }
+        </style>
+        <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
+        <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="empty-row"></div>
+        <div class="area">
+            <div>
+                <h2>상영관 등록</h2>
+            </div>
+            <form action="register" method="post">
+                <div class="content">
+                    상영관 번호 <input type="text" name="no" placeholder="예) 1, 2, 3 ..." required><br><br>
+                    지점명 <input type="text" name="theater" value="${theater.name }" readonly="readonly"><br>
+                    <input type="hidden" name="uploader" value="${sessionScope.id }" readonly="readonly"><br>
+                    <input type="submit" value="등록" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <div class="empty-row"></div>
+    </body>
+</html>

@@ -15,10 +15,10 @@ public class ScreenServiceImpl implements ScreenService {
 	
 	//상영관 등록
 	@Override
-	public String register(String no, String theater, String seats, String uploader) {
+	public String register(String no, String theater, String uploader) {
 		Screen s = new Screen();
 		s.setNo(Integer.parseInt(no)); s.setTheaterid(theater);
-		s.setSeats(Integer.parseInt(seats)); s.setUploader(uploader);
+		s.setUploader(uploader);
 		return screenDao.register(s);
 	}
 

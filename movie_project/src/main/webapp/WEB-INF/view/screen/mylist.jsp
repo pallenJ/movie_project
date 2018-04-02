@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <html>
     <head>
-        <title>상영관 상세 조회</title>
+        <title>상영관 목록</title>
         <style>
             .empty-row{
                 height: 50px;
@@ -16,7 +16,7 @@
             }
             .content{
                 margin: auto;
-                text-align: left;
+                text-align: center;
                 padding: 50px;
                 width: 60%;
             }
@@ -28,18 +28,17 @@
         <div class="empty-row"></div>
         <div class="area">
             <div class="text-right" style="margin-right: 20px;">
-                <a href='<c:url value="/screen/delete?screenid=${screen.id }"/>' class="btn btn-outline-secondary">상영관 삭제</a>
+                <a href='<c:url value="/screen/register"/>' class="btn btn-outline-primary">상영관 등록</a>
             </div>
             <div class="content">
-                <div class="card border-primary mb-3" style="max-width: 20rem; margin: auto;">
-                    <div class="card-header">${screen.no }관</div>
-                    <div class="card-body" style="text-align: left;">
-                        <h6 class="card-title">지점명 : </h6><h5 class="card-text">${theater.name }</h5>
-                        <h6 class="card-title">총좌석수 : </h6><h5 class="card-text">${screen.seats } 석</h5>
-                    </div>
+                <div>
+                    <c:forEach var="list" items="${list }">
+                        <a href='<c:url value="/screen/detail?screenid=${list.id }"/>' class="btn btn-secondary">${list.no } 관</a><br><br>
+                    </c:forEach>
                 </div>
             </div>
         </div>
         <div class="empty-row"></div>
     </body>
 </html>
+

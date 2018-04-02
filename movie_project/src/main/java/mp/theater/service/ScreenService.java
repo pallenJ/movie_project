@@ -9,7 +9,7 @@ import mp.theater.bean.Screen;
 @Service
 public interface ScreenService {
 	//상영관 등록
-	String register(String no, String theater, String seats, String id);
+	String register(String no, String theater, String id);
 	
 	//상영관 상세 조회
 	Screen detail(String screenid);

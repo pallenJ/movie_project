@@ -36,8 +36,8 @@ public class ScreenDaoImpl implements ScreenDao {
 		String sql = "select 'c'||LPAD(screen_seq.nextval, '10', '0') from dual";
 		String id = jdbcTemplate.queryForObject(sql, String.class);
 		sql = "insert into screen values (?, ?, (select id from theater where name = ?),"
-				+ " ?, (select no from member where id = ?))";
-		Object[] args = {id, screen.getNo(), screen.getTheaterid(), screen.getSeats(), screen.getUploader()};
+				+ " 0, (select no from member where id = ?))";
+		Object[] args = {id, screen.getNo(), screen.getTheaterid(), screen.getUploader()};
 		jdbcTemplate.update(sql, args);
 		log.debug("상영관 등록이 완료되었습니다");
 		return id;

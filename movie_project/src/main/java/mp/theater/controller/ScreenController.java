@@ -14,39 +14,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import mp.theater.bean.Screen;
 import mp.theater.service.ScreenService;
+import mp.theater.service.TheaterService;
 
 @Controller
 public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
+	@Autowired
+	private TheaterService theaterService;
 	private Logger log = LoggerFactory.getLogger(getClass());
 	 
 	//상영관 등록
 	@RequestMapping("/screen/register")
-	public String register(HttpSession session) {
-		session.setAttribute("id", "test"); //세션 임의로 등록
+	public String register(HttpSession session, Model model) {
+		model.addAttribute("theater", theaterService.my(session.getAttribute("loginId").toString()));
 		return "/screen/register";
 	}
 	@RequestMapping(value="/screen/register", method=RequestMethod.POST)
-	public String register(String no, String theater, String seats, String uploader) {
-		String screenid = screenService.register(no, theater, seats, uploader);
+	public String register(String no, String theater, String uploader) {
+		String screenid = screenService.register(no, theater, uploader);
 		return "redirect:/screen/detail?screenid="+screenid;
 	}
 	
 	//상영관 상세 조회
 	@RequestMapping("/screen/detail")
-	public String detail(String screenid, Model model) {
+	public String detail(String screenid, HttpSession session, Model model) {
 		model.addAttribute("screen", screenService.detail(screenid));
+		model.addAttribute("theater", theaterService.my(session.getAttribute("loginId").toString()));
 		return "/screen/detail";
 	}
 	
 	//상영관 목록 조회 (지점별)
-	@RequestMapping(value= {"/screen/list", "/screen"})
+	@RequestMapping(value= {"/screen/mylist", "/screen"})
 	public String list(HttpSession session, Model model) {
 		session.setAttribute("id", "test"); //세션아이디 임의 추가
-		List<Screen> list = screenService.list(session.getAttribute("id").toString());
+		List<Screen> list = screenService.mylist(session.getAttribute("id").toString());
 		model.addAttribute("list", list);
-		return "/screen/list";
+		return "/screen/mylist";
 	}
 	
 	//상영관 수정
