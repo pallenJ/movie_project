@@ -66,7 +66,10 @@ public class PaymentController {
 		movielist.addAll(movieService.getNow());
 		movielist.addAll(movieService.getSoon());
 		log.debug("movielist : {}",movielist);
-		String[] datelist = {"2018-03-29","2018-03-30","2018-03-31"};
+		
+		List<String> datelist = scheduleService.getLatelydate(); //오늘날짜에서 최근 상영시간표 등록 날짜까지 가져온다.
+		log.debug("상영시간표 날짜 : {}",datelist);
+		
 		model.addAttribute("theaterlist",theaterlist);
 		model.addAttribute("movielist",movielist);
 		model.addAttribute("datelist",datelist);	//오늘부터 상영스케줄 등록일까지만 출력, 일단 오늘기준 6일로 설정
@@ -158,6 +161,13 @@ public class PaymentController {
 		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
 		return "/ticket/complete";
 	}
+	
+	@RequestMapping("/ticket/cancel")
+	public String ticketCancel(HttpSession session) {
+		String loginid = (String)session.getAttribute("loginId");
+		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
+		return "/ticket/cancel";
+	}	
 	
 	@RequestMapping("/ticket/seat")
 	@ResponseBody

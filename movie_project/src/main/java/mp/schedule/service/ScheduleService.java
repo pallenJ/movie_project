@@ -28,4 +28,7 @@ public interface ScheduleService {
 	//선택한 영화, 영화관, 날짜의  상영시간표 목록 조회
 	List<Schedule> schedulelist(String theater, String movie, String day);
 	
+	//상영시간표  날짜 반환(중복제거과정 포함)
+	List<String> getLatelydate();
+	
 }

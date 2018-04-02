@@ -1,5 +1,6 @@
 package mp.schedule.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -72,6 +73,20 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public List<Schedule> schedulelist(String theater, String movie, String day) {
 		List<Schedule> list = scheduleDao.schedulelist(theater, movie, day);
 		return list;
+	}
+
+	@Override
+	public List<String> getLatelydate() {
+		List<String> scheduledate = scheduleDao.latelydate();
+		
+		//리스트 중복제거
+		List<String> resultList = new ArrayList<String>();
+		for (int i = 0; i < scheduledate.size(); i++) {
+		    if (!resultList.contains(scheduledate.get(i))) {
+		        resultList.add(scheduledate.get(i));
+		    }
+		}
+		return resultList;
 	}
 
 }

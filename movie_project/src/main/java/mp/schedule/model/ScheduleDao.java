@@ -32,6 +32,9 @@ public interface ScheduleDao {
 		//상영시간표 중복 확인(중복 시간대)
 		boolean check(Schedule schedule, String type);
 		
+		//상영시간표 등록된 날짜  가져오기(오늘부터 최신등록)
+		List<String> latelydate();
+		
 
 
 }

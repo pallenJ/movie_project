@@ -105,6 +105,7 @@
 	                $.each(data, function(i, d){
 	                    var id = "#" + d.reallocation;
 	                    $(id).css("background-color", "black").css("color", "black").css("visibility","visible");
+	                    $(id).removeClass("seat");	//class="seat"을 삭제해 click이벤트에서 제외한다.
 	 	             });
 	    		}
 	    	});
@@ -167,7 +168,7 @@
 	            		$(this).css("background-color","red").css("color","white");
 		            	var input = $("<input/>");
 	                	input = input.attr("type", "hidden").attr("name","seatid").attr("value",$(this).val());
-	                	$("#select").append(input);
+	                	$("#select").append(input);	
                 	}
  				}
             });
