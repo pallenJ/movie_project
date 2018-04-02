@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,15 @@ public class SeatDaoImpl implements SeatDao {
 	
 	private RowMapper<Seat> mapper = (rs, index) -> {
 		return new Seat(rs);
+	};
+	
+	private ResultSetExtractor<Seat> extractor = rs -> {
+		if(rs.next()) {
+			return new Seat(rs);
+		} else {
+			log.debug("데이터 없음 : null값 반환");
+			return null;
+		}
 	};
 	
 	//좌석 등록
@@ -84,6 +94,13 @@ public class SeatDaoImpl implements SeatDao {
 		} else {
 			log.debug("좌석이 삭제되지 않았습니다");
 		}
+	}
+
+	//좌석 조회 (좌석 아이디로 검색)
+	@Override
+	public Seat info(String seatid) {
+		String sql = "select * from where id = ?";
+		return jdbcTemplate.query(sql, extractor, seatid);
 	}
 
 }

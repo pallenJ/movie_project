@@ -1,12 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <html>
 <head>
-    <title>jQuery 배우기</title>
+    <title>좌석 목록</title>
     <style>
         .empty-row{
-            height: 20px;
+            height: 50px;
+        }
+        .area{
+            margin: auto;
+            text-align: center;
+            width: 80%;
+            border: 1px dotted;
+        }
+        .content{
+            margin: auto;
+            text-align: left;
+            padding: 50px;
+            width: 90%;
+            border: 1px dotted;
         }
         .screen{
         	margin: auto;
@@ -47,7 +61,9 @@
 	        width:25px;
 	        height:25px;
 	    }
-    </style>
+        </style>
+        <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
+        <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script>
         function seatlist(screenid){
@@ -85,24 +101,31 @@
     </script>
 </head>
 <body>
-    <h1>좌석 목록 페이지</h1>
-    <h2 id="screenno"></h2>
-    <div class="screen">screen</div>
     <div class="empty-row"></div>
-	<div class="seat-wrap">
-		<c:forEach var="r" begin="0" end="11">
-		    <c:forEach var="c" begin="1" end="23">
-		        <div class="seat" id="&#${r+97};${c}">
-		            &#${r+97};${c}
-		        </div>
-		    </c:forEach>
-		    <br>
-		</c:forEach>
-	</div>
-   <div class="empty-row"></div>
+    <div class="area">
+        <div class="text-right" style="margin-right: 20px;">
+            <a href="<c:url value='/seat/register'/>" class="btn btn-outline-secondary">좌석 등록</a>
+        </div>
+        <div class="content">
+            <h2 id="screenno"></h2>
+            <div class="screen">screen</div>
+            <div class="empty-row"></div>
+            <div class="seat-wrap">
+                <c:forEach var="r" begin="0" end="11">
+                    <c:forEach var="c" begin="1" end="23">
+                        <div class="seat" id="&#${r+97};${c}">
+                            &#${r+97};${c}
+                        </div>
+                    </c:forEach>
+                    <br>
+                </c:forEach>
+            </div>
+        
+        </div>
+    </div>
    <div class="empty-row"></div>
   <div id="content" style="text-align: center">
-   	상영관 : 
+   	상영관 
    	<select id="screenselect" name="screen">
    		<c:forEach var="screen" items="${screen}">
     		<option value="${screen.id }">${screen.no }</option>
@@ -116,7 +139,6 @@
    	좌석할인 : <input type="text" name="seatdiscount"/><br>
    	 -->
   	</div>
-<h2><a href="<c:url value='/seat/register'/>">좌석 등록</a></h2>
 </body>
 </html>
 

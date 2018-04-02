@@ -55,5 +55,12 @@ public class SeatServiceImpl implements SeatService {
 	public List<Seat> list(String screenid) {
 		return seatDao.seatlist(screenid);
 	}
+
+	//좌석 조회 (좌석 아이디로 검색)
+	@Override
+	public Seat info(String seatid) {
+		seatDao.info(seatid);
+		return null;
+	}
 	
 }

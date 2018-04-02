@@ -1,9 +1,7 @@
 package mp.theater.controller;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -32,8 +30,7 @@ public class SeatController {
 	//좌석 등록
 	@RequestMapping("/seat/register")
 	public String register(HttpSession session, Model model) {
-		session.setAttribute("id", "test"); //임의로 세션 저장
-		List<Screen> screen = screenService.list(session.getAttribute("id").toString());
+		List<Screen> screen = screenService.list(session.getAttribute("loginId").toString());
 		model.addAttribute("screen", screen);
 		return "/seat/register";
 	}
@@ -47,10 +44,11 @@ public class SeatController {
 	//좌석 조회(리스트)
 	@RequestMapping(value= {"/seat", "/seat/list"})
 	public String list(HttpSession session, Model model){
-		session.setAttribute("id", "test");
-		List<Screen> screen = screenService.list(session.getAttribute("id").toString());
+		List<Screen> screen = screenService.mylist(session.getAttribute("loginId").toString());
 		model.addAttribute("screen", screen);
-		model.addAttribute("screenid", screen.get(0).getId());
+		if(screen.size()!=0) {
+			model.addAttribute("screenid", screen.get(0).getId());
+		}		
 		return "/seat/list";
 	}
 	@RequestMapping(value="/seat/list", method=RequestMethod.POST)

@@ -20,4 +20,7 @@ public interface SeatDao {
 	
 	//좌석 삭제
 	void seatdelete(String seatid);
+	
+	//좌석 조회
+	Seat info(String seatid);
 }
