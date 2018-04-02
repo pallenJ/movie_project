@@ -90,11 +90,10 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public String noticeWrite(String id, String head, String title, String content,String uploadPath,MultipartFile upload) throws Exception{
 		String writer = memDao.myinfo(id).getNo();
+		String savename = null;
 		String name = upload.getOriginalFilename();
-		if(name == null || name.equals("")) {
-			noticeWrite(id, head, title, content);
-			return "사진 없음";
-		}
+		if(name != null && !name.equals("")) {
+			
 		if(
 				!name.endsWith(".jpg")&&
 				!name.endsWith(".png")&&
@@ -104,13 +103,10 @@ public class NoticeServiceImpl implements NoticeService {
 			return "업로드가 불가능한 파일입니다";
 		}
 		
-		String savename = UUID.randomUUID().toString();
+		savename = UUID.randomUUID().toString();
 		
-		File dir = new File(uploadPath);
-		if(!dir.exists()) dir.mkdirs();
-		
-		File target = new File(dir, savename);
-		upload.transferTo(target);
+		fileUpload(savename, uploadPath, upload);
+		}
 		
 		Notice notice = new Notice();
 		
@@ -125,7 +121,7 @@ public class NoticeServiceImpl implements NoticeService {
 		return "";
 	}
 	
-	@Override
+/*	@Override
 	public void noticeWrite(String id, String head, String title, String content){
 		String writer = memDao.myinfo(id).getNo();
 		
@@ -140,17 +136,60 @@ public class NoticeServiceImpl implements NoticeService {
 		notice.setWriter(writer);
 		
 		noticeDao.register(notice);
-	}
+	}*/
 
 	@Override
-	public void noticeEdit(String no, String head, String title, String content) {
+	public void noticeEdit(String no, String head, String title, String content,String fileDelete,String path,MultipartFile newfile) throws Exception {
 		Notice notice = noticeDao.noticedetail(Integer.parseInt(no));
-
+		
+		boolean fileEdit = (fileDelete==null&&newfile!=null)||fileDelete!=null;
+		log.debug("new file={}",newfile);
+		log.debug("fileDelete={}",fileDelete);
+		if(fileEdit) {
+			String name = newfile.getOriginalFilename();
+			if(notice.getUpload()!=null&&!notice.getUpload().equals("")) {
+				boolean test=fileDelete(notice.getUploadPath(), notice.getUpload());
+				log.debug("delete rs={}",test);
+			}   
+				if(name!=null&&!name.equals("")) {
+					String savename = UUID.randomUUID().toString();
+					fileUpload(savename, path, newfile);
+					notice.setUploadPath(path);
+					notice.setUpload(savename);
+					log.debug("파일 수정={}",savename);
+				} else{
+					notice.setUpload(null);
+					notice.setUploadPath(null);
+				}
+				
+			
+		}
+		log.debug("upload-edit={}",notice.getUpload());
 		notice.setHead(head);
 		notice.setTitle(title);
 		notice.setContent(content);
 		
 		noticeDao.noticeEdit(notice);
 	}
-	
+	@Override
+	public void fileUpload(String savename,String uploadPath,MultipartFile upload) throws Exception {
+
+		File dir = new File(uploadPath);
+		if(!dir.exists()) dir.mkdirs();
+		
+		log.debug("upload={}",uploadPath);
+		log.debug("path  ={}",savename);
+		
+		File target = new File(dir, savename);
+		upload.transferTo(target);
+	}
+	@Override
+	public boolean fileDelete(String uploadPath,String upload) {
+		File dir = new File(uploadPath);
+		log.debug("file exist={}",dir.exists());
+		File file = new File(dir,upload);
+		log.debug("file exist={}",file.exists());
+		log.debug("delete path={}",uploadPath+"\\"+upload);
+		return file.exists()?(file.delete()):false;
+	}
 }

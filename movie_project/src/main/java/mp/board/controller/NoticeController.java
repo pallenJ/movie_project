@@ -185,24 +185,37 @@ public class NoticeController {
 	
 	@RequestMapping(value= {"/noticeDelete","/noticedelete","/notice_delete"}, method = RequestMethod.POST)
 	public String noticeDelete(String no,String pw,Model model) {
+		
 		int bno = Integer.parseInt(no);
-		boolean flag=noticeDao.noticedelete(bno, pw);
+		Notice notice =noticeDao.noticedetail(bno);
+		String upload = notice.getUpload();
+		log.debug("del path={}",upload);
+		boolean flag1=false;
+		if(upload!=null&&!upload.equals("")) {
+			String uploadPath = notice.getUploadPath();
+			flag1=noticeService.fileDelete(uploadPath,upload);
+		}
+		
+		log.debug("file delete={}",flag1?"success":"fail");
+		boolean flag2=noticeDao.noticedelete(bno, pw);
 		
 		log.debug("no={}",bno);
 		log.debug("pw={}",pw);
-		log.debug("삭제"+(flag?"성공":"실패"));
+		log.debug("삭제"+(flag2?"성공":"실패"));
 		model.addAttribute("re_no_delete", true);
 		return "board/notice";
 	}
 	
 	@RequestMapping(value= {"/noticeEdit","/noticeedit","/notice_edit"})
-	public String noticeEdit(String no,Model model) {
+	public String noticeEdit(String no,String fileDelete,Model model) {
+		log.debug("fileEdit={}",fileDelete);
 		try {
 		String grade = (String) session.getAttribute("loginGrade");
 		
 		if(!grade.equals("admin")&&!grade.equals("관리자")) throw new Exception();
 		int bno = Integer.parseInt(no);
 		Notice notice = noticeDao.noticedetail(bno);
+		log.debug("content = {}",notice.getContent());
 		model.addAttribute("before",notice);
 		return "board/notice_edit";
 		}catch (Exception e) {
@@ -214,9 +227,14 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value={"/noticeEdit","/noticeedit","/notice_edit"},method = RequestMethod.POST)
-	public String noticeEdit(String no,String head,String title,String content,Model model) {
-		noticeService.noticeEdit(no, head, title, content);
-		model.addAttribute("re_no_edit", true);
+	public String noticeEdit(String no,String head,String title,String content,String fileDelete,MultipartFile newfile,Model model) {
+		try {
+			String uploadPath = session.getServletContext().getRealPath("upload");
+			noticeService.noticeEdit(no, head, title, content,fileDelete,uploadPath,newfile);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+		request.setAttribute("no", no);
 		return "board/notice";
 	}
 	

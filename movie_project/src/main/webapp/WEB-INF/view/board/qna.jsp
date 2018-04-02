@@ -81,7 +81,7 @@
 		<div align="center">
 		
 	<form action="<c:url value='/qnawrite'></c:url>" style="position: relative; left: 360px;">
-			<button type="submit" class="btn btn-secondary"
+			<button type="submit" class="btn btn-outline-secondary"
 				>글쓰기</button>
 	</form>
 		</div>

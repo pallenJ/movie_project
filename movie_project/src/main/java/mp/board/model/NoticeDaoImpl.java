@@ -58,9 +58,10 @@ public class NoticeDaoImpl implements NoticeDao{
 	@Override
 	public void noticeEdit(Notice notice) {
 		// TODO Auto-generated method stub
-		String sql="update notice set head = ?, title = ?, content = ? "
+		String sql="update notice set head = ?, title = ?, content = ?,upload=?,uploadpath=? "
 				+ "where no = ?";
-		Object [] args = {notice.getHead(),notice.getTitle(),notice.getContent(),notice.getNo()};
+		Object [] args = {notice.getHead(),notice.getTitle(),notice.getContent(),notice.getUpload(),
+				notice.getUploadPath(),notice.getNo()};
 		jdbcTemplate.update(sql,args);
 	}
 

@@ -40,7 +40,7 @@
 	<br>
 	<form action="login" method="post">
   
-  	<div class="col-lg-3">
+  	<div class="col-lg-2">
     
     	<label class="sr-only" for="id">id</label>
     	<input type="text" class="form-control" name="id" placeholder="Id" required>
@@ -49,14 +49,14 @@
   
   	<br>
   
-  	<div class="col-lg-3">
+  	<div class="col-lg-2">
     	<label class="sr-only" for="pw">pw</label>
     	<input type="password" class="form-control" name="pw" placeholder="Password" required>
   	</div>
   
   
   	<br><br>
-  	<button type="submit" class="btn btn-info btn-lg" style="width:18%; height:50px;">로그인</button>
+  	<button type="submit" class="btn btn-info btn-lg" style="width:16%; height:50px;">로그인</button>
   	<br>
    <!--  <label>
       <input type="checkbox"> Remember me
@@ -66,7 +66,7 @@
     <form action="register">
     <hr style="width: 20%">
 	<br>
-    <button type="submit" class="btn btn-secondary btn-lg" style="width:18%; height: 50px;">회원가입</button>
+    <button type="submit" class="btn btn-secondary btn-lg" style="width:16%; height: 50px;">회원가입</button>
     </form>
 
 </div>

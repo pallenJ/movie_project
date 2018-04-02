@@ -32,6 +32,26 @@
 </head>
 <body>
 	<script type="text/javascript">
+	
+		$(function () {
+			
+			
+			$("#pfile").click(function() {
+				var insert  =  "<img src='${pageContext.request.contextPath}/image/${contents.upload}' style='max-height:100%; height:450px; width:auto;'>";
+				//var   pshow   = document.getElementById("pshow");
+				//pshow.innerHTML  =  insert;
+				if(!$("#pshow").html()){
+				$("#pshow").html(insert);
+				$(this).html("사진접기");
+				}else{
+				$("#pshow").html("");					
+				$(this).html("사진보기");
+				}	
+			})
+		})
+		
+		
+		
 		$(document).keydown(function(e) {
 		    key = (e) ? e.keyCode : event.keyCode;
 		     
@@ -76,13 +96,20 @@
 			</tr>
 		</thead>
 		<tbody>
+		
 			<tr>
 				<td colspan="100%" style="height: 80%;">
-					<c:if test="${contents.uploadPath ne null and contents.uploadPath ne ''}">
-					<div align="center"><img src="${pageContext.request.contextPath}/image/${contents.upload}" style="max-height:100%; height:450px; width:auto;"></div>
+					<c:if test="${contents.upload ne null and contents.upload ne ''}">
+					<a id="pfile" href="#">사진보기</a>
+					<div align="center" id="pshow"><%-- <img src='${pageContext.request.contextPath}/image/${contents.upload}' style='max-height:100%; height:450px; width:auto;'> --%></div>
 					</c:if>
+					<div align="center">
+					<textarea style="width: 100%; height: 500px" name="content"
+						 	disabled="disabled">${contents.content}</textarea>
 					
-					<div align="center">${contents.content}</div>
+					<%-- ${contents.content} --%>
+					
+					</div>
 				</td>
 			</tr>
 
