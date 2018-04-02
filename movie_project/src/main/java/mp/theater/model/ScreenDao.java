@@ -16,7 +16,10 @@ public interface ScreenDao {
 	//상영관 정보 
 	Screen screendetail(String screenid);
 	
-	//상영관 목록(선택한 영화관 내)
+	//상영관 목록(세션 아이디로 검색)
+	List<Screen> screenmylist(String sessionid);
+	
+	//상영관 목록(영화관 아이디로 검색)
 	List<Screen> screenlist(String theaterid);
 	
 	//상영관 정보 수정
