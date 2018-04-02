@@ -62,7 +62,7 @@ public class ScreenDaoImpl implements ScreenDao {
 	@Override
 	public List<Screen> screenlist(String theaterid) {
 		String sql = "select * from screen where theaterid = ?";
-		return null;
+		return jdbcTemplate.query(sql, mapper, theaterid);
 	}
 
 	//상영관 수정
