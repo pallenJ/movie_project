@@ -56,5 +56,4 @@ public class TheaterServiceImpl implements TheaterService {
 	public Theater detail(String theaterid) {
 		return theaterDao.theaterdetail(theaterid);
 	}
-
 }

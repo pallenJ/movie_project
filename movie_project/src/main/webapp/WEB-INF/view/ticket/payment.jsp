@@ -56,7 +56,7 @@
                 	    pay_method : 'card',
                 	    merchant_uid : 'merchant_' + new Date().getTime(),
                 	    name : '${movie.title}',	//상품이름
-                	    amount : '${payment.paytotal}',
+                	    amount : '${paymentupdate.paytotal}',
                 	    buyer_email :'${member.email}',
                 	    buyer_name : '${member.id}',
                 	    buyer_tel : '${member.phone}',
@@ -78,13 +78,13 @@
                 				//ajax 요청을 보내면서 결제내역 정보 데이터를 첨부
                 				data:{
                 						memberid:'${member.id}',
-                    					movieid:'${payment.movieid}',
-                    					theaterid:'${payment.theaterid}',
-                    					screenid:'test관',
-                    					seatid:'${payment.seatid}',
-                    					scheduleid:'${payment.scheduleid}',
-                    					paydate:'${payment.paydate}',
-                						paytotal:'${payment.paytotal}'
+                    					movieid:'${paymentupdate.movieid}',
+                    					theaterid:'${paymentupdate.theaterid}',
+                    					screenid:'${paymentupdate.screenid}',
+                    					seatid:'${paymentupdate.seatid}',
+                    					scheduleid:'${paymentupdate.scheduleid}',
+                    					paydate:'${paymentupdate.paydate}',
+                						paytotal:'${paymentupdate.paytotal}'
                 				},
                 				dataType:"text",
                 				success:function(count){
@@ -106,11 +106,12 @@
 <body>
     <div>
         <h1>결제 정보 입력하기</h1>
-        <h1>date: ${payment.paydate}</h1>
-        <h1>schedule : ${payment.scheduleid}</h1>
-        <h1>seat : ${payment.seatid}</h1>
+        <h1>${paymentupdate}</h1>
+        <h1>date: ${paymentupdate.paydate}</h1>
+        <h1>schedule : ${paymentupdate.scheduleid}</h1>
+        <h1>seat : ${paymentupdate.seatid}</h1>
         <h1>memberid : ${member.id}</h1>
-        <h1>payment.movieid : ${payment.movieid}</h1>
+        <h1>paymentupdate.movieid : ${paymentupdate.movieid}</h1>
  			<button>결제하기</button>
     </div>
 </body> 

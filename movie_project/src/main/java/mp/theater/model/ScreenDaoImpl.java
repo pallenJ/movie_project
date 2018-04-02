@@ -50,12 +50,19 @@ public class ScreenDaoImpl implements ScreenDao {
 		return jdbcTemplate.query(sql, extractor, screenid);
 	}
 
-	//상영관 목록 조회 (지점별)
+	//상영관 목록 조회 (세션 아이디로 검색)
 	@Override
-	public List<Screen> screenlist(String sessionid) {
+	public List<Screen> screenmylist(String sessionid) {
 		String sql = "select * from screen where uploader = "
 				+ "(select no from member where id = ?) order by no asc";
 		return jdbcTemplate.query(sql, mapper, sessionid);
+	}
+	
+	//상영관 목록 조회 (상영관 아이디로 검색)
+	@Override
+	public List<Screen> screenlist(String theaterid) {
+		String sql = "select * from screen where theaterid = ?";
+		return jdbcTemplate.query(sql, mapper, theaterid);
 	}
 
 	//상영관 수정

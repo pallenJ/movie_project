@@ -1,15 +1,15 @@
--- °èÁ¤ ¸¸µé±â
+-- ê³„ì • ë§Œë“¤ê¸°
 connect system/oracle;
 create user movie identified by movie;
 grant dba to movie;
 
 
--- »õ °èÁ¤ ·Î±×ÀÎ
+-- ìƒˆ ê³„ì • ë¡œê·¸ì¸
 conn movie/movie;
 
 
--- ¿©±â¼­ºÎÅÍ º¹ºÙ
---Å×ÀÌºí µå·Ó (¿Ü·¡Å° ¶§¹®¿¡ »èÁ¦ ¼ø¼­ Áß¿ä)
+-- ì—¬ê¸°ì„œë¶€í„° ë³µë¶™
+--í…Œì´ë¸” ë“œë¡­ (ì™¸ëž˜í‚¤ ë•Œë¬¸ì— ì‚­ì œ ìˆœì„œ ì¤‘ìš”)
 drop table schedule;
 drop sequence schedule_seq;
 drop table payment;
@@ -32,7 +32,7 @@ drop table member;
 drop sequence member_seq;
 
 
--- table, sequence »ý¼º
+-- table, sequence ìƒì„±
 create sequence member_seq nocache;
 create table member 
 (no varchar2(11) primary key, 
@@ -62,6 +62,7 @@ productor varchar2(60) not null,
 story varchar2(400) not null, 
 posterpath varchar2(256), 
 poster varchar2(256), 
+postername varchar2(256), 
 uploader constraint fk_movie_uploader references member(no) on delete set null, 
 price number not null);
 
@@ -105,6 +106,9 @@ create table notice
 head varchar2(30) not null, 
 title varchar2(90) not null, 
 content varchar2(4000) not null, 
+uploadpath varchar2(256), 
+upload varchar2(256), 
+uploadname varchar2(256), 
 reg date not null, 
 read number not null, 
 writer constraint fk_notice_writer references member(no) on delete cascade);
@@ -143,83 +147,83 @@ memberid varchar2(12) not null,
 movieid varchar2(11) not null, 
 theaterid varchar2(11) not null, 
 screenid varchar2(11) not null, 
-seatid varchar2(150) not null,
+seatid varchar2(11) not null,
 scheduleid varchar2(11) not null, 
 paydate varchar2(10) not null, 
 paytotal number not null);
 
 
--- µ¥ÀÌÅÍ »ðÀÔ ¸í·É¹®
--- ¸â¹ö µî·Ï
-insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'member11', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, 'ÀÏ¹Ý', sysdate);
+-- ë°ì´í„° ì‚½ìž… ëª…ë ¹ë¬¸
+-- ë©¤ë²„ ë“±ë¡
+insert into member values ('m'||LPAD(member_seq.nextval, '10', '0'), 'member11', '111111', '2018-01-01', '01011111111', 'test1@test1.com', 0, 'ì¼ë°˜', sysdate);
 
--- ¿µÈ­ µî·Ï
+-- ì˜í™” ë“±ë¡
 insert into movie values 
 ('v'||LPAD(movie_seq.nextval, '10', '0'), 'title', '2018-02-15', '2018-03-15', 'director', 'actor', 'genre', 'rate', 200, 'korea', 'distributor', 'productor', 'story', 'posetpath', 'poster', 'm0000000001', 10000);
 
--- ¸®ºä µî·Ï
+-- ë¦¬ë·° ë“±ë¡
 insert into review values ('r'||LPAD(review_seq.nextval, '10', '0'), 10, 'm0000000001', 'content', 'v0000000001', sysdate);
 
--- ¿µÈ­°ü µî·Ï
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '°¡µðÁ¡', '¼­¿ï', '¼­¿ï½Ã ±ÝÃµ±¸ °¡»êµ¿', '0212341234', 'm0000000001');
+-- ì˜í™”ê´€ ë“±ë¡
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), 'ê°€ë””ì ', 'ì„œìš¸', 'ì„œìš¸ì‹œ ê¸ˆì²œêµ¬ ê°€ì‚°ë™', '0212341234', 'm0000000001');
 
--- »ó¿µ°ü µî·Ï
+-- ìƒì˜ê´€ ë“±ë¡
 insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001');
 
--- ÁÂ¼® µî·Ï
+-- ì¢Œì„ ë“±ë¡
 insert into seat values ('s'||LPAD(seat_seq.nextval, '10', '0'), 'c0000000001', 'A1', 'A5', 0);
 
 
 
 
--- ¾ÆÀÌµð »ý¼º (sequence ÀÌ¿ë)
--- m-> Ãß°¡ÇÒ ¹®ÀÚ, '10' -> 0ÀÚ¸®, '0' -> 0À¸·Î Ã¤¿î´Ù
+-- ì•„ì´ë”” ìƒì„± (sequence ì´ìš©)
+-- m-> ì¶”ê°€í•  ë¬¸ìž, '10' -> 0ìžë¦¬, '0' -> 0ìœ¼ë¡œ ì±„ìš´ë‹¤
 'm'||LPAD(member_seq.nextval, '10', '0')
 
 
-<Àº°æ Å×½ºÆ® Áß>
+<ì€ê²½ í…ŒìŠ¤íŠ¸ ì¤‘>
 
-alter table add ÇÊµå~;
-alter table drop (ÇÊµå¸í);
-alter table drop contraint ¿Ü·¡Å°;
+alter table add í•„ë“œ~;
+alter table drop (í•„ë“œëª…);
+alter table drop contraint ì™¸ëž˜í‚¤;
 
 
-<<movie ¼öÁ¤>>
+<<movie ìˆ˜ì •>>
 update movie set time=200 where id='m1111111111';
 
 
-<<movie »èÁ¦ id, pw È®ÀÎ>>
+<<movie ì‚­ì œ id, pw í™•ì¸>>
 delete from movie where id = 'movieid' and uploader = 
 (select no from member where id='test11' and pw='test22');
 
 
-<<¿µÈ­ ¸ñ·Ï Á¶È¸>>
+<<ì˜í™” ëª©ë¡ ì¡°íšŒ>>
 select * from movie where open <= sysdate and close >= sysdate order by id desc;
 
-<<¿µÈ­ »ó¼¼ Á¶È¸>>
+<<ì˜í™” ìƒì„¸ ì¡°íšŒ>>
 select * from movie where id = ?;
 
 
-<<¸®ºä »èÁ¦>>
+<<ë¦¬ë·° ì‚­ì œ>>
 delete from review where id='r1111111111' and writer = 
 (select no from member where id='member11' and pw='111111');
 
 
-<<³» ¿µÈ­ Á¶È¸ (¿µÈ­»çÀÔÀå)>>
+<<ë‚´ ì˜í™” ì¡°íšŒ (ì˜í™”ì‚¬ìž…ìž¥)>>
 select * from movie where uploader = (select no from member where id='member11')
 
 
-<<¿µÈ­°ü »èÁ¦>>
+<<ì˜í™”ê´€ ì‚­ì œ>>
 delete from theater where id = 't0000000001' and manager = (select no from member where id = 'seqtest8' and pw = '111111')
 
-<<¿µÈ­°ü ¼öÁ¤>>
+<<ì˜í™”ê´€ ìˆ˜ì •>>
 update screen set no = 2, theaterid = 't0000000002', seats = 100 where id = 's0000000001';
 
-<<¿µÈ­°ü »èÁ¦>>
+<<ì˜í™”ê´€ ì‚­ì œ>>
 delete from screen where uploader = (select no from member where id = 'member11' and pw = '111111');
 
-<<ÁÂ¼® ¼öÁ¤>>
+<<ì¢Œì„ ìˆ˜ì •>>
 update seat set screenid = 'c0000000001', reallocation='B1', servicelocation='B4', seatdiscount = 0 where id = 's0000000001';
 
-<<ÁÂ¼® »èÁ¦>>
+<<ì¢Œì„ ì‚­ì œ>>
 delete from seat where id = 's0000000002';

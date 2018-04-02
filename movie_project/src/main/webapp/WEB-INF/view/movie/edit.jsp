@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- 글자 자르는 태그 -->
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <html>
     <head>
         <title>영화 수정</title>

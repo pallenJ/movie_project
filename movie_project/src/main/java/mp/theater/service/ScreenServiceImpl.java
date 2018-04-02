@@ -28,10 +28,16 @@ public class ScreenServiceImpl implements ScreenService {
 		return screenDao.screendetail(screenid);
 	}
 
-	//상영관 목록 조회
+	//상영관 목록 조회 (세션 아이디로 조회)
 	@Override
-	public List<Screen> list(String sessionid) {
-		return screenDao.screenlist(sessionid);
+	public List<Screen> mylist(String sessionid) {
+		return screenDao.screenmylist(sessionid);
+	}
+	
+	//상영관 목록 조회 (영화관 아이디로 조회)
+	@Override
+	public List<Screen> list(String theaterid){
+		return screenDao.screenlist(theaterid);
 	}
 
 	//상영관 수정
