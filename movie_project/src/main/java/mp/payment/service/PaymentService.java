@@ -1,5 +1,7 @@
 package mp.payment.service;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.stereotype.Service;
@@ -26,4 +28,6 @@ public interface PaymentService {
 
 	//결제 등록 전 중복여부 확인
 	boolean check(Payment payment, String loginid);
+
+	List<String> getSeatlist(String scheduleid);
 }	

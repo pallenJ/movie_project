@@ -32,10 +32,10 @@
              	var dateselectvalue = dateselect.options[dateselect.selectedIndex].value;
 //              	alert(dateselectvalue);
              	
+             	//상영시간표 불러오는 ajax
 			    $.ajax({
 					url:"http://localhost:8080/movie_project/ticket/schedule",
 					type:"get",
-					//ajax 요청을 보내면서 결제내역 정보 데이터를 첨부
 					data:{
 							theaterid:theaterselectvalue,
 							movieid:movieselectvalue,
@@ -97,7 +97,6 @@
               <label for="scheduleselect">상영 시간 선택하기</label>        
               <select multiple="" name="scheduleid" class="form-control" id="scheduleselect" required>
               </select>
-
 
             <button type="submit" class="btn btn-secondary">자리 찜하기!</button>
             </div>

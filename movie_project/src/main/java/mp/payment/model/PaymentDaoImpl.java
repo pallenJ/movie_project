@@ -72,4 +72,11 @@ public class PaymentDaoImpl implements PaymentDao {
 		log.debug("PaymentDaoImpl checkRegister 결과 : {}",result);
 		return result;
 	}
+
+	@Override
+	public List<String> getSeatlist(String scheduleid) {
+		String sql = "select seatid from payment where scheduleid=?";
+		Object[] args = {scheduleid};
+		return jdbcTemplate.queryForList(sql, args, String.class);
+	}
 }

@@ -18,4 +18,7 @@ public interface PaymentDao {
 
 	List<Payment> paymentlist(String membername);
 
+	//결제내역 중 해당 스케줄번호 좌석id목록 불러오는 메소드
+	List<String> getSeatlist(String scheduleid);
+
 }

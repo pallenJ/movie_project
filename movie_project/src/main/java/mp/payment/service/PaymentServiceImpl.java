@@ -197,4 +197,11 @@ public class PaymentServiceImpl implements PaymentService {
 		return true;
 	}
 
+
+	@Override
+	public List<String> getSeatlist(String scheduleid) {
+		List<String> list = paymentDao.getSeatlist(scheduleid);
+		return list;
+	}
+
 }

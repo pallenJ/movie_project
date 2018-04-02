@@ -37,7 +37,7 @@
             position: absolute;
             overflow: hidden;
             text-align: center;
-            font-size: 10pt;
+            font-size: 8pt;
         }
         .seat-wrap{
 	        border: 1px dotted black;
@@ -48,8 +48,8 @@
 	    .seat{
 	        border:1px solid black;
 	        display:inline-block;
-	        width:25px;
-	        height:25px;
+	        width:28px;
+	        height:28px;
 	    }
 	    
   		<!-- 기타 디자인 -->
@@ -90,6 +90,26 @@
 	    		}
 	    	});
 	    }
+    	
+    	//예매 좌석 가져오는 함수(ajax이용한다.)
+    	//payment에서 상영시간표id가 같은 seat리스트를 가져온다.
+	    function ticketingseatlist(scheduleid){
+	    	$.ajax({
+	    		type: 'POST',
+	       		url: "http://localhost:8080/movie_project/ticket/seat",
+	    		data: {scheduleid:'${scheduleid}'},
+	    		dataType: "json", 
+	    		success: function(data){
+	    			//data에 들어있는 정보를 검사하여
+	                //해당하는 id를 가진 자리를 표시
+	                $.each(data, function(i, d){
+	                    var id = "#" + d.reallocation;
+	                    $(id).css("background-color", "black").css("color", "black").css("visibility","visible");
+	 	             });
+	    		}
+	    	});
+	    }    	
+    	
 	    
 	    
     
@@ -105,7 +125,6 @@
                 var child = document.getElementById("child").value;	//select에서 선택한 값 가져오기
                 var senior = document.getElementById("senior").value;	//select에서 선택한 값 가져오기
                 var temp = Number(adult)+Number(child)+Number(senior);
-                alert(total);
                 //입력 인원수가 기준인원 초과시 좌석선택창을 보여주지 않는다.
                 if(total>8){
                     alert("8명을 초과할 수 없습니다.");
@@ -120,6 +139,7 @@
                  $(".screen").css("visibility","visible");
 				 $(".seat-wrap").css("visibility","visible");
             	 seatlist('${screenid}');
+            	 ticketingseatlist('${scheduleid}')
             	 total = temp;
                 }
             });	//button

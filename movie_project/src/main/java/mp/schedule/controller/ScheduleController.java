@@ -1,6 +1,7 @@
 package mp.schedule.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,14 +14,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import mp.member.bean.Member;
+import mp.member.service.MemberService;
 import mp.movie.bean.Movie;
 import mp.movie.service.MovieService;
 import mp.schedule.bean.Schedule;
 import mp.schedule.bean.ScheduleJoin;
 import mp.schedule.service.ScheduleService;
 import mp.theater.bean.Screen;
+import mp.theater.bean.Theater;
 import mp.theater.service.ScreenService;
+import mp.theater.service.TheaterService;
 
 
 @Controller
@@ -32,19 +38,41 @@ public class ScheduleController {
 	
 	@Autowired
 	MovieService movieService;
+
+	@Autowired
+	TheaterService theaterService;
 	
 	@Autowired
 	ScreenService screenService;
 	
+	@Autowired
+	MemberService memberService;
+	
 	@RequestMapping("/schedule")
-	public String schedulemain() {
+	public String schedulemain(HttpSession session, Model model) {
+		String loginid = (String)session.getAttribute("loginId");	
+		
+		List<ScheduleJoin> schedulelist = scheduleService.getlist(loginid);		//세션값으로 변경해야함. 현재 id값으로 되어있다.
+		
+		model.addAttribute("schedulelist",schedulelist);
 		return "/schedule/main";
 	}
 	
 	
 	@RequestMapping("/schedule/register")
-	public String register() {
+	public String register(HttpSession session, Model model) {
+		String loginid = (String)session.getAttribute("loginId");	
+		Member member =memberService.myinfo(loginid);
+		model.addAttribute("uploaderid",member.getNo());
+		
+		List<Theater> theaterlist = theaterService.list();
+		List<Movie> movielist = new ArrayList<Movie>();
+		movielist.addAll(movieService.getNow());
+		movielist.addAll(movieService.getSoon());
+		model.addAttribute("theaterlist",theaterlist);
+		model.addAttribute("movielist",movielist);
 		return "/schedule/register";
+
 	}
 	
 	@RequestMapping(value="/schedule/register", method=RequestMethod.POST)
@@ -59,6 +87,16 @@ public class ScheduleController {
 		log.debug("scheduleController register 등록 직후");
 			
 	}	
+	
+	//ajax로 영화관별 상영관 조회
+	@RequestMapping("/schedule/screenlist")
+	@ResponseBody
+	public List<Screen> getscreenlist(String theaterid){
+		log.debug("screenlist 컨트롤러 진입");
+		List<Screen> screenlist = screenService.list(theaterid);
+		return screenlist;		
+	}
+	
 	
 	@RequestMapping("/schedule/list")
 	public String list(HttpSession session, Model model) {
@@ -84,6 +122,14 @@ public class ScheduleController {
 	public String edit(String scheduleid, Model model) {
 		ScheduleJoin schedule = scheduleService.getinfo(scheduleid);
 		model.addAttribute("schedule",schedule);
+		
+		List<Theater> theaterlist = theaterService.list();
+		List<Movie> movielist = new ArrayList<Movie>();
+		movielist.addAll(movieService.getNow());
+		movielist.addAll(movieService.getSoon());
+		model.addAttribute("theaterlist",theaterlist);
+		model.addAttribute("movielist",movielist);
+		
 		return "/schedule/edit";	
 	}	
 	
@@ -94,7 +140,7 @@ public class ScheduleController {
 		log.debug("ScheduleController editpost 리다이렉트 직전");
 		//edit후 info페이지로 이동
 		if(result) {
-			return "redirect:/schedule/info?scheduleid="+schedule.getId();
+			return "redirect:/schedule";
 		}else {
 			return "redirect:/schedule/editfail";
 		}

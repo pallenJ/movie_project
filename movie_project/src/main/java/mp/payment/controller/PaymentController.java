@@ -1,5 +1,6 @@
 package mp.payment.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -55,13 +56,16 @@ public class PaymentController {
 		return "/home";
 	}
 
-//	 
+	
 	@RequestMapping("/ticket")
 	public String ticket(HttpSession session, Model model) {
 		String loginid = (String)session.getAttribute("loginId");
 		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
 		List<Theater> theaterlist = theaterService.list();
-		List<Movie> movielist = movieService.getNow();
+		List<Movie> movielist = new ArrayList<Movie>();
+		movielist.addAll(movieService.getNow());
+		movielist.addAll(movieService.getSoon());
+		log.debug("movielist : {}",movielist);
 		String[] datelist = {"2018-03-29","2018-03-30","2018-03-31"};
 		model.addAttribute("theaterlist",theaterlist);
 		model.addAttribute("movielist",movielist);
@@ -96,7 +100,6 @@ public class PaymentController {
 		//예매된 좌석 정보
 		//결제테이블에서 scheduleid로 조회해서 seatid들을 불러온다.
 		//seatid로 seat객체를 만든다. 그것을 동일하게 뿌려준다. ajax가는 페이지에서 처리해야될 것 같은데.
-		
 		//어플리케이션 영역에 저장된 좌석 정보
 		
 		return "/ticket/selectSeat";
@@ -135,7 +138,7 @@ public class PaymentController {
 	public String ticketRegister(Payment payment) throws Exception {
 		log.debug("ajax넘겨온 Controller");
 		log.debug("ajax넘겨온 payment payment : {}",payment.getScheduleid());
-		boolean check = paymentService.register(payment);	//회원가입 성공 여부 반납
+		boolean check = paymentService.register(payment);	//등록 성공 여부 반납
 		//작동하지 않는 것인가?? ajax는 페이지 이동은 안되는 가
 		if(check) {
 			return "/ticket/complete";	
@@ -154,6 +157,23 @@ public class PaymentController {
 		String loginid = (String)session.getAttribute("loginId");
 		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
 		return "/ticket/complete";
+	}
+	
+	@RequestMapping("/ticket/seat")
+	@ResponseBody
+	public List<Seat> list(String scheduleid){
+		List<String> seatidlist = paymentService.getSeatlist(scheduleid);
+		//seatid들을 가져올 수 있다.
+		//그seatid로 seat객체 만들고 그걸 리스트에 넣어서 반환한다.
+		log.debug("예매한 seat객체목록 가져오기 : {}",seatidlist);
+		List<Seat> seatlist = new ArrayList<Seat>();
+		for(String seatid: seatidlist) {
+			log.debug("예매한 seatid : {}",seatid);
+			Seat seat = seatService.info(seatid);
+			log.debug("예매한 seat객체 가져오기 : {}",seat);
+			seatlist.add(seat);
+		}
+		return seatlist;
 	}
 	
 }
