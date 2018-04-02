@@ -30,7 +30,7 @@ public class SeatController {
 	//좌석 등록
 	@RequestMapping("/seat/register")
 	public String register(HttpSession session, Model model) {
-		List<Screen> screen = screenService.list(session.getAttribute("loginId").toString());
+		List<Screen> screen = screenService.mylist(session.getAttribute("loginId").toString());
 		model.addAttribute("screen", screen);
 		return "/seat/register";
 	}

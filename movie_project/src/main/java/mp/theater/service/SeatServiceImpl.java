@@ -59,8 +59,7 @@ public class SeatServiceImpl implements SeatService {
 	//좌석 조회 (좌석 아이디로 검색)
 	@Override
 	public Seat info(String seatid) {
-		seatDao.info(seatid);
-		return null;
+		return seatDao.info(seatid);
 	}
 	
 }

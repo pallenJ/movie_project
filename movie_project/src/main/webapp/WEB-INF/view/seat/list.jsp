@@ -13,12 +13,14 @@
             margin: auto;
             text-align: center;
             width: 80%;
+            border: 1px dotted;
         }
         .content{
             margin: auto;
             text-align: left;
             padding: 50px;
             width: 90%;
+            border: 1px dotted;
         }
         .screen{
         	margin: auto;
@@ -128,8 +130,8 @@
                 </select>
             </div>
         </div>
-        <div class="empty-row"></div>
     </div>
    <div class="empty-row"></div>
 </body>
 </html>
+
