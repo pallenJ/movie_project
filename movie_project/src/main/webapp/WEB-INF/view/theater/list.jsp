@@ -36,7 +36,7 @@
             <div class="empty-row"></div>
             <div>
 	            <c:forEach var="list" items="${list }">
-	                <a href='<c:url value="/theater/detail?theaterid=${list.id }"/>' class="btn btn-primary">${list.name }</a><br><br>	
+	                <a href='<c:url value="/theater/detail?theaterid=${list.id }"/>' class="btn btn-info">${list.name }</a><br><br>	
 	            </c:forEach>
             </div>
             <div class="empty-row"></div>
