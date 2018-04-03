@@ -47,8 +47,7 @@ public class ScreenController {
 	//상영관 목록 조회 (지점별)
 	@RequestMapping(value= {"/screen/mylist", "/screen"})
 	public String list(HttpSession session, Model model) {
-		session.setAttribute("id", "test"); //세션아이디 임의 추가
-		List<Screen> list = screenService.mylist(session.getAttribute("id").toString());
+		List<Screen> list = screenService.mylist(session.getAttribute("loginId").toString());
 		model.addAttribute("list", list);
 		return "/screen/mylist";
 	}
@@ -73,8 +72,8 @@ public class ScreenController {
 	}
 	@RequestMapping(value="/screen/delete", method=RequestMethod.POST)
 	public String delete(String screenid, String managerpw, HttpSession session) {
-		log.debug(screenid, managerpw, session.getAttribute("id").toString());
-		screenService.delete(screenid, session.getAttribute("id").toString(), managerpw);
+		log.debug(screenid, managerpw, session.getAttribute("loginId").toString());
+		screenService.delete(screenid, session.getAttribute("loginId").toString(), managerpw);
 		return "redirect:/screen";
 	}
 	

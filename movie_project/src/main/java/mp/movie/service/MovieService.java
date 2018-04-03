@@ -14,7 +14,7 @@ public interface MovieService {
 	String register(String title, String open, String close, String director, 
 			String actor, String genre, String rate, String time,
 			String nation, String distributor, String productor, String story, 
-			String posterpath, MultipartFile poster, String postername, String uploader, String price) throws Exception;
+			String posterpath, MultipartFile poster, String uploader, String price) throws Exception;
 	
 	//영화 조회 (영화사 입장)
 	List<Movie> getlist(String uploaderid);

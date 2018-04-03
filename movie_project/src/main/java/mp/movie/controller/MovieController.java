@@ -28,14 +28,16 @@ public class MovieController {
 	public String register(String title, String open, String close, 
 			String director, String actor, String genre, String rate, String time,
 			String nation, String distributor, String productor, String story, 
-			MultipartFile poster, String postername, String price, HttpSession session) throws Exception {
+			MultipartFile poster, String price, HttpSession session) throws Exception {
 		//파일 업로드시에 pom.xml에 commons-io, commons-fileupload 추가
 		//mvc-config.xml에 multipartResolver추가
 		String posterpath = session.getServletContext().getRealPath("upload");
+		log.debug(posterpath);
 		String uploader = (String)session.getAttribute("loginId");
+		log.debug(uploader);
 		String movieid = movieService.register(title, open, close, director, actor, genre, 
 				rate, time, nation, distributor, productor, story, posterpath, poster,
-				postername, uploader, price);
+				uploader, price);
 		return "redirect:/movie/info?movieid="+movieid;
 	}
 	
@@ -92,15 +94,13 @@ public class MovieController {
 	
 	//영화 삭제
 	@RequestMapping("/movie/delete")
-	public String delete(String movieid, HttpSession session, Model model) {
-		//일단 세션아이디 임의로 지정--------------------------------------------------------------
-		session.setAttribute("id", "member11");
+	public String delete(String movieid, Model model) {
 		model.addAttribute("movieid", movieid);
 		return "/movie/delete";
 	}
 	@RequestMapping(value="/movie/delete", method=RequestMethod.POST)
 	public String delete(String movieid, String uploaderpw, HttpSession session) {
-		movieService.delete(movieid, session.getAttribute("id").toString(), uploaderpw);
+		movieService.delete(movieid, session.getAttribute("loginId").toString(), uploaderpw);
 		return "redirect:/movie/list";
 	}
 	

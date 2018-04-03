@@ -34,7 +34,7 @@
             <a class="btn btn-secondary btn-lg" href='<c:url value="/movie/now"/>'>현재 상영작</a>
             <a class="btn btn-primary btn-lg" href='<c:url value="/movie/soon"/>'>상영 예정작</a>
             <div class="empty-row"></div>
-            <div class="card border-secondary mb-3" style="width: 100%; text-align: center;">
+            <div class="card border-secondary mb-3" style="width: 100%; display:inline-block;">
                 <c:forEach var="list" items="${list }">
                     <div style="width: 30%; overflow: hidden; display: inline-block; margin: auto;">
                         <img src="${pageContext.request.contextPath}/image/${list.poster}" style="margin: 20px; width: 200px; height:280px;"><br>

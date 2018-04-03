@@ -28,7 +28,8 @@ public class MovieServiceImpl implements MovieService {
 	public String register(String title, String open, String close, 
 			String director, String actor, String genre, String rate, String time,
 			String nation, String distributor, String productor, String story, 
-			String posterpath, MultipartFile poster, String postername, String uploader, String price) throws Exception {
+			String posterpath, MultipartFile poster, String uploader, String price) throws Exception {
+		log.debug("확인");
 		//업로더 no 찾기
 		Member member = memberDao.myinfo(uploader);
 		String uploaderno = member.getNo();

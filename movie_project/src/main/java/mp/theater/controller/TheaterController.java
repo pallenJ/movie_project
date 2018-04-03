@@ -22,8 +22,7 @@ public class TheaterController {
 	
 	//영화관 등록
 	@RequestMapping("/theater/register")
-	public String register(HttpSession session) {
-		session.setAttribute("id", "test");
+	public String register() {
 		return "/theater/register";
 	}
 	@RequestMapping(value="/theater/register", method=RequestMethod.POST)
@@ -41,8 +40,7 @@ public class TheaterController {
 	//영화관 상세 조회 (지점 입장)
 	@RequestMapping("/theater/my")
 	public String my(HttpSession session, Model model) {
-		session.setAttribute("id", "test");
-		Theater t = theaterService.my(session.getAttribute("id").toString());
+		Theater t = theaterService.my(session.getAttribute("loginId").toString());
 		model.addAttribute("theater", t);
 		return "/theater/my";
 	}
@@ -50,7 +48,7 @@ public class TheaterController {
 	//영화관 수정 (지점 입장)
 	@RequestMapping("/theater/edit")
 	public String edit(HttpSession session, Model model) {
-		model.addAttribute("theater", theaterService.my(session.getAttribute("id").toString()));
+		model.addAttribute("theater", theaterService.my(session.getAttribute("loginId").toString()));
 		return "/theater/edit";
 	}
 	@RequestMapping(value="/theater/edit", method=RequestMethod.POST)
@@ -63,12 +61,12 @@ public class TheaterController {
 	//영화관 삭제 (지점 입장)
 	@RequestMapping("/theater/delete")
 	public String delete(HttpSession session, Model model) {
-		model.addAttribute("theater", theaterService.my(session.getAttribute("id").toString()));
+		model.addAttribute("theater", theaterService.my(session.getAttribute("loginId").toString()));
 		return "/theater/delete";
 	}
 	@RequestMapping(value="/theater/delete", method=RequestMethod.POST)
 	public String delete(String theaterid, String managerpw, HttpSession session) {
-		theaterService.delete(theaterid, session.getAttribute("id").toString(), managerpw);
+		theaterService.delete(theaterid, session.getAttribute("loginId").toString(), managerpw);
 		return "redirect:/theater/list";
 	}
 	
