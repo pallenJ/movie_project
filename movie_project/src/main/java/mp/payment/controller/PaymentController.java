@@ -53,7 +53,7 @@ public class PaymentController {
 	@RequestMapping("/ticket")
 	public String ticket(HttpSession session, Model model) {
 		String loginid = (String)session.getAttribute("loginId");
-		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
+//		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
 		List<Theater> theaterlist = theaterService.list();
 		List<Movie> movielist = new ArrayList<Movie>();
 		movielist.addAll(movieService.getNow());
@@ -91,12 +91,8 @@ public class PaymentController {
 		String screenid = schedule.getScreen();
 		List<Seat> seatlist = seatService.list(screenid);
 		model.addAttribute("screenid",screenid);
-		model.addAttribute("seatlist",seatlist);
 		
-		//예매된 좌석 정보
-		//결제테이블에서 scheduleid로 조회해서 seatid들을 불러온다.
-		//seatid로 seat객체를 만든다. 그것을 동일하게 뿌려준다. ajax가는 페이지에서 처리해야될 것 같은데.
-		//어플리케이션 영역에 저장된 좌석 정보
+		model.addAttribute("seatlist",seatlist);
 		
 		return "/ticket/selectSeat";
 	}	
@@ -152,6 +148,7 @@ public class PaymentController {
 	public String ticketComplete(HttpSession session) {
 		String loginid = (String)session.getAttribute("loginId");
 		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
+		log.debug("{}아이디 어플리케이션 영역 초기화",loginid);
 		return "/ticket/complete";
 	}
 	
@@ -159,6 +156,7 @@ public class PaymentController {
 	public String ticketCancel(HttpSession session) {
 		String loginid = (String)session.getAttribute("loginId");
 		application.setAttribute(loginid,null);	//결제대기 좌석 초기화
+		log.debug("{}아이디 어플리케이션 영역 초기화",loginid);
 		return "/ticket/cancel";
 	}	
 	
@@ -166,6 +164,7 @@ public class PaymentController {
 	@ResponseBody
 	public List<Seat> list(String scheduleid){
 		List<String> seatidlist = paymentService.getSeatlist(scheduleid);
+		
 		//seatid들을 가져올 수 있다.
 		//그seatid로 seat객체 만들고 그걸 리스트에 넣어서 반환한다.
 		log.debug("예매한 seat객체목록 가져오기 : {}",seatidlist);
@@ -176,6 +175,8 @@ public class PaymentController {
 			log.debug("예매한 seat객체 가져오기 : {}",seat);
 			seatlist.add(seat);
 		}
+
+		
 		return seatlist;
 	}
 	

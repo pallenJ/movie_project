@@ -181,6 +181,7 @@
 	                	$("#select").append(input);	
                 	}
  				}
+            	
             });
         	
        });	//ready
@@ -200,11 +201,11 @@
               <!--인원선택-->    
               <div class="form-group">
                   <label class="col-form-label" for="adult">성인</label>
-                  <input type="text" name ="adult" class="form-control" placeholder="인원수 입력 ex) 3" id="adult">
+                  <input type="text" name ="adult" class="form-control" placeholder="인원수 입력 ex) 3" value="0" id="adult">
                   <label class="col-form-label" for="child">어린이</label>
-                  <input type="text" name ="child"  class="form-control" placeholder="인원수 입력 ex) 3" id="child">
+                  <input type="text" name ="child"  class="form-control" placeholder="인원수 입력 ex) 3" value="0" id="child">
                   <label class="col-form-label" for="senior">어르신</label>
-                  <input type="text" name ="senior"  class="form-control" placeholder="인원수 입력 ex) 3" id="senior">
+                  <input type="text" name ="senior"  class="form-control" placeholder="인원수 입력 ex) 3" value="0" id="senior">
                   <div id="mantotal"></div>
                 </div>
               <button type="button" class="btn btn-info" id="man">인원 선택 완료</button>

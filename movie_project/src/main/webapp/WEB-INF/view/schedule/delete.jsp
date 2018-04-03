@@ -7,7 +7,6 @@
         $(document).ready(function(){
         	//버튼 클릭시 상영시간표 삭제
             $("button").on("click", function(){
-            		alert("버튼클릭");
         			$.ajax({
         				url:"http://localhost:8080/movie_project/schedule/delete",
         				type:"post",
@@ -19,7 +18,7 @@
         				dataType:"text",
         				success:function(count){
         					alert("삭제성공");
-        					location.href = 'http://localhost:8080/movie_project/schedule/list';	//자바스크립트 페이지 강제이동	
+        					location.href = 'http://localhost:8080/movie_project/schedule';	//자바스크립트 페이지 강제이동	
         				},
        		        	error : function(xhr, status, error) {
      		                alert("비밀번호가 맞지 않습니다.");

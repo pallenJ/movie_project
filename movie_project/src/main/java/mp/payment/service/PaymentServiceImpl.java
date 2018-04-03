@@ -3,7 +3,9 @@ package mp.payment.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
@@ -118,15 +120,6 @@ public class PaymentServiceImpl implements PaymentService {
 		log.debug("seatidArray[0] : {}, length : {}",seatidArray[0],seatidArray.length);
 		boolean check = true;
 		
-		//기존 예매 좌석인지 확인
-//		for(String seatid: seatidArray) {
-//			payment.setSeatid(seatid);
-//			check =  paymentDao.checkRegister(payment.getScheduleid(),seatid);
-//			if(!check) {
-//				return false;	//중복 등록시 false반환
-//			}
-//		}
-		
 		//중복값 없을 시
 		//결제 정보 등록 seatid별로 반복처리
 		for(String seatid: seatidArray) {
@@ -157,35 +150,68 @@ public class PaymentServiceImpl implements PaymentService {
 			if(!check) {
 				return false;	//중복 등록시 false반환
 			}
-			
-			//어플리케이션 영역에 저장된 좌석인지 확인
-			//어플리케이션 영역에 아무것도 없으면 리스트 생성해서 넣는다. 이름은 세션값 
-			if(application.getAttribute(loginid)==null) {
-				list = new ArrayList<>();
-				log.debug("어플리케이션 {}  : 널이다.",loginid);
-				application.setAttribute(loginid,list);
-				log.debug("어플리케이션  : {}",application.getAttribute(loginid));
-			}else {	
-				
-			//어플리케이션에 값이 있다면
-				log.debug("어플리케이션 {} : 널아니다.",loginid);
-				list = (List<String>) application.getAttribute(loginid);
-				//리스트에서 스트링분해해서 비교한다.
-				for(String s: list) { 
-					String schedule = s.substring(0, 11);
-					String seat = s.substring(11);
-					log.debug("매개 scheduleid : {}, 매개 seatid : {}, 어플리케이션 scheduleid : {}, seatid : {}",payment.getScheduleid(),seatid,schedule,seat);
-					if(payment.getScheduleid().equals(schedule)&&seatid.equals(seat)) {
-						log.debug("어플리케이션영역에서 중복");
-						return false;	//중복 등록시 false반환
-					}
-				}
-			}	
-		}
+			//어플리케이션 영역에서 좌석 정보 가져오기
+			Enumeration attrEnum = application.getAttributeNames();
+			while(attrEnum.hasMoreElements()){
+			  String name = (String)attrEnum.nextElement();
+			  //정규표현식으로 어플리케이션영역에서 id만 추출
+		      String pattern = "^[a-zA-Z0-9]*$";	//영문 숫자만 가능
+		      boolean i = Pattern.matches(pattern, name);
+		      //어플리케이션 영역에서 아이디 형식이라면 중복 확인한다.
+		      if(i==true)
+		      {
+		            log.debug("{}는 패턴에 일치함",name);
+		            Object value = application.getAttribute(name);
+					log.debug("어플리케이션 저장 좌석 : {}",value);
+					  if(value!=null) {
+						   //어플리케이션 영역의 모든 좌석값 가져오기
+						   list =  (List<String>)value;
+					        
+							//리스트에서 스트링분해해서 비교한다.
+							for(String s: list) { 
+								String schedule = s.substring(0, 11);
+								String seat = s.substring(11);
+								log.debug("매개 scheduleid : {}, 매개 seatid : {}, 어플리케이션 scheduleid : {}, seatid : {}",payment.getScheduleid(),seatid,schedule,seat);
+								if(payment.getScheduleid().equals(schedule)&&seatid.equals(seat)) {
+									log.debug("어플리케이션영역에서 중복");
+									return false;	//중복 등록시 false반환
+								}
+							}
+					  }
+		            
+		      }//if
+		   }//while
 
+			
+			
+//			//어플리케이션 영역에 아무것도 없으면 리스트 생성해서 넣는다. 이름은 세션값  
+//			if(application.getAttribute(loginid)==null) {
+//				list = new ArrayList<>();
+//				log.debug("어플리케이션 {}  : 널이다.",loginid);
+//				application.setAttribute(loginid,list);
+//				log.debug("어플리케이션  : {}",application.getAttribute(loginid));
+//			}else {	
+//				
+//			//어플리케이션에 값이 있다면
+//				log.debug("어플리케이션 {} : 널아니다.",loginid);
+//				list = (List<String>) application.getAttribute(loginid);
+//				//리스트에서 스트링분해해서 비교한다.
+//				for(String s: list) { 
+//					String schedule = s.substring(0, 11);
+//					String seat = s.substring(11);
+//					log.debug("매개 scheduleid : {}, 매개 seatid : {}, 어플리케이션 scheduleid : {}, seatid : {}",payment.getScheduleid(),seatid,schedule,seat);
+//					if(payment.getScheduleid().equals(schedule)&&seatid.equals(seat)) {
+//						log.debug("어플리케이션영역에서 중복");
+//						return false;	//중복 등록시 false반환
+//					}
+//				}
+//			}	
+		}
+	    //중복되는 거 없다면
+        list = new ArrayList<>();
 		//이 사용자가 선택한 스케줄, 좌석정보를 어플리케이션영역에 넣는다.
-		for(String seatid : seatidArray) {
-			String temp = payment.getScheduleid()+seatid;
+		for(String seat : seatidArray) {
+			String temp = payment.getScheduleid()+seat;
 			log.debug("어플리케이션영역에 {} 추가",temp);
 			list.add(temp);
 		}
@@ -201,6 +227,45 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public List<String> getSeatlist(String scheduleid) {
 		List<String> list = paymentDao.getSeatlist(scheduleid);
+		//어플리케이션 영역의 이 스케줄에 해당하는 모든 좌석 가져오기
+		
+
+		log.debug("어플리케이션에서 좌석정보 가져오기");
+		//어플리케이션 영역에서 좌석 정보 가져오기
+		Enumeration attrEnum = application.getAttributeNames();
+		while(attrEnum.hasMoreElements()){
+		  String name = (String)attrEnum.nextElement();
+		  //정규표현식으로 어플리케이션영역에서 id만 추출
+		  log.debug("name : {}",name);
+	      String pattern = "^[a-zA-Z0-9]*$";	//영문 숫자만 가능
+	      boolean i = Pattern.matches(pattern, name);
+	      //어플리케이션 영역에서 아이디 형식이라면 중복 확인한다.
+	      if(i==true)
+	      {
+	            log.debug("{}는 패턴에 일치함",name);
+	            Object value = application.getAttribute(name);
+				log.debug("어플리케이션 저장 좌석 : {}",value);
+				  if(value!=null) {
+					   //어플리케이션 영역의 모든 좌석값 가져오기
+					   list =  (List<String>)value;
+				        
+						//리스트에서 스트링분해해서 비교한다.
+						for(String s: list) { 
+							String schedule = s.substring(0, 11);
+							String seat = s.substring(11);
+							log.debug("어플리케이션영역 확인 schedule : {}",schedule );
+							log.debug("어플리케이션영역 확인 scheduleid : {}",scheduleid);
+							if(schedule.equals(scheduleid)) {		//상영시간표가 같으면 seat추가하기
+								log.debug("어플리케이션영역에서 seat : {} 추가",seat);
+								list.add(seat);
+							}
+						}
+				  }
+	            
+	      }//if
+	   }//while
+		
+
 		return list;
 	}
 
