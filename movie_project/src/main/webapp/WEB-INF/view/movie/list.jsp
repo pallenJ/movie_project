@@ -13,13 +13,11 @@
                 margin: auto;
                 text-align: center;
                 width: 80%;
-                border: 1px dotted;
             }
             .content{
                 margin: auto;
                 text-align: left;
                 width: 60%;
-                border: 1px dotted;
             }
         </style>
         <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">

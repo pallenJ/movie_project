@@ -26,26 +26,23 @@
     <body>
         <div class="empty-row"></div>
         <div class="area">
-            <div class="content">
+            <div class="card border-secondary mb-3" style="width: 60%; margin: auto;">
                 <form action="register" method="post">
-                    <div style="text-align: center;">
-                        <h2>영화관 등록</h2><br>
+                <div>
+                    <div class="card-header" style="text-align: center;">
+                        <h2>영화관 등록</h2>
                     </div>
-                    <div>
+                    <div class="card-body">
                         지점명 <input type="text" name="name" required><br><br>
                         지역 <input type="text" name="region" required><br><br>
                         주소 <input type="text" name="address" style="width: 80%;" required><br><br>
                         전화번호 <input type="text" name="tel" required><br><br>
                         <input type="hidden" name="manager" value="${sessionScope.id }" readonly="readonly">
-                    </div>
-                    <div class="empty-row"></div>
-                    <div style="text-align: center;">
                         <input type="submit" value="등록" class="btn btn-info">            
                     </div>
-                    <div class="empty-row"></div>
+                </div>
                 </form>
             </div>
         </div>
-        <div class="empty-row"></div>
     </body>
 </html>

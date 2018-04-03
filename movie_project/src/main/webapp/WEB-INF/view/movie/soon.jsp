@@ -13,12 +13,10 @@
                 margin: auto;
                 text-align: center;
                 width: 80%;
-                border: 1px dotted;
             }
             .content{
                 width: 100%; height: 100%;
                 text-align: center;
-                border: 1px dotted;
             }
         </style>
         <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
@@ -31,21 +29,19 @@
             <a class="btn btn-outline-secondary" href='<c:url value="/movie/list"/>'>나의 영화 리스트</a>
             <a class="btn btn-outline-info" href='<c:url value="/movie/list"/>'>영화사별 검색(관리자용)</a>
         </div>
-        <div class="empty-row"></div>
         <div class="area">
             <div class="empty-row"></div>
             <a class="btn btn-secondary btn-lg" href='<c:url value="/movie/now"/>'>현재 상영작</a>
             <a class="btn btn-primary btn-lg" href='<c:url value="/movie/soon"/>'>상영 예정작</a>
             <div class="empty-row"></div>
-            <div class="content">
+            <div class="card border-primary mb-3" style="width: 100%; text-align: center;">
                 <c:forEach var="list" items="${list }">
-                    <div style="width: 30%; overflow: hidden; display: inline-block;">
+                    <div style="width: 30%; overflow: hidden; display: inline-block; margin: auto;">
                         <img src="${pageContext.request.contextPath}/image/${list.poster}" style="margin: 20px; width: 200px; height:280px;"><br>
                         <a class="btn btn-secondary" href='<c:url value="/movie/info?movieid=${list.id }"/>' style="margin: 20px;">${list.title }</a>
                     </div>
                 </c:forEach>
             </div>
-            <div class="empty-row"></div>
         </div>
         <div class="empty-row"></div>
     </body>

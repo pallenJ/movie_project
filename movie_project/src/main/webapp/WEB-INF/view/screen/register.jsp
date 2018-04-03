@@ -26,17 +26,21 @@
     <body>
         <div class="empty-row"></div>
         <div class="area">
-            <div>
-                <h2>상영관 등록</h2>
-            </div>
-            <form action="register" method="post">
-                <div class="content">
-                    상영관 번호 <input type="text" name="no" placeholder="예) 1, 2, 3 ..." required><br><br>
-                    지점명 <input type="text" name="theater" value="${theater.name }" readonly="readonly"><br>
-                    <input type="hidden" name="uploader" value="${sessionScope.id }" readonly="readonly"><br>
-                    <input type="submit" value="등록" class="btn btn-primary">
-                </div>
-            </form>
+        	<div class="card border-info mb-3" style="max-width: 40rem; margin:auto;">
+	            <div class="card-header">
+	                <h2>상영관 등록</h2>
+	            </div>
+	            <div class="card-body">
+		            <form action="register" method="post">
+		                <div class="content">
+		                    상영관 번호 <input type="text" name="no" placeholder="예) 1, 2, 3 ..." required><br><br>
+		                    지점명 <input type="text" name="theater" value="${theater.name }" readonly="readonly"><br>
+		                    <input type="hidden" name="uploader" value="${sessionScope.id }" readonly="readonly"><br>
+		                    <input type="submit" value="등록" class="btn btn-primary">
+		                </div>
+		            </form>
+	            </div>
+        	</div>
         </div>
         <div class="empty-row"></div>
     </body>
