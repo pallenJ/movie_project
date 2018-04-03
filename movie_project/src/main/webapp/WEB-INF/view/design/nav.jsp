@@ -53,6 +53,44 @@ li {
 
 			<li class="nav-item"><a class="nav-link"
 				href="<c:url value='/'/>">홈으로</a></li>
+			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+				role="button" aria-haspopup="true" aria-expanded="false">예매</a>
+				<div class="dropdown-menu" x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a class="dropdown-item" href="<c:url value='/schedule'/>">상영시간표</a>
+					<a class="dropdown-item" href="<c:url value='/ticket'/>">예매</a>
+				</div></li>
+			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+				role="button" aria-haspopup="true" aria-expanded="false">영화</a>
+				<div class="dropdown-menu" x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a class="dropdown-item" href="<c:url value='/movie'/>">영화정보</a>
+				</div></li>
+			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+				role="button" aria-haspopup="true" aria-expanded="false">영화관</a>
+				<div class="dropdown-menu" x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a class="dropdown-item" href="<c:url value='/theater'/>">영화관
+						페이지</a> <a class="dropdown-item" href="<c:url value='/screen'/>">상영관
+						페이지</a> <a class="dropdown-item" href="<c:url value='/seat'/>">좌석</a>
+				</div></li>
+				
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+				role="button" aria-haspopup="true" aria-expanded="false">게시판</a>
+				<div class="dropdown-menu" x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+					 <a class="dropdown-item" href="<c:url value='/notice'/>">notice</a>
+					 <a class="dropdown-item" href="<c:url value='/qna'/>">QnA</a>
+				</div></li>
+				
+				
 			<c:if test="${sessionScope.loginGrade eq '관리자' or sessionScope.loginGrade eq 'admin'}">
 			
 			<li class="nav-item dropdown"><a
@@ -65,37 +103,7 @@ li {
 				
 			</c:if>
 		
-				
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-				role="button" aria-haspopup="true" aria-expanded="false">게시판</a>
-				<div class="dropdown-menu" x-placement="bottom-start"
-					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-					<a class="dropdown-item" href="#">리뷰</a> <a class="dropdown-item"
-						href="<c:url value='/qna'/>">QnA</a> <a class="dropdown-item"
-						href="<c:url value='/notice'/>">notice</a>
-				</div></li>
-				
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-				role="button" aria-haspopup="true" aria-expanded="false">영화 페이지들</a>
-				<div class="dropdown-menu" x-placement="bottom-start"
-					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-					<a class="dropdown-item" href="<c:url value='/schedule'/>">상영시간표</a>
-					<a class="dropdown-item" href="<c:url value='/ticket'/>">예매페이지</a>
-					<a class="dropdown-item" href="<c:url value='/movie'/>">영화페이지</a>
-				</div></li>
 
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-				role="button" aria-haspopup="true" aria-expanded="false">상영관
-					페이지들</a>
-				<div class="dropdown-menu" x-placement="bottom-start"
-					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-					<a class="dropdown-item" href="<c:url value='/theater'/>">영화관
-						페이지</a> <a class="dropdown-item" href="<c:url value='/screen'/>">스크린
-						페이지</a> <a class="dropdown-item" href="<c:url value='/seat'/>">좌석페이지</a>
-				</div></li>
 		</ul>
 		<script src="https://bootswatch.com/_vendor/jquery/dist/jquery.min.js"></script>
 		<script
