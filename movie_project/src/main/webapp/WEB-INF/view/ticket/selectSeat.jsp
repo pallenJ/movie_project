@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <html>
   <!--반드시 있어야 할 것(jsp페이지에 이것만 추가후 디자인 시작)-->
 <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
@@ -76,11 +77,13 @@
     	//상영관 좌석 배치도 가져오는 함수(ajax이용한다.)
 	    function seatlist(screenid){
 	    	$.ajax({
+	    		async:false,	//ajax 동시 작동 방지
 	    		type: 'POST',
 	       		url: "http://localhost:8080/movie_project/seat/list",
 	    		data: {screenid:'${screenid}'},
 	    		dataType: "json", 
 	    		success: function(data){
+					console.log(data);	    			
 	    			for(var r=0; r<=11; r++){
 	    				for(var c=1; c<=23; c++){
 	    					var id = "#" + String.fromCharCode(r+97) + c;
@@ -95,12 +98,14 @@
 	                });
 	    		}
 	    	});
+       		 ticketingseatlist('${scheduleid}');
 	    }
     	
     	//예매 좌석 가져오는 함수(ajax이용한다.)
     	//payment에서 상영시간표id가 같은 seat리스트를 가져온다.
 	    function ticketingseatlist(scheduleid){
 	    	$.ajax({
+	    		async:false,	//ajax 동시 작동 방지
 	    		type: 'POST',
 	       		url: "http://localhost:8080/movie_project/ticket/seat",
 	    		data: {scheduleid:'${scheduleid}'},
@@ -110,10 +115,9 @@
 	                //해당하는 id를 가진 자리를 표시
 	                $.each(data, function(i, d){
 	                    var id = "#" + d.reallocation;
-	                    $(id).css("background-color", "gray").css("color", "gray").css("visibility","visible");
+	                    $(id).css("background-color", "gray");
 	                	$(id).off("click");
-	                  	
-	 	             });
+	 	            });
 	    		}
 	    	});
 	    }    	
@@ -140,14 +144,13 @@
    					$(".seat-wrap").css("visibility","hidden");
    					$(".seat").css("visibility","hidden");
                 } 
-
                 //정상적인 인원입력이라면 ajax로 상영관의 좌석을 보여준다.
                 if(total<=8){
                 //ajax
                  $(".screen").css("visibility","visible");
 				 $(".seat-wrap").css("visibility","visible");
+// 				 console.log('${screenid}')
             	 seatlist('${screenid}');
-            	 ticketingseatlist('${scheduleid}')
             	 total = temp;
                 }
             });	//button
@@ -239,8 +242,3 @@
 </body>
 
 </html>
-
-
-
-
-

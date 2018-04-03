@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 
 <html>
 <head>
@@ -123,8 +124,8 @@ document.getElementById('now_date').valueAsDate = new Date();
       <div class="text-center">      
        <br><button type="submit" class="btn btn-info">수정하기</button>
       </div>
-      <input type="text" value="${schedule.uploader}" name="uploader"><br>
-      <input type="text" value="${schedule.id}" name="id"><br>
+      <input type="hidden" value="${schedule.uploader}" name="uploader"><br>
+      <input type="hidden" value="${schedule.id}" name="id"><br>
 
     </div>	
         

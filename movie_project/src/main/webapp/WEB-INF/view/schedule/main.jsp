@@ -3,13 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 글자 자르는 태그 -->
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 <html>
 <head>
 	<title></title>
 
 <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
 <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
-
 
 </head>
 <body>
@@ -25,7 +25,6 @@
         <table class="table table-hover">
       <thead>
         <tr>    <tr>
-
           <th scope="col">날짜</th>
           <th scope="col">영화이름</th>
           <th scope="col">상영관</th>
@@ -37,7 +36,7 @@
       </thead>
       <tbody>
         <c:forEach var="schedule" items="${schedulelist}">
-        <tr class="table-primary">
+        <tr class="table">
           <th scope="row">${fn:substring(schedule.day, 0, 10)}</th>
           <td>${schedule.movietitle}</td>    
           <td>${schedule.screenno}</td>

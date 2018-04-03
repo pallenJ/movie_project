@@ -14,7 +14,6 @@
 			location.href = 'home';
 		</script>
 	</c:if>
-	<h1>환영합니다</h1>
 	<div align="right">
 
 		<c:if test="${re_reg_reg eq 'ok'}">
@@ -27,32 +26,34 @@
 
 
 	</div>
+	
+	
 
-	<h1>
-		<a href="<c:url value='/qna'/>">Q&A 게시판 이동</a>
-	</h1>
-	<h1>
-		<a href="<c:url value='/notice'/>">Noitce 게시판 이동</a>
-	</h1>
-	<br>
-	<br>
-	<h1>
-		<a href="<c:url value='/schedule'/>">상영시간표 페이지로 이동</a>
-	</h1>
-	<h1>
-		<a href="<c:url value='/ticket'/>">예매 페이지로 이동</a>
-	</h1>
-	<h1>
-		<a href="<c:url value='/movie'/>">영화 페이지로 이동</a>
-	</h1>
-	<h1>
-		<a href="<c:url value='/theater'/>">영화관 페이지로 이동</a>
-	</h1>
-	<h1>
-		<a href="<c:url value='/screen'/>">스크린 페이지로 이동</a>
-	</h1>
-	<h1>
-		<a href="<c:url value='/seat'/>">좌석 페이지로 이동</a>
-	</h1>
+<!-- 	<h1> -->
+<%-- 		<a href="<c:url value='/qna'/>">Q&A 게시판 이동</a> --%>
+<!-- 	</h1> -->
+<!-- 	<h1> -->
+<%-- 		<a href="<c:url value='/notice'/>">Noitce 게시판 이동</a> --%>
+<!-- 	</h1> -->
+<!-- 	<br> -->
+<!-- 	<br> -->
+<!-- 	<h1> -->
+<%-- 		<a href="<c:url value='/schedule'/>">상영시간표 페이지로 이동</a> --%>
+<!-- 	</h1> -->
+<!-- 	<h1> -->
+<%-- 		<a href="<c:url value='/ticket'/>">예매 페이지로 이동</a> --%>
+<!-- 	</h1> -->
+<!-- 	<h1> -->
+<%-- 		<a href="<c:url value='/movie'/>">영화 페이지로 이동</a> --%>
+<!-- 	</h1> -->
+<!-- 	<h1> -->
+<%-- 		<a href="<c:url value='/theater'/>">영화관 페이지로 이동</a> --%>
+<!-- 	</h1> -->
+<!-- 	<h1> -->
+<%-- 		<a href="<c:url value='/screen'/>">스크린 페이지로 이동</a> --%>
+<!-- 	</h1> -->
+<!-- 	<h1> -->
+<%-- 		<a href="<c:url value='/seat'/>">좌석 페이지로 이동</a> --%>
+<!-- 	</h1> -->
 </body>
 </html>
