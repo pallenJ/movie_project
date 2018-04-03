@@ -158,15 +158,14 @@ paytotal number not null);
 
 
 --멤버 추가
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'admin','1234','1993-01-01','01012341234','admin@test.com',0,'관리자',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'movie','1234','1993-01-07','01012341234','test@test.com',0,'영화사',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater','1234','1993-01-07','01012341234','test@test.com',0,'지점장',sysdate);
 insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
 insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test1','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
 insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test2','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test3','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test4','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test5','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test6','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test7','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test8','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
+
+
 
 --영화 추가
 insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), '조선명탐정', '2018-02-15', '2018-05-30', '김석윤','김명민', '코미디', '7.6', 120, '한국', 'distributor', 'productor', '목에 난 두 개의 이빨 자국, 심장을 관통한 화살촉에 새겨진 글자. 
