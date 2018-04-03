@@ -1,4 +1,4 @@
--- 계정 만들기
+-- 계정 만들기 
 connect system/oracle;
 create user movie identified by movie;
 grant dba to movie;
