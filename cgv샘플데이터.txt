@@ -5,7 +5,8 @@ grant dba to movie;
 
 
 -- 새 계정 로그인
-conn movie/movie;
+-- conn movie/movie;
+conn movie/movie@61.75.27.204:11112/xe; --공유계정
 
 
 -- 여기서부터 복붙
