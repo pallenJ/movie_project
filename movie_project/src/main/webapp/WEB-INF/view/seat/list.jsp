@@ -13,14 +13,12 @@
             margin: auto;
             text-align: center;
             width: 80%;
-            border: 1px dotted;
         }
         .content{
             margin: auto;
             text-align: left;
             padding: 50px;
             width: 90%;
-            border: 1px dotted;
         }
         .screen{
         	margin: auto;
@@ -50,7 +48,6 @@
             font-size: 8pt;
         }
         .seat-wrap{
-	        border: 1px dotted black;
             width: 750px;
             height: 350px;
             margin: auto;
