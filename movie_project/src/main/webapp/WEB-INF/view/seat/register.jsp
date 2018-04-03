@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1>좌석 등록 페이지</h1>
 <html>
 <head>
-    <title>jQuery 배우기</title>
+    <title>좌석 등록</title>
     <style>
         .empty-row{
             height: 20px;
         }
         .area{
-            border: 1px dotted black;
+            width: 80%;
+            margin: auto;
+        }
+        .seatarea{
             width: 600px;
             height: 400px;
             margin: auto;
@@ -99,29 +101,30 @@
     </script>
 </head>
 <body>
-<form action="register" method="post" onsubmit="return send()">
+    <div class="empty-row"></div>
+    <div class="empty-row"></div>
     <div class="area">
-        <div class="screen">screen</div>
         <div class="empty-row"></div>
-        <div class="seats"></div>
+        <form action="register" method="post" onsubmit="return send()">
+            <div class="seatarea">
+                <div class="screen">screen</div>
+                <div class="empty-row"></div>
+                <div class="seats"></div>
+            </div>
+            <div class="empty-row"></div>
+            <div class="empty-row"></div>
+           <div id="content" style="text-align: center">
+                상영관 : 
+                <select name="screen">
+                    <c:forEach var="screen" items="${screen}">
+                        <option value="${screen.id }">${screen.no }</option>
+                    </c:forEach>
+                </select>
+                <br><br>
+                <input type="submit" value="등록">
+            </div>
+        </form>
+        <div class="empty-row"></div>
     </div>
-    <div class="empty-row"></div>
-    <div class="empty-row"></div>
-   <div id="content" style="text-align: center">
-    	상영관 : 
-    	<select name="screen">
-    		<c:forEach var="screen" items="${screen}">
-	    		<option value="${screen.id }">${screen.no }</option>
-    		</c:forEach>
-    	</select>
-		<br>
-		<!-- 
-    	실제위치 : <input type="text" name="reallocation"/><br>
-    	서비스위치 : <input type="text" name="servicelocation"/><br>
-    	좌석할인 : <input type="text" name="seatdiscount"/><br>
-    	 -->
-    	<input type="submit" value="등록">
-   	</div>
-</form>
 </body>
 </html>
