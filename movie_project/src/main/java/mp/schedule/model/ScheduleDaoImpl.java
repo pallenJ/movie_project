@@ -222,7 +222,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 	@Override
 	public List<String> latelydate() {
-		String sql = "select day from mo where day>=to_char(sysdate-1,'yyyy-mm-dd') order by day asc";	//어제 날짜부터 조회(날짜입력이 지금 달력으로 받기 때문에 sysdate로 오늘꺼 조회불가)
+		String sql = "select day from schedule where day>=to_char(sysdate-1,'yyyy-mm-dd') order by day asc";	//어제 날짜부터 조회(날짜입력이 지금 달력으로 받기 때문에 sysdate로 오늘꺼 조회불가)
 		return jdbcTemplate.queryForList(sql, String.class);
 	}
 	

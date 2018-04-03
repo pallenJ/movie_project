@@ -15,10 +15,9 @@ public interface PaymentDao {
 	//기존에 예매된 좌석인지 확인하는 메소드
 	boolean checkRegister(String scheduleid, String seatid);
 	
-
 	List<Payment> paymentlist(String membername);
 
 	//결제내역 중 해당 스케줄번호 좌석id목록 불러오는 메소드
 	List<String> getSeatlist(String scheduleid);
-
+	
 }

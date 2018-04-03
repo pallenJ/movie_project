@@ -51,6 +51,12 @@
 	        width:28px;
 	        height:28px;
 	    }
+	    .seatdisabled{
+	        border:1px solid black;
+	        display:inline-block;
+	        width:28px;
+	        height:28px;
+	    }	    
 	    
   		<!-- 기타 디자인 -->
 	    .emptysmall{
@@ -104,8 +110,9 @@
 	                //해당하는 id를 가진 자리를 표시
 	                $.each(data, function(i, d){
 	                    var id = "#" + d.reallocation;
-	                    $(id).css("background-color", "black").css("color", "black").css("visibility","visible");
-	                    $(id).removeClass("seat");	//class="seat"을 삭제해 click이벤트에서 제외한다.
+	                    $(id).css("background-color", "gray").css("color", "gray").css("visibility","visible");
+	                	$(id).off("click");
+	                  	
 	 	             });
 	    		}
 	    	});
