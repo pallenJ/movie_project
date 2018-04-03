@@ -16,7 +16,7 @@ import mp.schedule.bean.ScheduleJoin;
 //상영시간표 DAO IMPL
 
 
-@Repository("scheduleDao")
+@Repository("scheduleDao") 
 public class ScheduleDaoImpl implements ScheduleDao {
 	
 	Logger log = LoggerFactory.getLogger(getClass());

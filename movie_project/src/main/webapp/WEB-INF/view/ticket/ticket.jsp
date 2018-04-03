@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
 <!--자바스크립트로 -->   
 <head>
-    <style>
+    <style> 
         .emptysmall{
             height: 10px;
         }

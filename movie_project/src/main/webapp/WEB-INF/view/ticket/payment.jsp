@@ -109,7 +109,7 @@
 //                 					alert(msg);
 //                 					location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
 //                 					//console.log(c);
-//                 				}
+//                 				} 
 //                 			});
 //                 	    } else {		//결제 취소 버튼 클릭시
 //                 	        var msg = '결제를 취소하셨습니다.';

@@ -34,7 +34,7 @@ public class PaymentController {
 	
 	@Autowired
 	PaymentService paymentService;	
-	
+	 
 	@Autowired
 	TheaterService theaterService;
 	

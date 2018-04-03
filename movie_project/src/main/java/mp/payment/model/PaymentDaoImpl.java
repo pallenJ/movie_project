@@ -14,7 +14,7 @@ import mp.payment.bean.Payment;
 
 @Repository("paymentDao")
 public class PaymentDaoImpl implements PaymentDao {
-	
+	 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
