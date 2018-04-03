@@ -68,7 +68,6 @@ public class MemberController {
             model.addAttribute("re_login_fail", true);
 			return "member/login";
 		}
-		String  grade	 =memDao.myinfo(id).getGrade();
 		
 		session.setAttribute("loginId", id);
 		request.setAttribute("loginId", id);
@@ -159,6 +158,7 @@ public class MemberController {
 			memberservice.message(response, "로그아웃에 실패했습니다");
 		    log.debug("로그아웃 실패");	
 		}
+		model.addAttribute("logout",true);
 		return "member/login";
 	}
 	@RequestMapping({"/idCheck","/idcheck","/id_check"})

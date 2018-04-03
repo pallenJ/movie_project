@@ -111,11 +111,11 @@ public class QnaController {
 	public String qnaShow(Model model) {
 		//비로그인 상태일시 로그인 후 글을 볼 수 있음
 		String loginId = (String) session.getAttribute("loginId");
-		if(loginId==null) {
+		/*if(loginId==null) {
 			log.debug("먼저 로그인 하세요");
 			model.addAttribute("re_login_myInfo", true);
 			return "member/login";
-		}
+		}*/
 		
 		//글번호 정보가 없을때 예외처리.(글목록으로 보냄)
 		int no=Integer.parseInt(request.getParameter("no"));;
@@ -146,13 +146,14 @@ public class QnaController {
 		log.debug("gno={}",gno);
 		
 		
+		/*
 		String id = (String) session.getAttribute("loginId");
 		boolean flag = id!=null;
-		if(!flag) {
+		 if(!flag) {
 			log.debug("먼저 로그인 해주세요");
 			model.addAttribute("re_login_myInfo", true);
 			return "member/login";
-		}
+		}*/
 		if(parent!=null&&gno!=null) {
 			request.setAttribute("parent", parent);
 			request.setAttribute("gno", gno);
@@ -171,11 +172,11 @@ public class QnaController {
 		
 		
 		log.debug("qna id={}",id);
-		if(id.equals("")||id==null) {
+		/*if(id.equals("")||id==null) {
 			log.debug("먼저 로그인 해주세요");
 			model.addAttribute("re_login_myInfo", true);
 			return "member/login";
-		}
+		}*/
 		if(gno!=null) {
 			qnaService.qnaWrite(id, head, title, secret, content, parent);
 		}else {

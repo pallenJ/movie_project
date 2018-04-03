@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
+<c:if test="${logout}">
+
+	<script>
+		location.href = 'login';
+	</script>
+
+</c:if>
 <html>
 
 <head>
@@ -12,7 +20,7 @@
 
 </head>
 <body>
-<c:if test="${re_login_fail}">
+<%-- <c:if test="${re_login_fail}">
 	<script type="text/javascript">
 		alert('로그인에 실패했습니다.');
 		location.href='login';
@@ -31,7 +39,7 @@
 		alert('먼저 로그인 해주세요');
 		location.href='login';
 	</script>
-</c:if>
+</c:if> --%>
 <div align="center">
 	<br>
 	<br>

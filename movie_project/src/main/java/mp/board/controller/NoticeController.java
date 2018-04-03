@@ -102,11 +102,11 @@ public class NoticeController {
 		}
 		
 		String grade = (String)session.getAttribute("loginGrade");
-		boolean adminFlag = false;
+		boolean adminFlag;
 		try {
 			adminFlag=grade.equals("관리자")||grade.equals("admin");
 		} catch (Exception e) {
-			
+			adminFlag = false;
 		}
 		Notice notice = noticeDao.noticedetail(no);
 		
@@ -127,7 +127,7 @@ public class NoticeController {
 	
 	@RequestMapping(value= {"/noticeWrite","/noticewrite","/notice_write"})
 	public String noticeWrite(Model model) {
-		String id = (String) session.getAttribute("loginId");
+		/*String id = (String) session.getAttribute("loginId");
 		String grade = (String) session.getAttribute("loginGrade");
 		boolean flag = id!=null;
 		if(!flag) {
@@ -138,7 +138,7 @@ public class NoticeController {
 			log.debug("권한이 부족합니다.");
 			model.addAttribute("re_no_no", true);
 			return "board/notice";
-		}
+		}*/
 		  
 		return "board/notice_write";
 	}
@@ -169,18 +169,18 @@ public class NoticeController {
 	
 	@RequestMapping(value= {"/noticeDelete","/noticedelete","/notice_delete"})
 	public String noticeDelete(String no,Model model) {
-		try {
+		/*try {*/
 			
-		String grade = (String) session.getAttribute("loginGrade");
+		/*String grade = (String) session.getAttribute("loginGrade");*/
 		
-		if(!grade.equals("admin")&&!grade.equals("관리자")) throw new Exception();
+		/*if(!grade.equals("admin")&&!grade.equals("관리자")) throw new Exception();*/
 		request.setAttribute("no", Integer.parseInt(no));
 		return "board/notice_delete";
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			log.debug("권한이 부족합니다.");
 			model.addAttribute("re_no_no", true);
 			return "board/notice";
-		}
+		}*/
 	}
 	
 	@RequestMapping(value= {"/noticeDelete","/noticedelete","/notice_delete"}, method = RequestMethod.POST)
@@ -209,20 +209,19 @@ public class NoticeController {
 	@RequestMapping(value= {"/noticeEdit","/noticeedit","/notice_edit"})
 	public String noticeEdit(String no,String fileDelete,Model model) {
 		log.debug("fileEdit={}",fileDelete);
-		try {
-		String grade = (String) session.getAttribute("loginGrade");
+		/*try {*/
+//		String grade = (String) session.getAttribute("loginGrade");
 		
-		if(!grade.equals("admin")&&!grade.equals("관리자")) throw new Exception();
 		int bno = Integer.parseInt(no);
 		Notice notice = noticeDao.noticedetail(bno);
 		log.debug("content = {}",notice.getContent());
 		model.addAttribute("before",notice);
 		return "board/notice_edit";
-		}catch (Exception e) {
+		/*}catch (Exception e) {
 			log.debug("권한이 부족합니다.");
 			model.addAttribute("re_no_no", true);
 			return "board/notice";
-		}
+		}*/
 		
 	}
 	
