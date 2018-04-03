@@ -50,13 +50,6 @@ public class PaymentController {
 	@Autowired
 	SeatService seatService;
 	
-	@RequestMapping("/home")
-	public String home() {
-		System.out.println("컨트롤러");
-		return "/home";
-	}
-
-	
 	@RequestMapping("/ticket")
 	public String ticket(HttpSession session, Model model) {
 		String loginid = (String)session.getAttribute("loginId");

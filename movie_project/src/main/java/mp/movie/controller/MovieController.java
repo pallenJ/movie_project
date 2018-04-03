@@ -101,7 +101,7 @@ public class MovieController {
 	@RequestMapping(value="/movie/delete", method=RequestMethod.POST)
 	public String delete(String movieid, String uploaderpw, HttpSession session) {
 		movieService.delete(movieid, session.getAttribute("loginId").toString(), uploaderpw);
-		return "redirect:/movie/list";
+		return "redirect:/movie/now";
 	}
 	
 	//현재 개봉 영화
