@@ -21,51 +21,69 @@
     <![endif]-->
     
     
-    <div align="center"> <h1> 회원정보</h1> </div><hr>
+    <div align="center"> <h1> 회원정보수정</h1> </div><hr>
   </head>
   <body>
        
     <div align="center">
-      <form action="edit" id="forEdit">
-      	
+      <form action="memedit" method="post">
       <!-- Table -->
       <table class="table table-bordered" align="center"  style="position: relative; width: 400px; top:30px">
         
         <tbody>
          
           <tr>
+            <th scope="row" colspan="40%">회원번호</th>
+            <td>
+            ${memInfo.no}
+            <input type="hidden" id="no" name="no" value="${memInfo.no}">
+            
+            </td>
+          </tr>
+          
+          <tr>
             <th scope="row" colspan="40%">아이디</th>
             <td>${memInfo.id}</td>
           </tr>
          
          <tr>
-            <th scope="row" colspan="40%">비밀번호</th>
-            <td>${memInfo.pw}</td>
-         </tr>
-         
-         <tr>
             <th scope="row" colspan="40%">생년월일</th>
-            <td>${memInfo.birth}</td>
+            <td>
+           ${memInfo.birth}
+            </td>
          </tr>
          
         <tr>
             <th scope="row" colspan="40%">이메일</th>
-            <td>${memInfo.email}</td>
+            
+            <td>
+            <input type="email" class="form-control" id="email" name="email" 
+            value="${memInfo.email}" required>
+            </td>
           </tr>
           
          <tr>
             <th scope="row" colspan="40%">전화번호</th>
-            <td>${memInfo.phone}</td>
+            <td>
+            <input type="text" class="form-control" id="phone" name="phone" 
+            value="${memInfo.phone}" required>
+            </td>
          </tr>
           
          <tr>
             <th scope="row" colspan="40%">회원등급</th>
-            <td>${memInfo.grade}</td>
+            <td>
+            <input type="text" class="form-control" id="grade" name="grade" 
+            value="${memInfo.grade}" required>
+            </td>
          </tr>
          
          <tr>
             <th scope="row" colspan="40%">포인트</th>
-            <td>${memInfo.point}</td>
+            <td>
+            <input type="number" class="form-control" id="point" name="point" 
+            value="${memInfo.point}" required>
+            </td>
          </tr>
           
          <tr>
@@ -77,15 +95,13 @@
         </tbody>
         
       </table>
+      <br><br>
+   	<button type="submit" class="btn btn-primary" style="width: 100px">회원 수정</button>&nbsp;&nbsp;&nbsp;
+   	<button type="button" onClick="history.back();" class="btn btn-warning"  style="width: 100px">취소</button>
+      </form>	
       <br> <hr>
-    
-    <button type="submit" class="btn btn-primary" style="width: 100px">내정보 수정</button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" onClick="location.href='home'" class="btn btn-warning"  style="width: 100px">홈으로</button>
-   </form>
-    <form action="logout" id="forLogout">
-     <button type="submit" class="btn btn-default" style="width: 200px" >로그아웃</button>
-    </form>
+    
     
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

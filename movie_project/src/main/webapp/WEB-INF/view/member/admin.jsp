@@ -24,7 +24,8 @@
 
 
 <div align="center">
-	<h1>게시판</h1>
+<br>
+	<h1>회원 관리</h1>
 
 </div>
 <hr>
@@ -47,13 +48,7 @@
 
 
 
-		<div align="center">
-		
-	<form action="<c:url value='/qnawrite'></c:url>" style="position: relative; left: 360px;">
-			<button type="submit" class="btn btn-outline-secondary"
-				>글쓰기</button>
-	</form>
-		</div>
+	
 	<!--전체를 감는 div-->
 
 	<div align="center">
@@ -70,7 +65,7 @@
 					<th width="20%">아이디</th>
 					<th width="10%">등급</th>
 					<th width="20%">가입일</th>
-					<th width="40%">""</th>
+					<th width="40%">수정/삭제</th>
 				</tr>
 
 			</thead>
@@ -87,10 +82,24 @@
 						<td>${member.grade}</td>
 						<td>${member.reg}</td>
 						<td>
-						<form action="<c:url value='/memberDelete'></c:url>">
+						<div align="center">
+						<form action="<c:url value='/memInfo'></c:url>" style="display:inline;width: -10px">
+							<input type="hidden" name="no" value="${member.no}">
+							<button type="submit"> 회원정보 </button>
+						</form>
+						
+						
+						<form action="<c:url value='/memEdit'></c:url>" style="display:inline;width: -10px">
+							<input type="hidden" name="no" value="${member.no}">
+							<button type="submit"> 수정 </button>
+						</form>
+						
+						
+						<form action="<c:url value='/memDelete'></c:url>" style="display:inline;width: -10px;">
 							<input type="hidden" name="no" value="${member.no}">
 							<button type="submit"> 삭제 </button>
 						</form>
+						</div>
 						</td>
 						<%-- </c:if> --%>
 					</tr>
@@ -108,7 +117,7 @@
 				<div class="input-group">
 
 					<!--       검색 옵션 선택(드롭다운)-->
-					<div class="input-group-btn">
+					<!-- <div class="input-group-btn">
 
 						<div class="dropdown" style="width: 90px;">
 							<select class="form-control" name="search">
@@ -118,13 +127,13 @@
 							</select>
 						</div>
 
-					</div>
+					</div> -->
 					<!-- 검색할 단어 입력-->
-					<input type="text" class="form-control" name="keyword"
+					<!-- <input type="text" class="form-control" name="keyword"
 						placeholder="Search for..."> <span class="input-group-btn">
-						<!-- 검색버튼-->
+						검색버튼
 						<button class="btn btn-info" type="submit">검색</button>
-					</span>
+					</span> -->
 
 				</div>
 				<!-- /input-group -->

@@ -17,4 +17,5 @@ public interface MemberService {
 	   Member myinfo(String id);
 	   boolean register(String id, String pw, String birth, String phone, String email);
 	   void message(HttpServletResponse response,String msg);
+	void adminEdit(String no,  String email, String grade,String phone, String point);
 }

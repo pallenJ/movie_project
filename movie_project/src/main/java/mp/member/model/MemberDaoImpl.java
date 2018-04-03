@@ -116,13 +116,13 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void adminedit(Member member) {
 		// TODO Auto-generated method stub
-		String sql = "update member set no=?, id=?, pw=?, "
-						+"birth=?, phone=?, email=?, "
-							+"point=?,grade=?, reg=? "
+		String sql = "update member set  pw=?, "
+						+" phone=?, email=?, "
+							+"point=?,grade=?"
 								+ "where no=?";
-		Object []args= {member.getNo(), member.getId(), member.getPw(),
-				member.getBirth(),member.getPhone(),member.getEmail(),
-				member.getPoint(),member.getGrade(),member.getReg()
+		Object []args= { member.getPw(),
+				member.getPhone(),member.getEmail(),
+				member.getPoint(),member.getGrade(),member.getNo()
 		};
 		jdbcTemplate.update(sql, args);
 	}

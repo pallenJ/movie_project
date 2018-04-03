@@ -89,6 +89,26 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public void adminEdit(String no,String email,String grade,String phone,String point) {
+		
+		log.debug("no={}",no);
+		log.debug("email={}",email);
+		log.debug("grade={}",grade);
+		log.debug("phone={}",phone);
+		log.debug("point={}",point);
+		
+		Member member = memberdao.selectMem(no);
+		log.debug("null?={}",member==null);
+		
+		member.setEmail(email);
+		member.setGrade(grade);
+		member.setPhone(phone);
+		member.setPoint(Integer.parseInt(point));
+		
+		memberdao.adminedit(member);
+	}
+	
+	@Override
 	public void message(HttpServletResponse response,String msg) {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html; charset=UTF-8");

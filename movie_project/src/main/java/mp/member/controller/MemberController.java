@@ -177,7 +177,7 @@ public class MemberController {
 		return "member/admin";
 	}
 	//--------------------------------------------------------
-	@RequestMapping({"/memberDelete","/memberdelete","/member_delete"})
+	@RequestMapping({"/memDelete","/memdelete"})
 	public String memdelete(String no,Model model) {
 		Member member = memDao.selectMem(no);
 		boolean flag=memDao.delete(member.getId(), member.getPw());
@@ -187,10 +187,26 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = {"/memInfo","/meminfo"})//다중매핑(둘중 어느걸로 들어가도 상관 없음)
-	public String meminfo(String no,Model model) {
-		
-		
-		return "member/myInfo";
+	public String memInfo(String no,Model model) {
+		model.addAttribute("memInfo",memDao.selectMem(no));
+		return "member/memInfo";
+	}
+	@RequestMapping(value = {"/memEdit","/memedit"})//다중매핑(둘중 어느걸로 들어가도 상관 없음)
+	public String memEdit(String no,Model model) {
+		model.addAttribute("memInfo",memDao.selectMem(no));
+		return "member/memedit";
+	}
+	@RequestMapping(value = {"/memEdit","/memedit"}, method = RequestMethod.POST)//다중매핑(둘중 어느걸로 들어가도 상관 없음)
+	public String memEdit(String no,String email,String grade,String phone,String point,Model model) {
+		/*log.debug("pw={}",pw);
+		log.debug("birth={}",birth);
+		log.debug("email={}",email);
+		log.debug("grade={}",grade);
+		log.debug("phone={}",phone);
+		log.debug("point={}",point);*/
+		memberservice.adminEdit(no,  email, grade, phone, point);
+		model.addAttribute("re_admin",true);
+		return "member/admin";
 	}
 	
 	
