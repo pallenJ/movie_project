@@ -17,11 +17,12 @@
 
 <style>
 li {
-	width: 280px;
+	width: 230px;
 }
 </style>
 <br>
 <div align="right">
+<h1>${sessionScope.loginId}</h1>
 	<c:choose>
 
 		<c:when
@@ -52,7 +53,19 @@ li {
 
 			<li class="nav-item"><a class="nav-link"
 				href="<c:url value='/'/>">홈으로</a></li>
-
+			<c:if test="${sessionScope.loginGrade eq '관리자' or sessionScope.loginGrade eq 'admin'}">
+			
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+				role="button" aria-haspopup="true" aria-expanded="false">관리자 페이지</a>
+				<div class="dropdown-menu" x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a class="dropdown-item" href="<c:url value='/admin'/>">회원관리</a> 
+				</div></li>
+				
+			</c:if>
+		
+				
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 				role="button" aria-haspopup="true" aria-expanded="false">게시판</a>
@@ -62,6 +75,7 @@ li {
 						href="<c:url value='/qna'/>">QnA</a> <a class="dropdown-item"
 						href="<c:url value='/notice'/>">notice</a>
 				</div></li>
+				
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 				role="button" aria-haspopup="true" aria-expanded="false">영화 페이지들</a>

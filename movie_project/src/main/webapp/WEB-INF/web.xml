@@ -31,22 +31,7 @@
 	</filter>
 	
 	
-	<filter-mapping>
-		<filter-name>AdminFilter</filter-name>
-				
-		<url-pattern>/noticeWrite</url-pattern>
-		<url-pattern>/noticewrite</url-pattern>
-		<url-pattern>/notice_write</url-pattern>
 
-		<url-pattern>/noticeDelete</url-pattern>
-		<url-pattern>/noticedelete</url-pattern>
-		<url-pattern>/notice_delete</url-pattern>
-
-		<url-pattern>/noticeEdit</url-pattern>
-		<url-pattern>/noticeedit</url-pattern>
-		<url-pattern>/notice_edit</url-pattern>
-		
-	</filter-mapping>
 	
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
@@ -78,8 +63,27 @@
 		<url-pattern>/noticeedit</url-pattern>
 		<url-pattern>/notice_edit</url-pattern>
 		
+		<url-pattern>/admin</url-pattern>
 	</filter-mapping>
 	
+		<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+				
+		<url-pattern>/noticeWrite</url-pattern>
+		<url-pattern>/noticewrite</url-pattern>
+		<url-pattern>/notice_write</url-pattern>
+
+		<url-pattern>/noticeDelete</url-pattern>
+		<url-pattern>/noticedelete</url-pattern>
+		<url-pattern>/notice_delete</url-pattern>
+
+		<url-pattern>/noticeEdit</url-pattern>
+		<url-pattern>/noticeedit</url-pattern>
+		<url-pattern>/notice_edit</url-pattern>
+		
+		<url-pattern>/admin</url-pattern>
+		
+	</filter-mapping>
 	
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

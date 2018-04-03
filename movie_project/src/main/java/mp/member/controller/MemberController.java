@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -169,5 +170,29 @@ public class MemberController {
 		
 		return "member/register";
 		}
+	@RequestMapping("/admin")
+	public String admin(Model model) {
+		List<Member> list = memDao.memberlist();
+		model.addAttribute("list",list);
+		return "member/admin";
+	}
 	//--------------------------------------------------------
+	@RequestMapping({"/memberDelete","/memberdelete","/member_delete"})
+	public String memdelete(String no,Model model) {
+		Member member = memDao.selectMem(no);
+		boolean flag=memDao.delete(member.getId(), member.getPw());
+		memberservice.message(response, "삭제"+(flag?"성공":"실패"));
+		model.addAttribute("re_admin", true);
+		return "member/admin";
+	}
+	
+	@RequestMapping(value = {"/memInfo","/meminfo"})//다중매핑(둘중 어느걸로 들어가도 상관 없음)
+	public String meminfo(String no,Model model) {
+		
+		
+		return "member/myInfo";
+	}
+	
+	
+	
 }

@@ -45,4 +45,6 @@ public interface MemberDao {
 	boolean admindelete(String adminpw, String memberid);
 
 	int idCheck(String id);
+
+	Member selectMem(String no);
 }

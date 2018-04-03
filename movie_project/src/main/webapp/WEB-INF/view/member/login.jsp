@@ -20,12 +20,13 @@
 
 </head>
 <body>
-<%-- <c:if test="${re_login_fail}">
+<c:if test="${re_login_home}">
 	<script type="text/javascript">
 		alert('로그인에 실패했습니다.');
 		location.href='login';
 	</script>
 </c:if>
+<%-- 
 
 <c:if test="${re_login_login}">
 	<script type="text/javascript">

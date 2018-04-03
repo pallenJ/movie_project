@@ -52,6 +52,13 @@ public class MemberDaoImpl implements MemberDao{
 		Member member = jdbcTemplate.query(sql,extractor,id);
 		return member;
 	}
+	
+	@Override
+	public Member selectMem(String no) {
+		String sql = "select * from member where no=?";//return jdbcTemplate.query(sql,extractor,id);
+		Member member = jdbcTemplate.query(sql,extractor,no);
+		return member;
+	}
 
 	@Override
 	public void edit(Member member) {
@@ -64,7 +71,7 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public boolean delete(String id, String pw) {
-		String sql = "delete * from member where id=? and pw=?";
+		String sql = "delete member where id=? and pw=?";
 		return jdbcTemplate.update(sql,id,pw)>0;
 	}
 
