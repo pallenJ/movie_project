@@ -37,7 +37,7 @@
              	
              	//상영시간표 불러오는 ajax
 			    $.ajax({
-					url:"http://localhost:8080/movie_project/ticket/schedule",
+					url:'${pageContext.request.contextPath}'+"/ticket/schedule",
 					type:"get",
 					data:{
 							theaterid:theaterselectvalue,

@@ -13,7 +13,7 @@
 			$('#theater').on("input", function(){
 				//영화관 선택시 상영관 불러오는 ajax
 				$.ajax({
-					url:"http://localhost:8080/movie_project/schedule/screenlist",
+					url:'${pageContext.request.contextPath}'+"/schedule/screenlist",
 					type:"post",
 					//ajax 요청을 보내면서 결제내역 정보 데이터를 첨부
 					data:{

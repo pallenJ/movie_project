@@ -66,7 +66,7 @@
         function seatlist(screenid){
         	$.ajax({
         		type: 'POST',
-	       		url: "http://localhost:8080/movie_project/seat/list",
+	       		url: '${pageContext.request.contextPath}'+"/seat/list",
         		data: {screenid:screenselect.options[screenselect.selectedIndex].value},
         		dataType: "json", 
         		success: function(data){

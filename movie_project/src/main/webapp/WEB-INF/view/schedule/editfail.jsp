@@ -5,5 +5,5 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script>
 	alert("수정 실패!");
-	location.href = 'http://localhost:8080/movie_project/schedule/';	//자바스크립트 페이지 강제이동	
+	location.href = '${pageContext.request.contextPath}'+'/schedule/';	//자바스크립트 페이지 강제이동	
 </script>

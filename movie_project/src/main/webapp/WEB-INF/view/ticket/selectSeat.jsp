@@ -79,7 +79,7 @@
 	    	$.ajax({
 	    		async:false,	//ajax 동시 작동 방지
 	    		type: 'POST',
-	       		url: "http://localhost:8080/movie_project/seat/list",
+	       		url: '${pageContext.request.contextPath}'+"/seat/list",
 	    		data: {screenid:'${screenid}'},
 	    		dataType: "json", 
 	    		success: function(data){
@@ -107,7 +107,7 @@
 	    	$.ajax({
 	    		async:false,	//ajax 동시 작동 방지
 	    		type: 'POST',
-	       		url: "http://localhost:8080/movie_project/ticket/seat",
+	       		url: '${pageContext.request.contextPath}'+"/ticket/seat",
 	    		data: {scheduleid:'${scheduleid}'},
 	    		dataType: "json", 
 	    		success: function(data){

@@ -13,7 +13,7 @@
             $('#theater').on("input", function(){
 	        	//영화관 선택시 상영관 불러오는 ajax
     			$.ajax({
-    				url:"http://localhost:8080/movie_project/schedule/screenlist",
+    				url:'${pageContext.request.contextPath}'+"/schedule/screenlist",
     				type:"post",
     				//ajax 요청을 보내면서 결제내역 정보 데이터를 첨부
     				data:{
@@ -40,7 +40,7 @@
             $("button").on("click", function(){
        	        //ajax이용하여 상영시간표 등록
         			$.ajax({
-        				url:"http://localhost:8080/movie_project/schedule/register",
+        				url:'${pageContext.request.contextPath}'+"/schedule/register",
         				type:"post",
         				//ajax 요청을 보내면서 결제내역 정보 데이터를 첨부
         				data:{
@@ -58,7 +58,7 @@
 
         				success:function(count){
         					alert("등록성공");
-        					location.href = 'http://localhost:8080/movie_project/schedule';	//자바스크립트 페이지 강제이동	
+        					location.href = '${pageContext.request.contextPath}'+'/schedule';	//자바스크립트 페이지 강제이동	
         				},
        		        	error : function(xhr, status, error) {
      		                alert("등록 실패했습니다.(상영 시작시간이 종료시간보다 늦거나 상영시간이 중복됩니다.)");

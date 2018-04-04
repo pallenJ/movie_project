@@ -26,7 +26,7 @@
                 	    buyer_tel : '${member.phone}',
                 	    buyer_addr : 'address',
                 	    buyer_postcode : 'post',
-                	    m_redirect_url : 'http://localhost:8080/movie_project/payment/complete'
+                	    m_redirect_url : '${pageContext.request.contextPath}'+'/payment/complete'
                 	}, function(rsp) {	
                 	    if ( rsp.success ) {			//결제 성공 후.
                 	        var msg = '결제가 완료되었습니다.';
@@ -37,7 +37,7 @@
 
                  	        //ajax이용하여 결제내역 저장
                 			$.ajax({
-                				url:"http://localhost:8080/movie_project/ticket/register",
+                				url:'${pageContext.request.contextPath}'+"/ticket/register",
                 				type:"get",
                 				//ajax 요청을 보내면서 결제내역 정보 데이터를 첨부
                 				data:{
@@ -53,13 +53,13 @@
                 				dataType:"text",
                 				success:function(count){
                 					alert(msg);
-                					location.href = 'http://localhost:8080/movie_project/ticket/complete';	//자바스크립트 페이지 강제이동	
+                					location.href = '${pageContext.request.contextPath}'+'/ticket/complete';	//자바스크립트 페이지 강제이동	
                 					//console.log(c);
                 				}
                 			});
                 	    } else {
                 	    	//결제 취소시
-                	    	location.href = 'http://localhost:8080/movie_project/ticket/cancel';	//자바스크립트 페이지 강제이동	
+                	    	location.href = '${pageContext.request.contextPath}'+'/ticket/cancel';	//자바스크립트 페이지 강제이동	
     	            	}            	        
                 	});	//requestpay
         	
