@@ -12,12 +12,10 @@
                 margin: auto;
                 text-align: center;
                 align-content: center;
-                width: 80%;
             }
             .content{
                 margin: auto;
                 text-align: left;
-                width: 60%;
             }
         </style>
         <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
