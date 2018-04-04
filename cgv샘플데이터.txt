@@ -82,7 +82,7 @@ name varchar2(50) not null unique,
 region varchar2(30) not null, 
 address varchar2(300) not null, 
 tel varchar2(11) not null, 
-manager constraint fk_theater_manager references member(no) on delete set null);
+manager unique constraint fk_theater_manager references member(no) on delete set null);
 
 create sequence screen_seq nocache;
 create table screen 
@@ -158,11 +158,23 @@ paytotal number not null);
 
 --멤버 추가
 insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'admin','1234','1993-01-01','01012341234','admin@test.com',0,'관리자',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'movie','1234','1993-01-07','01012341234','test@test.com',0,'영화사',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater','1234','1993-01-07','01012341234','test@test.com',0,'지점장',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test1','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
-insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test2','1234','1993-01-07','01012341234','test@test.com',0,'일반',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'movie','1234','1993-01-01','01012341234','test@test.com',0,'영화사',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater1','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater2','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater3','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater4','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater5','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater6','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater7','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater8','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater9','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater10','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater11','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'theater12','1234','1993-01-01','01012341234','test@test.com',0,'지점장',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test','1234','1993-01-01','01012341234','test@test.com',0,'일반',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test1','1234','1993-01-01','01012341234','test@test.com',0,'일반',sysdate);
+insert into member values('m'||LPAD(member_seq.nextval, '10', '0'),'test2','1234','1993-01-01','01012341234','test@test.com',0,'일반',sysdate);
 
 
 
@@ -191,32 +203,43 @@ insert into movie values ('v'||LPAD(movie_seq.nextval, '10', '0'), '쓰리빌보
 
 
 -- 영화관 등록
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000001');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '구로점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000001');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '이름점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000002');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '복점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000003');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '줌순이점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000003');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '밥점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000003');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '그냥점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000004');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '상도점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000001');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '복어점', '서울', '서울시 노원구 상계동', '0212341234', 'm0000000001');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '상어점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000002');
-insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '피카츄점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000003');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '가디점', '서울', '서울시 금천구 가산동', '0212341234', 'm0000000003');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '구로점', '서울', '서울시 구로구', '0212341234', 'm0000000004');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '노원점', '서울', '서울시 노원구', '0212341234', 'm0000000005');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '상계점', '서울', '서울시 누원구 상계동', '0212341234', 'm0000000006');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '상도점', '서울', '서울시 상도동', '0212341234', 'm0000000007');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '서울역점', '서울', '서울시 서울역앞', '0212341234', 'm0000000008');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '신림점', '서울', '서울시 신림동', '0212341234', 'm0000000009');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '강남점', '서울', '서울시 강남구', '0212341234', 'm0000000010');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '하계점', '서울', '서울시 노원구 하계동', '0212341234', 'm0000000011');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '신촌점', '서울', '서울시 서대문구', '0212341234', 'm0000000012');
+insert into theater values ('t'||LPAD(theater_seq.nextval, '10', '0'), '건대점', '서울', '서울시 건대', '0212341234', 'm0000000013');
 
 -- 상영관 등록
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000001');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 2, 't0000000001', 0, 'm0000000001');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 3, 't0000000001', 0, 'm0000000001');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 4, 't0000000001', 0, 'm0000000001');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 5, 't0000000001', 0, 'm0000000001');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000002', 0, 'm0000000002');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 2, 't0000000002', 0, 'm0000000002');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 3, 't0000000002', 0, 'm0000000002');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 4, 't0000000002', 0, 'm0000000002');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 5, 't0000000002', 0, 'm0000000002');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 6, 't0000000002', 0, 'm0000000002');
-insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 7, 't0000000002', 0, 'm0000000002');
-
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000001', 0, 'm0000000003');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 2, 't0000000001', 0, 'm0000000003');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 3, 't0000000001', 0, 'm0000000003');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 4, 't0000000001', 0, 'm0000000003');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 5, 't0000000001', 0, 'm0000000003');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000002', 0, 'm0000000004');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 2, 't0000000002', 0, 'm0000000004');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 3, 't0000000002', 0, 'm0000000004');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 4, 't0000000002', 0, 'm0000000004');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 5, 't0000000002', 0, 'm0000000004');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 6, 't0000000002', 0, 'm0000000004');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 7, 't0000000002', 0, 'm0000000004');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000003', 0, 'm0000000005');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 2, 't0000000003', 0, 'm0000000005');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 3, 't0000000003', 0, 'm0000000005');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 4, 't0000000003', 0, 'm0000000005');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 5, 't0000000003', 0, 'm0000000005');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 6, 't0000000003', 0, 'm0000000005');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 7, 't0000000003', 0, 'm0000000005');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 1, 't0000000004', 0, 'm0000000006');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 2, 't0000000004', 0, 'm0000000006');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 3, 't0000000004', 0, 'm0000000006');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 4, 't0000000004', 0, 'm0000000006');
+insert into screen values ('c'||LPAD(screen_seq.nextval, '10', '0'), 5, 't0000000004', 0, 'm0000000006');
 
 -- 상영시간표 등록
 insert into schedule values ('d'||LPAD(schedule_seq.nextval,'10','0'),'v0000000001','t0000000001','c0000000001','2018-03-30','13:30','15:30',3000,3000,'m0000000001');
@@ -577,7 +600,6 @@ insert into seat values ('s'||LPAD(seat_seq.nextval,'10','0'),'c0000000001','l23
 
 
 commit;
-
 
 
 
