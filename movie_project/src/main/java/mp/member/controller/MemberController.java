@@ -83,6 +83,7 @@ public class MemberController {
 		return "/home";
 	}
 //--------------------------------------------------------------------------
+	
 	@RequestMapping("/register")
 	public String register() {
 		return "member/register";
@@ -207,6 +208,10 @@ public class MemberController {
 		memberservice.adminEdit(no,  email, grade, phone, point);
 		model.addAttribute("re_admin",true);
 		return "member/admin";
+	}
+	@RequestMapping("/drop")
+	public String drop() {
+		return "member/drop";
 	}
 	
 	

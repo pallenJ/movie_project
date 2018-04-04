@@ -26,7 +26,6 @@
 		location.href='login';
 	</script>
 </c:if>
-<%-- 
 
 <c:if test="${re_login_login}">
 	<script type="text/javascript">
@@ -35,12 +34,13 @@
 	</script>
 </c:if>
 
+
 <c:if test="${re_login_myInfo}">
 	<script type="text/javascript">
 		alert('먼저 로그인 해주세요');
 		location.href='login';
 	</script>
-</c:if> --%>
+</c:if>
 <div align="center">
 	<br>
 	<br>

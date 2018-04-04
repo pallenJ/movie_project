@@ -96,14 +96,7 @@ public class MemberDaoImpl implements MemberDao{
 		Member member = new Member(rs);
 		return member;//return new Member(rs);
 	};
-	@Override
-	public List<Member> memberlist() {
-		// TODO Auto-generated method stub
-		String sql ="select * from member";
-		List<Member> list=jdbcTemplate.query(sql,mapper);
-		return list;
-	}
-
+	
 	@Override
 	public List<Member> membersearch(String sort, String keyword) {
 		// TODO Auto-generated method stub
@@ -141,4 +134,13 @@ public class MemberDaoImpl implements MemberDao{
 		log.debug("size={}",size);
 		return size;
 	}
+	@Override
+	public List<Member> memberlist() {
+		// TODO Auto-generated method stub
+		String sql ="select * from member";
+		List<Member> list=jdbcTemplate.query(sql,mapper);
+		return list;
+	}
+
+
 }

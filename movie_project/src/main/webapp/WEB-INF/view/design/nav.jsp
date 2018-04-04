@@ -59,7 +59,6 @@ li {
 				role="button" aria-haspopup="true" aria-expanded="false">예매</a>
 				<div class="dropdown-menu" x-placement="bottom-start"
 					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-					<a class="dropdown-item" href="<c:url value='/schedule'/>">상영시간표</a>
 					<a class="dropdown-item" href="<c:url value='/ticket'/>">예매</a>
 				</div></li>
 			
@@ -76,6 +75,7 @@ li {
 				role="button" aria-haspopup="true" aria-expanded="false">영화관</a>
 				<div class="dropdown-menu" x-placement="bottom-start"
 					style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a class="dropdown-item" href="<c:url value='/schedule'/>">상영시간표</a>
 					<a class="dropdown-item" href="<c:url value='/theater'/>">영화관
 						페이지</a> <a class="dropdown-item" href="<c:url value='/screen'/>">상영관
 						페이지</a> <a class="dropdown-item" href="<c:url value='/seat'/>">좌석</a>
