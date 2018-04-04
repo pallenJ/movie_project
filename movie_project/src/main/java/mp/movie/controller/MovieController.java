@@ -19,7 +19,7 @@ public class MovieController {
 	private MovieService movieService;
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
-	//영화 등록
+	//영화 등록 (영화사)
 	@RequestMapping("/movie/register")
 	public String register() {
 		return "/movie/register";
@@ -41,14 +41,14 @@ public class MovieController {
 		return "redirect:/movie/info?movieid="+movieid;
 	}
 	
-	//나의 영화 조회(영화사 입장)
+	//나의 영화 조회(영화사)
 	@RequestMapping("/movie/mylist")
 	public String my(HttpSession session, Model model) {
 		model.addAttribute("list", movieService.getlist((String)session.getAttribute("loginId")));
 		return "/movie/mylist";
 	}
 	
-	//영화사별 영화 조회 (관리자 입장)
+	//영화사별 영화 조회 (admin)
 	@RequestMapping("/movie/list")
 	public String list() {
 		return "/movie/list";
@@ -59,7 +59,7 @@ public class MovieController {
 		return "/movie/list";
 	}
 	
-	//영화 수정
+	//영화 수정 (영화사)
 	@RequestMapping("/movie/edit")
 	public String edit(String movieid, Model model) {
 		model.addAttribute("list", movieService.getInfo(movieid));
@@ -92,7 +92,7 @@ public class MovieController {
 		return "redirect:/movie/info?movieid="+id;
 	}
 	
-	//영화 삭제
+	//영화 삭제 (영화사)
 	@RequestMapping("/movie/delete")
 	public String delete(String movieid, Model model) {
 		model.addAttribute("movieid", movieid);
@@ -104,21 +104,21 @@ public class MovieController {
 		return "redirect:/movie/now";
 	}
 	
-	//현재 개봉 영화
+	//현재 개봉 영화 (전체)
 	@RequestMapping(value= {"/movie/now", "/movie"})
 	public String now(Model model) {
 		model.addAttribute("list", movieService.getNow());
 		return "/movie/now";
 	}
 	
-	//개봉 예정 영화
+	//개봉 예정 영화 (전체)
 	@RequestMapping("/movie/soon")
 	public String soon(Model model) {
 		model.addAttribute("list", movieService.getSoon());
 		return "/movie/soon";
 	}
 	
-	//영화 상세 조회
+	//영화 상세 조회 (전체)
 	@RequestMapping("movie/info")
 	public String info(String movieid, Model model) {
 		model.addAttribute("movie", movieService.getInfo(movieid));

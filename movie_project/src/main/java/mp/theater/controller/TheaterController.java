@@ -20,7 +20,7 @@ public class TheaterController {
 	@Autowired
 	private TheaterService theaterService;
 	
-	//영화관 등록
+	//영화관 등록 (지점입장)
 	@RequestMapping("/theater/register")
 	public String register() {
 		return "/theater/register";
