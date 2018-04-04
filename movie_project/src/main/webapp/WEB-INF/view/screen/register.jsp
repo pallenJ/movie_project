@@ -35,7 +35,6 @@
 		                <div class="content">
 		                    상영관 번호 <input type="text" name="no" placeholder="예) 1, 2, 3 ..." required><br><br>
 		                    지점명 <input type="text" name="theater" value="${theater.name }" readonly="readonly"><br>
-		                    <input type="hidden" name="uploader" value="${sessionScope.id }" readonly="readonly"><br>
 		                    <input type="submit" value="등록" class="btn btn-primary">
 		                </div>
 		            </form>

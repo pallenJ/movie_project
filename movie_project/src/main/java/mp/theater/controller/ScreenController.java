@@ -27,12 +27,11 @@ public class ScreenController {
 	//상영관 등록
 	@RequestMapping("/screen/register")
 	public String register(HttpSession session, Model model) {
-		model.addAttribute("theater", theaterService.my(session.getAttribute("loginId").toString()));
 		return "/screen/register";
 	}
 	@RequestMapping(value="/screen/register", method=RequestMethod.POST)
-	public String register(String no, String theater, String uploader) {
-		String screenid = screenService.register(no, theater, uploader);
+	public String register(String no, String theater, HttpSession session) {
+		String screenid = screenService.register(no, theater, (String)session.getAttribute("loginId"));
 		return "redirect:/screen/detail?screenid="+screenid;
 	}
 	
