@@ -209,10 +209,10 @@ public class MemberController {
 		model.addAttribute("re_admin",true);
 		return "member/admin";
 	}
-	@RequestMapping("/drop")
+	/*@RequestMapping("/drop")
 	public String drop() {
 		return "member/drop";
-	}
+	}*/
 	
 	
 	

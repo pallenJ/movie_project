@@ -13,7 +13,7 @@
 
 <jsp:include page="/WEB-INF/view/design/nav.jsp"></jsp:include>
 
-
+<br><br>
 <div align="center">
 	<h1>게시판</h1>
 

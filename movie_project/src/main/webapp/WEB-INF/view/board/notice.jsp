@@ -46,14 +46,21 @@
 			history.back();
 		</script>
 	</c:if>
-	<c:if test="${sessionScope.loginGrade eq 'admin' or sessionScope.loginGrade eq '관리자'}">
+	<c:choose>
+	<c:when test="${sessionScope.loginGrade eq 'admin' or sessionScope.loginGrade eq '관리자'}">
 		<form action="<c:url value='/noticewrite'></c:url>">
 			<div align="center">
 				<button type="submit" class="btn btn-outline-secondary"
 					style="position: relative; left: 360px;">글쓰기</button>
 			</div>
 		</form>
-	</c:if>
+	</c:when>
+	
+	<c:otherwise>
+		<br><br>
+	</c:otherwise>
+	
+	</c:choose>
 
 	<!--전체를 감는 div-->
 	 
