@@ -17,7 +17,7 @@
 
 <style>
 li {
-	width: 230px;
+	width: 200px;
 }
 </style>
 <br>

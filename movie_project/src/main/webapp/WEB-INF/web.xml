@@ -26,6 +26,16 @@
 	</filter>
 	
 	<filter>
+		<filter-name> ManagerFilter</filter-name>
+		<filter-class>mp.member.filter.ManagerFilter</filter-class>
+	</filter>
+	
+	<filter>
+		<filter-name> MovieFilter</filter-name>
+		<filter-class>mp.member.filter.MovieFilter</filter-class>
+	</filter>
+	
+	<filter>
 		<filter-name>AdminFilter</filter-name>
 		<filter-class>mp.member.filter.AdminFilter</filter-class>
 	</filter>
@@ -64,7 +74,43 @@
 		<url-pattern>/notice_edit</url-pattern>
 		
 		<url-pattern>/admin</url-pattern>
-	</filter-mapping>
+		
+		<url-pattern>/movie/register</url-pattern>
+		<url-pattern>/movie/mylist</url-pattern>
+		<url-pattern>/movie/edit</url-pattern>
+		<url-pattern>/movie/delete</url-pattern>
+		
+		<url-pattern>/movie/list</url-pattern>
+		
+		<url-pattern>/ticket</url-pattern>
+		<url-pattern>/schedule/*</url-pattern>
+		<url-pattern>/screen/*</url-pattern>
+		<url-pattern>/seat/*</url-pattern>
+		<url-pattern>/theater/delete</url-pattern>
+		<url-pattern>/theater/edit</url-pattern>
+		<url-pattern>/theater/my</url-pattern>
+		<url-pattern>/theater/register</url-pattern>
+	    </filter-mapping>
+	
+		<filter-mapping>
+		<filter-name>MovieFilter</filter-name>
+		<url-pattern>/movie/register</url-pattern>
+		
+		<url-pattern>/movie/edit</url-pattern>
+		<url-pattern>/movie/delete</url-pattern>
+		</filter-mapping>
+		
+		
+		<filter-mapping>
+		<filter-name>ManagerFilter</filter-name>
+		<url-pattern>/schedule/*</url-pattern>
+		<url-pattern>/screen/*</url-pattern>
+		<url-pattern>/seat/*</url-pattern>
+		<url-pattern>/theater/delete</url-pattern>
+		<url-pattern>/theater/edit</url-pattern>
+		<url-pattern>/theater/my</url-pattern>
+		<url-pattern>/theater/register</url-pattern>
+		</filter-mapping>
 	
 		<filter-mapping>
 		<filter-name>AdminFilter</filter-name>
@@ -80,6 +126,8 @@
 		<url-pattern>/noticeEdit</url-pattern>
 		<url-pattern>/noticeedit</url-pattern>
 		<url-pattern>/notice_edit</url-pattern>
+		
+		<url-pattern>/movie/list</url-pattern>
 		
 		<url-pattern>/admin</url-pattern>
 		
