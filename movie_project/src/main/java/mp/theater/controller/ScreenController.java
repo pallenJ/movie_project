@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import mp.theater.bean.Screen;
+import mp.theater.bean.Theater;
 import mp.theater.service.ScreenService;
 import mp.theater.service.TheaterService;
 
@@ -27,6 +28,8 @@ public class ScreenController {
 	//상영관 등록
 	@RequestMapping("/screen/register")
 	public String register(HttpSession session, Model model) {
+		Theater theater = theaterService.my((String)session.getAttribute("loginId"));
+		model.addAttribute("theater", theater);
 		return "/screen/register";
 	}
 	@RequestMapping(value="/screen/register", method=RequestMethod.POST)
