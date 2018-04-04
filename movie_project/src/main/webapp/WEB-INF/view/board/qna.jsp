@@ -15,7 +15,7 @@
 
 <br><br>
 <div align="center">
-	<h1>게시판</h1>
+	<h1>Q&A</h1>
 
 </div>
 <hr>
