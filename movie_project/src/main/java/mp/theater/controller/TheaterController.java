@@ -20,27 +20,30 @@ public class TheaterController {
 	@Autowired
 	private TheaterService theaterService;
 	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	
 	//영화관 등록 (지점입장)
 	@RequestMapping("/theater/register")
 	public String register() {
 		return "/theater/register";
 	}
 	@RequestMapping(value="/theater/register", method=RequestMethod.POST)
-	public String register(String name, String region, String address, String tel, String manager) {
+	public String register(String name, String region, String address, String tel, HttpSession session) {
 		Theater t = new Theater();
 		t.setName(name);
 		t.setRegion(region);
 		t.setAddress(address);
 		t.setTel(tel);
-		t.setManager(manager);
+		t.setManager((String)session.getAttribute("loginId"));
 		String theaterid = theaterService.register(t);
-		return "redirect:/theater/my";
+		return "redirect:/theater/detail?theaterid="+theaterid;
 	}
 	
 	//영화관 상세 조회 (지점 입장)
 	@RequestMapping("/theater/my")
 	public String my(HttpSession session, Model model) {
-		Theater t = theaterService.my(session.getAttribute("loginId").toString());
+		log.debug((String)session.getAttribute("loginId"));
+		Theater t = theaterService.my((String)session.getAttribute("loginId"));
 		model.addAttribute("theater", t);
 		return "/theater/my";
 	}

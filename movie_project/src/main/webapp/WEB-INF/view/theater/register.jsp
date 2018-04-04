@@ -37,7 +37,6 @@
                         지역 <input type="text" name="region" required><br><br>
                         주소 <input type="text" name="address" style="width: 80%;" required><br><br>
                         전화번호 <input type="text" name="tel" required><br><br>
-                        <input type="hidden" name="manager" value="${sessionScope.id }" readonly="readonly">
                         <input type="submit" value="등록" class="btn btn-info">            
                     </div>
                 </div>
